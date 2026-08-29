@@ -12,8 +12,12 @@ Desktop.ini
 $RECYCLE.BIN/
 .DS_Store
 
-# Editor / IDE
+# Editor / IDE & Local Agent Rules
 .vscode/
 .idea/
 *.swp
 *~
+.agents/
+GEMINI.md
+AGENTS.md
+project_config.json
