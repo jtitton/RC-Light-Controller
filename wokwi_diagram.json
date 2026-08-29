@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "author": "Antigravity RC Light System",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-arduino-nano", "id": "nano", "top": 0, "left": 0, "attrs": {} },
+
+    { "type": "wokwi-led", "id": "led_pisca_fl", "top": -160, "left": -180, "attrs": { "color": "orange", "label": "Pisca Diant Esq (D10)" } },
+    { "type": "wokwi-resistor", "id": "r2", "top": -90, "left": -180, "attrs": { "value": "150" } },
+
+    { "type": "wokwi-led", "id": "led_farol", "top": -160, "left": -70, "attrs": { "color": "white", "label": "Farol Dianteiro (D9)" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": -90, "left": -70, "attrs": { "value": "100" } },
+
+    { "type": "wokwi-led", "id": "led_pisca_fr", "top": -160, "left": 50, "attrs": { "color": "orange", "label": "Pisca Diant Dir (D11)" } },
+    { "type": "wokwi-resistor", "id": "r3", "top": -90, "left": 50, "attrs": { "value": "150" } },
+
+    { "type": "wokwi-led", "id": "led_pisca_rl", "top": 210, "left": -180, "attrs": { "color": "orange", "label": "Pisca Tras Esq (D7)" } },
+    { "type": "wokwi-resistor", "id": "r6", "top": 150, "left": -180, "attrs": { "value": "150" } },
+
+    { "type": "wokwi-led", "id": "led_tail", "top": 210, "left": -80, "attrs": { "color": "red", "label": "Lanterna (D5)" } },
+    { "type": "wokwi-resistor", "id": "r4", "top": 150, "left": -80, "attrs": { "value": "150" } },
+
+    { "type": "wokwi-led", "id": "led_brake", "top": 210, "left": 20, "attrs": { "color": "red", "label": "Luz de Freio (D6)" } },
+    { "type": "wokwi-resistor", "id": "r5", "top": 150, "left": 20, "attrs": { "value": "150" } },
+
+    { "type": "wokwi-led", "id": "led_pisca_rr", "top": 210, "left": 130, "attrs": { "color": "orange", "label": "Pisca Tras Dir (D8)" } },
+    { "type": "wokwi-resistor", "id": "r7", "top": 150, "left": 130, "attrs": { "value": "150" } }
+  ],
+  "connections": [
+    [ "nano:GND.1", "led_pisca_fl:C", "black", [ "v-30", "h-60" ] ],
+    [ "nano:GND.1", "led_farol:C", "black", [ "v-30", "h0" ] ],
+    [ "nano:GND.1", "led_pisca_fr:C", "black", [ "v-30", "h60" ] ],
+    [ "nano:GND.2", "led_pisca_rl:C", "black", [ "v30", "h-60" ] ],
+    [ "nano:GND.2", "led_tail:C", "black", [ "v30", "h-20" ] ],
+    [ "nano:GND.2", "led_brake:C", "black", [ "v30", "h20" ] ],
+    [ "nano:GND.2", "led_pisca_rr:C", "black", [ "v30", "h60" ] ],
+
+    [ "nano:9", "r1:1", "white", [ "v-15", "h-20" ] ],
+    [ "r1:2", "led_farol:A", "white", [ "v-10" ] ],
+
+    [ "nano:10", "r2:1", "orange", [ "v-15", "h-40" ] ],
+    [ "r2:2", "led_pisca_fl:A", "orange", [ "v-10" ] ],
+
+    [ "nano:11", "r3:1", "blue", [ "v-15", "h40" ] ],
+    [ "r3:2", "led_pisca_fr:A", "blue", [ "v-10" ] ],
+
+    [ "nano:5", "r4:1", "brown", [ "v15", "h-20" ] ],
+    [ "r4:2", "led_tail:A", "brown", [ "v10" ] ],
+
+    [ "nano:6", "r5:1", "red", [ "v15", "h20" ] ],
+    [ "r5:2", "led_brake:A", "red", [ "v10" ] ],
+
+    [ "nano:7", "r6:1", "orange", [ "v15", "h-40" ] ],
+    [ "r6:2", "led_pisca_rl:A", "orange", [ "v10" ] ],
+
+    [ "nano:8", "r7:1", "blue", [ "v15", "h40" ] ],
+    [ "r7:2", "led_pisca_rr:A", "blue", [ "v10" ] ]
+  ],
+  "dependencies": {}
+}

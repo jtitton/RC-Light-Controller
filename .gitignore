@@ -1,0 +1,19 @@
+# Compiled Arduino & Build binaries
+build/
+*.hex
+*.elf
+*.o
+*.a
+
+# OS metadata
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
