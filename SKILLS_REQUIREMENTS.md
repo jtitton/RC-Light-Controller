@@ -1,4 +1,4 @@
-# Skills, Requirements & Troubleshooting — RC Light System v2.0
+# Skills, Requirements & Troubleshooting — RC Light System v6.0
 
 [🇧🇷 **Versão em Português (HABILIDADES_REQUISITOS.md)**](HABILIDADES_REQUISITOS.md) | [🇺🇸 **English Version**](#-english)
 

@@ -1,4 +1,4 @@
-# Wiring Harness Guide — RC Light System v2.0
+# Wiring Harness Guide — RC Light System v6.0
 
 [🇧🇷 **Versão em Português (CHICOTE_LEDS.md)**](CHICOTE_LEDS.md) | [🇺🇸 **English Version**](#-english)
 

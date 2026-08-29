@@ -1,6 +1,6 @@
 /*
  * ============================================================
- *  Sistema de Luzes para Carro RC - v2.0
+ *  Sistema de Luzes para Carro RC - v6.0
  *  Arduino Nano + Receptor FlySky FS-BS6
  * ============================================================
  *
@@ -19,7 +19,7 @@
  *   D7  - Pisca traseiro esquerdo (laranja, Digital)
  *   D8  - Pisca traseiro direito (laranja, Digital)
  *
- * Melhorias v2.0:
+ * Melhorias v6.0:
  *   - Lógica 100% interrupt-driven (sem pulseIn bloqueante)
  *   - PCINT20 no pino D4 para leitura do volante sem bloqueio
  *   - Média móvel atualizada apenas na recepção de novos pulsos
@@ -332,7 +332,7 @@ void setup() {
   // Inicializa a Serial (para bancada e debug)
   Serial.begin(SERIAL_BAUD);
   Serial.println(F("\n==================================="));
-  Serial.println(F(" Sistema de Luzes RC - v2.0"));
+  Serial.println(F(" Sistema de Luzes RC - v6.0"));
   Serial.println(F(" 100% Interrupt-driven (Não-bloqueante)"));
   Serial.println(F("==================================="));
   Serial.println(F(" C=Calibrar A=Centro P=Print ?=Ajuda\n"));
@@ -806,7 +806,7 @@ void autoCenter() {
 // ============================================================
 void runFullCalibration() {
   Serial.println(F("\n╔══════════════════════════════════════╗"));
-  Serial.println(F("║    CALIBRAÇÃO COMPLETA  v2.0        ║"));
+  Serial.println(F("║    CALIBRAÇÃO COMPLETA  v6.0        ║"));
   Serial.println(F("║  Configure limitadores de curva     ║"));
   Serial.println(F("║  ANTES de calibrar!                 ║"));
   Serial.println(F("╚══════════════════════════════════════╝"));

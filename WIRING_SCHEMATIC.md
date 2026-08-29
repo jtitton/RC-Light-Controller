@@ -1,4 +1,4 @@
-# Wiring Diagram & Shield Board Schematic — RC Light System v2.0
+# Wiring Diagram & Shield Board Schematic — RC Light System v6.0
 
 [🇧🇷 **Versão em Português (ESQUEMA_LIGACAO.md)**](ESQUEMA_LIGACAO.md) | [🇺🇸 **English Version**](#-english)
 

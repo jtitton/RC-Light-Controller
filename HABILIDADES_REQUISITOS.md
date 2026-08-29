@@ -1,4 +1,4 @@
-# Habilidades, Requisitos e Solução de Problemas — Sistema de Luzes RC v2.0
+# Habilidades, Requisitos e Solução de Problemas — Sistema de Luzes RC v6.0
 
 [🇧🇷 **Versão em Português**](#-português) | [🇺🇸 **English Version (SKILLS_REQUIREMENTS.md)**](SKILLS_REQUIREMENTS.md)
 

@@ -1,4 +1,4 @@
-# Esquema de Ligação — Sistema de Luzes RC v2.0
+# Esquema de Ligação — Sistema de Luzes RC v6.0
 
 [🇧🇷 **Versão em Português**](#-português) | [🇺🇸 **English Version (WIRING_SCHEMATIC.md)**](WIRING_SCHEMATIC.md)
 

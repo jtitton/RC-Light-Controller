@@ -1,6 +1,6 @@
 /*
  * ============================================================
- *  Sistema de Luzes para Carro RC - v2.0 (Versão PRODUÇÃO / PISTA)
+ *  Sistema de Luzes para Carro RC - v6.0 (Versão PRODUÇÃO / PISTA)
  *  Arduino Nano + Receptor FlySky FS-BS6
  * ============================================================
  *

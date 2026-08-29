@@ -1,4 +1,4 @@
-# Guia de Confecção dos Chicotes — Sistema de Luzes RC v2.0
+# Guia de Confecção dos Chicotes — Sistema de Luzes RC v6.0
 
 [🇧🇷 **Versão em Português**](#-português) | [🇺🇸 **English Version (LED_HARNESS.md)**](LED_HARNESS.md)
 

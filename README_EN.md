@@ -1,4 +1,4 @@
-# RC Car Smart Lighting System v2.0 — User Manual
+# RC Car Smart Lighting System v6.0 — User Manual
 
 [🇧🇷 **Portuguese Version (README.md)**](README.md) | [🇺🇸 **English Version**](#-english)
 

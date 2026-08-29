@@ -1,4 +1,4 @@
-# Sistema de Luzes RC v2.0 — Manual do Usuário
+# Sistema de Luzes RC v6.0 — Manual do Usuário
 
 [🇧🇷 **Versão em Português**](#-português) | [🇺🇸 **English Version (README_EN.md)**](README_EN.md)
 
