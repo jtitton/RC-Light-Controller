@@ -1,7 +1,7 @@
 /*
  * ============================================================
- *  Sistema de Luzes para Carro RC - v6.0
- *  Arduino Nano + Receptor FlySky FS-BS6
+ *  Sistema de Luzes para Carro RC - v7.0
+ *  Arduino Nano + Receptor FlySky FS-BS6 + Acelerômetro MPU-6050
  * ============================================================
  *
  * Entradas (Servo PPM do receptor):
@@ -9,6 +9,10 @@
  *   D2 - Acelerador / Freio (CH2, Interrupção externa INT0)
  *   D3 - Farol (CH4, Interrupção externa INT1)
  *   5V / GND - Alimentação direta via Canal 6 (CH6 do receptor)
+ *
+ * Interface I2C (Acelerômetro Inercial 3D):
+ *   A4 (SDA) - Dados I2C do MPU-6050 (GY-521)
+ *   A5 (SCL) - Clock I2C do MPU-6050 (GY-521)
  *
  * Saídas (LEDs):
  *   D5  - Lanterna traseira (vermelho, PWM com fade suave de ~300ms)
@@ -19,15 +23,17 @@
  *   D7  - Pisca traseiro esquerdo (laranja, Digital)
  *   D8  - Pisca traseiro direito (laranja, Digital)
  *
- * Melhorias v6.0:
- *   - Lógica 100% interrupt-driven (sem pulseIn bloqueante)
- *   - PCINT20 no pino D4 para leitura do volante sem bloqueio
- *   - Média móvel atualizada apenas na recepção de novos pulsos
- *   - Protótipos de funções incluídos para evitar erros de compilação
- *   - Transições de fade ultra-suaves devido ao loop sem bloqueio (~40000Hz)
+ * Novidades v7.0:
+ *   - Suporte a Acelerômetro I2C MPU-6050 com I2C Fast-Mode (400kHz).
+ *   - Algoritmo de Auto-Alinhamento Vetorial 3D (independente da orientação de instalação).
+ *   - Detecção de aceleração e frenagem física real por produto escalar de Força G.
+ *   - Alerta de Capotamento (Roll-Over Safety): 4 piscas em alerta se o carro capotar.
+ *   - Fusão de Sensores: Freio acende por comando do rádio OU desaceleração física (freio motor).
+ *   - Detecção graciosa: continua funcionando 100% via rádio se o sensor não estiver conectado.
  */
 
 #include <EEPROM.h>
+#include <Wire.h>
 
 // ============================================================
 // PINAGEM (compatível com luzesbronco v3.8)
@@ -45,7 +51,7 @@
 #define PIN_OUT_BLINK_RR   8    // Pisca traseiro direito
 
 // ============================================================
-// CONSTANTES
+// CONSTANTES DO SISTEMA
 // ============================================================
 #define EEPROM_MAGIC_VALUE  0xAD
 #define EEPROM_START_ADDR   0
@@ -56,7 +62,19 @@
 #define DEFAULT_CENTER      1500
 #define DEFAULT_DEFLECTION  500
 
-// --- Limiares em Percentual ---
+// --- Registradores e Constantes MPU-6050 (I2C) ---
+#define MPU6050_ADDR_A           0x68
+#define MPU6050_ADDR_B           0x69
+#define MPU6050_REG_PWR_1        0x6B
+#define MPU6050_REG_CONFIG       0x1A
+#define MPU6050_REG_ACCEL_CFG    0x1C
+#define MPU6050_REG_ACCEL_X      0x3B
+#define ACCEL_SCALE_4G           8192.0f // LSB/G para escala de ±4G
+#define ACCEL_BRAKE_THRESH_G     0.20f   // Desaceleração >= 0.20G acende a luz de freio
+#define ACCEL_ACCEL_THRESH_G     0.15f   // Aceleração >= 0.15G
+#define ACCEL_ROLLOVER_COS       0.15f   // Ângulo > 81° com a gravidade estática indica capotamento
+
+// --- Limiares em Percentual do Rádio ---
 #define STEERING_BLINK_PERCENT   70
 #define THROTTLE_BRAKE_PERCENT   5
 #define HEADLIGHT_THRESH_LOW     33
@@ -68,12 +86,12 @@
 #define BRIGHTNESS_100           255
 
 // --- Pisca ---
-#define BLINK_INTERVAL_MS        250   // 250ms on / 250ms off (120 piscadas/minuto, ajustado)
+#define BLINK_INTERVAL_MS        250   // 250ms on / 250ms off (120 bpm)
+#define BLINK_HAZARD_MS          120   // 120ms on / 120ms off (Alerta de capotamento)
 
 // --- Fade (lanterna traseira) ---
 #define FADE_STEP_INTERVAL_MS    6     // Atualiza a cada ~6ms
-#define FADE_STEP_SIZE           5     // Incremento por passo
-// Transição 0 -> 255: ~51 passos x 6ms = ~306ms
+#define FADE_STEP_SIZE           5     // Incremento por passo (~306ms total)
 
 // --- Filtro de média móvel ---
 #define FILTER_SIZE              5
@@ -97,6 +115,10 @@ struct CalibrationData {
   int throDeflFwd;
   int headlightMin;
   int headlightMax;
+  // Vetor unitário longitudinal de movimento (Auto-alinhamento 3D)
+  float uLongX;
+  float uLongY;
+  float uLongZ;
 };
 
 struct MovingAvgFilter {
@@ -124,9 +146,10 @@ struct MovingAvgFilter {
 enum HeadlightMode { HL_OFF, HL_DIM, HL_FULL };
 
 enum BlinkDirection {
-  BLINK_LEFT  = -1,
-  BLINK_NONE  =  0,
-  BLINK_RIGHT =  1
+  BLINK_HAZARD = -2,
+  BLINK_LEFT   = -1,
+  BLINK_NONE   =  0,
+  BLINK_RIGHT  =  1
 };
 
 // ============================================================
@@ -150,8 +173,8 @@ int getFilteredSteering();
 int getFilteredThrottle();
 int getFilteredHeadlight();
 HeadlightMode calcHeadlightMode(int hlPercent);
-bool isBraking(int throPct);
-BlinkDirection getBlinkDirection(int steerPct);
+bool isBraking(int throPct, float accelLong);
+BlinkDirection getBlinkDirection(int steerPct, bool rollOver);
 void updateHeadlight(HeadlightMode mode);
 void setTailLightTarget(HeadlightMode hlMode, bool braking);
 void updateTailLightFade();
@@ -159,6 +182,13 @@ void updateBrakeLight(bool braking);
 void updateBlinkers(BlinkDirection direction);
 void processSerialCommand();
 void runSimulationStep();
+
+// Protótipos - MPU-6050 e Vetores 3D
+bool initMPU6050();
+bool readMPU6050(float &ax, float &ay, float &az);
+void calibrateStaticGravity();
+void updateLongitudinalVector(float ax, float ay, float az);
+void processInertialDynamics(float ax, float ay, float az);
 
 // ============================================================
 // VARIÁVEIS GLOBAIS
@@ -170,6 +200,19 @@ CalibrationData g_cal;
 // --- Centro detectado no boot ---
 int g_steerCenter = DEFAULT_CENTER;
 int g_throCenter  = DEFAULT_CENTER;
+
+// --- Acelerômetro I2C (MPU-6050) & Dinâmica 3D ---
+bool    g_hasMPU           = false;
+uint8_t g_mpuAddr          = MPU6050_ADDR_A;
+float   g_g0X              = 0.0f;
+float   g_g0Y              = 0.0f;
+float   g_g0Z              = 1.0f;     // Vetor estático de gravidade em repouso
+float   g_rawAx            = 0.0f;
+float   g_rawAy            = 0.0f;
+float   g_rawAz            = 1.0f;     // Aceleração bruta medida em G
+float   g_accelLong        = 0.0f;     // Força G longitudinal (+Acelera / -Freia)
+bool    g_rollOver         = false;    // Indicador de capotamento (Roll-Over Safety)
+bool    g_longVectorLocked = false;    // Trava de aprendizado do vetor após fixação
 
 // --- ISR (Steering via PCINT, Throttle via INT0, Headlight via INT1) ---
 volatile unsigned long g_steerRiseTime = 0;
@@ -332,10 +375,10 @@ void setup() {
   // Inicializa a Serial (para bancada e debug)
   Serial.begin(SERIAL_BAUD);
   Serial.println(F("\n==================================="));
-  Serial.println(F(" Sistema de Luzes RC - v6.0"));
-  Serial.println(F(" 100% Interrupt-driven (Não-bloqueante)"));
+  Serial.println(F(" Sistema de Luzes RC - v7.0"));
+  Serial.println(F(" 100% Interrupt-driven + Acelerômetro I2C"));
   Serial.println(F("==================================="));
-  Serial.println(F(" C=Calibrar A=Centro P=Print ?=Ajuda\n"));
+  Serial.println(F(" C=Calibrar A=Centro P=Print I=Inercial ?=Ajuda\n"));
 
   // Configura e habilita as interrupções de hardware
   // 1. Pin Change Interrupt no pino D4 (PCINT20)
@@ -346,7 +389,20 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(PIN_IN_THROTTLE),  throttleISR,  CHANGE);
   attachInterrupt(digitalPinToInterrupt(PIN_IN_HEADLIGHT), headlightISR, CHANGE);
 
-  // 3. Carrega calibração prévia da EEPROM ou adota os padrões de fábrica universais (500us)
+  // 3. Inicializa Acelerômetro I2C MPU-6050 nos pinos A4 (SDA) e A5 (SCL)
+  if (initMPU6050()) {
+    Serial.println(F("✓ MPU-6050 detectado nos pinos A4/A5 (I2C Fast Mode 400kHz)."));
+    Serial.println(F("⏱ Calibrando gravidade estática em repouso (1 seg)..."));
+    calibrateStaticGravity();
+    Serial.print(F("  Vetor g0: ("));
+    Serial.print(g_g0X, 2); Serial.print(F(", "));
+    Serial.print(g_g0Y, 2); Serial.print(F(", "));
+    Serial.print(g_g0Z, 2); Serial.println(F(") G"));
+  } else {
+    Serial.println(F("ℹ MPU-6050 não detectado em A4/A5. Operando em modo Rádio PPM exclusivo."));
+  }
+
+  // 4. Carrega calibração prévia da EEPROM ou adota os padrões de fábrica universais (500us)
   if (loadCalibration()) {
     Serial.println(F("✓ Calibração carregada da EEPROM."));
   } else {
@@ -357,9 +413,12 @@ void setup() {
     g_cal.throDeflFwd    = DEFAULT_DEFLECTION;
     g_cal.headlightMin   = DEFAULT_CENTER - DEFAULT_DEFLECTION;
     g_cal.headlightMax   = DEFAULT_CENTER + DEFAULT_DEFLECTION;
+    g_cal.uLongX         = 1.0f;
+    g_cal.uLongY         = 0.0f;
+    g_cal.uLongZ         = 0.0f;
   }
 
-  // 4. Verifica se o usuário realizou o Gesto de Calibração (Segurar volante virado no boot)
+  // 5. Verifica se o usuário realizou o Gesto de Calibração (Segurar volante virado no boot)
   Serial.println(F("⏱ Verificando se há gesto de calibração no rádio (1.5 seg)..."));
   bool gestureTriggered = checkCalibrationGesture();
 
@@ -402,6 +461,7 @@ void loop() {
     if (g_throTimeout > 0 && millis() >= g_throTimeout) {
       g_simThro = g_throCenter;
       g_throTimeout = 0;
+      g_accelLong = 0.0f;
     }
     steerRaw = g_simSteer;
     throRaw  = g_simThro;
@@ -412,39 +472,55 @@ void loop() {
     hlRaw    = getFilteredHeadlight();
   }
 
-  // 3. Converte os tempos de pulso (µs) para valores percentuais (-100% a +100%)
+  // 3. Lê Força G inercial do Acelerômetro MPU-6050 (se presente no hardware real)
+  if (!g_manualSim && g_hasMPU) {
+    float ax, ay, az;
+    if (readMPU6050(ax, ay, az)) {
+      g_rawAx = ax; g_rawAy = ay; g_rawAz = az;
+      processInertialDynamics(ax, ay, az);
+    }
+  }
+
+  // 4. Converte os tempos de pulso (µs) para valores percentuais (-100% a +100%)
   int steerPct = steeringToPercent(steerRaw);
   int throPct  = throttleToPercent(throRaw);
   int hlPct    = headlightToPercent(hlRaw);
 
-  // 4. Processa a lógica de controle
-  g_hlMode = calcHeadlightMode(hlPct);
-  bool           braking  = isBraking(throPct);
-  BlinkDirection blinkDir = getBlinkDirection(steerPct);
+  // Se o piloto acelerar forte para frente (>60%) e o vetor ainda não estiver gravado, aprende u_long
+  if (!g_manualSim && g_hasMPU && throPct > 60 && !g_longVectorLocked) {
+    updateLongitudinalVector(g_rawAx, g_rawAy, g_rawAz);
+  }
 
-  // 5. Atualiza o estado físico das saídas
+  // 5. Processa a lógica de controle com Fusão de Sensores (Rádio + Inercial)
+  g_hlMode = calcHeadlightMode(hlPct);
+  bool           braking  = isBraking(throPct, g_accelLong);
+  BlinkDirection blinkDir = getBlinkDirection(steerPct, g_rollOver);
+
+  // 6. Atualiza o estado físico das saídas
   updateHeadlight(g_hlMode);
   setTailLightTarget(g_hlMode, braking);
   updateTailLightFade(); // Executado suavemente a cada ciclo
   updateBrakeLight(braking);
   updateBlinkers(blinkDir);
 
-  // 6. Exibição periódica de Debug via Serial (imprime em mudanças de estado e durante ações)
+  // 7. Exibição periódica de Debug via Serial (imprime em mudanças de estado e durante ações)
   static unsigned long lastDebug = 0;
   static int lastSteer = 999, lastThro = 999, lastHl = 999;
   static bool lastBrake = false;
   static BlinkDirection lastBlink = BLINK_NONE;
+  static bool lastRoll = false;
 
   bool stateChanged = (steerPct != lastSteer || throPct != lastThro || hlPct != lastHl ||
-                       braking != lastBrake || blinkDir != lastBlink);
+                       braking != lastBrake || blinkDir != lastBlink || g_rollOver != lastRoll);
 
-  if (!g_testActive && (stateChanged || (millis() - lastDebug >= 1000 && (steerPct != 0 || throPct != 0 || braking || g_hlMode != HL_OFF)))) {
+  if (!g_testActive && (stateChanged || (millis() - lastDebug >= 1000 && (steerPct != 0 || throPct != 0 || braking || g_hlMode != HL_OFF || g_rollOver)))) {
     lastDebug = millis();
     lastSteer = steerPct;
     lastThro  = throPct;
     lastHl    = hlPct;
     lastBrake = braking;
     lastBlink = blinkDir;
+    lastRoll  = g_rollOver;
 
     Serial.print(F("DIR:"));
     if (steerPct >= 0) Serial.print(F("+"));
@@ -453,6 +529,10 @@ void loop() {
     Serial.print(F(" THR:"));
     if (throPct >= 0) Serial.print(F("+"));
     Serial.print(throPct);    Serial.print(F("%"));
+
+    Serial.print(F(" G:"));
+    if (g_accelLong >= 0) Serial.print(F("+"));
+    Serial.print(g_accelLong, 2); Serial.print(F("G"));
 
     Serial.print(F(" HL:"));
     Serial.print(hlPct);      Serial.print(F("%"));
@@ -473,9 +553,10 @@ void loop() {
 
     Serial.print(F(" P:"));
     switch (blinkDir) {
-      case BLINK_LEFT:  Serial.println(F("<<E")); break;
-      case BLINK_RIGHT: Serial.println(F("D>>")); break;
-      default:          Serial.println(F("---")); break;
+      case BLINK_HAZARD: Serial.println(F("!!CAPOTOU!!")); break;
+      case BLINK_LEFT:   Serial.println(F("<<E")); break;
+      case BLINK_RIGHT:  Serial.println(F("D>>")); break;
+      default:           Serial.println(F("---")); break;
     }
   }
 }
@@ -596,7 +677,7 @@ int getFilteredHeadlight() {
 }
 
 // ============================================================
-// LÓGICA DE CONTROLE
+// LÓGICA DE CONTROLE & FUSÃO DE SENSORES
 // ============================================================
 HeadlightMode calcHeadlightMode(int hlPercent) {
   if (hlPercent < HEADLIGHT_THRESH_LOW)  return HL_OFF;
@@ -604,16 +685,25 @@ HeadlightMode calcHeadlightMode(int hlPercent) {
   return HL_FULL;
 }
 
-bool isBraking(int throPct) {
-  return (throPct < -THROTTLE_BRAKE_PERCENT);
+bool isBraking(int throPct, float accelLong) {
+  // Se o piloto está ativamente acelerando para frente pelo rádio, NUNCA freia
+  if (throPct > THROTTLE_BRAKE_PERCENT) return false;
+  // 1. Freio comandado pelo rádio (gatilho empurrado à frente / ré)
+  if (throPct < -THROTTLE_BRAKE_PERCENT) return true;
+  // 2. Freio por desaceleração física inercial (freio-motor ou atrito real na pista)
+  if (g_hasMPU && accelLong < -ACCEL_BRAKE_THRESH_G) return true;
+  return false;
 }
 
-BlinkDirection getBlinkDirection(int steerPct) {
-  // Inversão física compensada no software:
-  // steerPct > 70% (curva direita/alto) aciona o pisca esquerdo (pino 10)
-  // steerPct < -70% (curva esquerda/baixo) aciona o pisca direito (pino 11)
-  if (steerPct > STEERING_BLINK_PERCENT)  return BLINK_LEFT;
-  if (steerPct < -STEERING_BLINK_PERCENT) return BLINK_RIGHT;
+BlinkDirection getBlinkDirection(int steerPct, bool rollOver) {
+  // 1. Prioridade Máxima: Capotamento / Tombamento (Pisca-alerta 4x rápido)
+  if (rollOver) return BLINK_HAZARD;
+
+  // 2. Acionamento direcional das setas:
+  // steerPct <= -70% (curva esquerda) aciona o pisca esquerdo (D10 / D7)
+  // steerPct >=  70% (curva direita)  aciona o pisca direito  (D11 / D8)
+  if (steerPct <= -STEERING_BLINK_PERCENT) return BLINK_LEFT;
+  if (steerPct >=  STEERING_BLINK_PERCENT) return BLINK_RIGHT;
   return BLINK_NONE;
 }
 
@@ -673,12 +763,21 @@ void updateBlinkers(BlinkDirection direction) {
     return;
   }
 
-  if (now - g_lastBlinkToggle >= BLINK_INTERVAL_MS) {
+  // Se estiver em modo de alerta por capotamento, pisca no dobro da velocidade (120ms)
+  unsigned long interval = (direction == BLINK_HAZARD) ? BLINK_HAZARD_MS : BLINK_INTERVAL_MS;
+
+  if (now - g_lastBlinkToggle >= interval) {
     g_blinkState = !g_blinkState;
     g_lastBlinkToggle = now;
   }
 
-  if (direction == BLINK_LEFT) {
+  if (direction == BLINK_HAZARD) {
+    // Todos os 4 piscas piscam juntos em alerta
+    digitalWrite(PIN_OUT_BLINK_FL, g_blinkState ? HIGH : LOW);
+    digitalWrite(PIN_OUT_BLINK_RL, g_blinkState ? HIGH : LOW);
+    digitalWrite(PIN_OUT_BLINK_FR, g_blinkState ? HIGH : LOW);
+    digitalWrite(PIN_OUT_BLINK_RR, g_blinkState ? HIGH : LOW);
+  } else if (direction == BLINK_LEFT) {
     digitalWrite(PIN_OUT_BLINK_FL, g_blinkState ? HIGH : LOW);
     digitalWrite(PIN_OUT_BLINK_RL, g_blinkState ? HIGH : LOW);
     digitalWrite(PIN_OUT_BLINK_FR, LOW);
@@ -692,6 +791,141 @@ void updateBlinkers(BlinkDirection direction) {
 }
 
 // ============================================================
+// ACELERÔMETRO I2C (MPU-6050) & AUTO-ALINHAMENTO VETORIAL 3D
+// ============================================================
+bool initMPU6050() {
+  Wire.begin();
+  Wire.setClock(400000); // I2C Fast-Mode 400kHz para mínimo consumo de tempo
+
+  // Testa endereço padrão 0x68
+  g_mpuAddr = MPU6050_ADDR_A;
+  Wire.beginTransmission(g_mpuAddr);
+  byte error = Wire.endTransmission();
+
+  if (error != 0) {
+    // Testa endereço secundário 0x69
+    g_mpuAddr = MPU6050_ADDR_B;
+    Wire.beginTransmission(g_mpuAddr);
+    error = Wire.endTransmission();
+  }
+
+  if (error != 0) {
+    g_hasMPU = false;
+    return false;
+  }
+
+  // 1. Acorda o chip (PWR_MGMT_1 = 0x00)
+  Wire.beginTransmission(g_mpuAddr);
+  Wire.write(MPU6050_REG_PWR_1);
+  Wire.write(0x00);
+  Wire.endTransmission();
+
+  // 2. Configura filtro interno DLPF para 44Hz (rejeita vibrações parasitas do chassi)
+  Wire.beginTransmission(g_mpuAddr);
+  Wire.write(MPU6050_REG_CONFIG);
+  Wire.write(0x03);
+  Wire.endTransmission();
+
+  // 3. Configura escala de aceleração para ±4G (ACCEL_CONFIG = 0x08)
+  Wire.beginTransmission(g_mpuAddr);
+  Wire.write(MPU6050_REG_ACCEL_CFG);
+  Wire.write(0x08);
+  Wire.endTransmission();
+
+  g_hasMPU = true;
+  return true;
+}
+
+bool readMPU6050(float &ax, float &ay, float &az) {
+  if (!g_hasMPU) return false;
+
+  Wire.beginTransmission(g_mpuAddr);
+  Wire.write(MPU6050_REG_ACCEL_X);
+  if (Wire.endTransmission(false) != 0) return false;
+
+  Wire.requestFrom((uint8_t)g_mpuAddr, (uint8_t)6, (uint8_t)true);
+  if (Wire.available() < 6) return false;
+
+  int16_t rawX = (int16_t)(Wire.read() << 8 | Wire.read());
+  int16_t rawY = (int16_t)(Wire.read() << 8 | Wire.read());
+  int16_t rawZ = (int16_t)(Wire.read() << 8 | Wire.read());
+
+  ax = (float)rawX / ACCEL_SCALE_4G;
+  ay = (float)rawY / ACCEL_SCALE_4G;
+  az = (float)rawZ / ACCEL_SCALE_4G;
+  return true;
+}
+
+void calibrateStaticGravity() {
+  if (!g_hasMPU) return;
+  float sumX = 0, sumY = 0, sumZ = 0;
+  int count = 0;
+  unsigned long t0 = millis();
+
+  while (millis() - t0 < 800) {
+    float ax, ay, az;
+    if (readMPU6050(ax, ay, az)) {
+      sumX += ax;
+      sumY += ay;
+      sumZ += az;
+      count++;
+    }
+    delay(10);
+  }
+
+  if (count >= 10) {
+    g_g0X = sumX / count;
+    g_g0Y = sumY / count;
+    g_g0Z = sumZ / count;
+  } else {
+    g_g0X = 0.0f; g_g0Y = 0.0f; g_g0Z = 1.0f;
+  }
+}
+
+void updateLongitudinalVector(float ax, float ay, float az) {
+  // Vetor dinâmico de avanço (subtrai a gravidade estática do repouso)
+  float dx = ax - g_g0X;
+  float dy = ay - g_g0Y;
+  float dz = az - g_g0Z;
+  float mag = sqrt(dx * dx + dy * dy + dz * dz);
+
+  if (mag >= 0.25f) { // Dinâmica suficiente para extrair a direção de marcha
+    g_cal.uLongX = dx / mag;
+    g_cal.uLongY = dy / mag;
+    g_cal.uLongZ = dz / mag;
+    g_longVectorLocked = true;
+    saveCalibration();
+  }
+}
+
+void processInertialDynamics(float ax, float ay, float az) {
+  if (!g_hasMPU) {
+    g_accelLong = 0.0f;
+    g_rollOver  = false;
+    return;
+  }
+
+  // 1. Projeção escalar no vetor longitudinal de marcha: A_long = a_din • u_long
+  float dx = ax - g_g0X;
+  float dy = ay - g_g0Y;
+  float dz = az - g_g0Z;
+  g_accelLong = (dx * g_cal.uLongX) + (dy * g_cal.uLongY) + (dz * g_cal.uLongZ);
+
+  // 2. Detecção de Capotamento (Roll-over Safety):
+  // Cosseno do ângulo entre a gravidade atual e a gravidade de repouso g0
+  float gMagAct = sqrt(ax * ax + ay * ay + az * az);
+  float gMag0   = sqrt(g_g0X * g_g0X + g_g0Y * g_g0Y + g_g0Z * g_g0Z);
+
+  if (gMagAct > 0.3f && gMag0 > 0.3f) {
+    float cosAngle = (ax * g_g0X + ay * g_g0Y + az * g_g0Z) / (gMagAct * gMag0);
+    // Se o ângulo com a vertical de repouso for superior a 81° (cos < 0.15), o carro está tombado
+    g_rollOver = (cosAngle < ACCEL_ROLLOVER_COS);
+  } else {
+    g_rollOver = false;
+  }
+}
+
+// ============================================================
 // EEPROM
 // ============================================================
 bool loadCalibration() {
@@ -701,6 +935,16 @@ bool loadCalibration() {
       g_cal.throDeflBack < 50  || g_cal.throDeflFwd < 50 ||
       (g_cal.headlightMax - g_cal.headlightMin) < CAL_MIN_RANGE) {
     return false;
+  }
+  // Valida o vetor 3D de marcha salvo na EEPROM
+  float mag = sqrt(g_cal.uLongX * g_cal.uLongX + g_cal.uLongY * g_cal.uLongY + g_cal.uLongZ * g_cal.uLongZ);
+  if (isnan(mag) || mag < 0.5f || mag > 1.5f) {
+    g_cal.uLongX = 1.0f;
+    g_cal.uLongY = 0.0f;
+    g_cal.uLongZ = 0.0f;
+    g_longVectorLocked = false;
+  } else {
+    g_longVectorLocked = true;
   }
   return true;
 }
@@ -723,16 +967,19 @@ void printCalibration() {
   Serial.print(F("us frente=")); Serial.print(g_cal.throDeflFwd); Serial.println(F("us"));
   Serial.print(F("│ Farol:    min=")); Serial.print(g_cal.headlightMin);
   Serial.print(F("us  max=")); Serial.print(g_cal.headlightMax); Serial.println(F("us"));
+  Serial.print(F("│ Vetor 3D: (")); Serial.print(g_cal.uLongX, 2); Serial.print(F(", "));
+  Serial.print(g_cal.uLongY, 2); Serial.print(F(", ")); Serial.print(g_cal.uLongZ, 2); Serial.println(F(")"));
 
   Serial.println(F("├─── Centro Detectado (boot) ───────┤"));
   Serial.print(F("│ Volante:  ")); Serial.print(g_steerCenter); Serial.println(F("us"));
   Serial.print(F("│ Throttle: ")); Serial.print(g_throCenter);  Serial.println(F("us"));
+  Serial.print(F("│ MPU-6050: ")); Serial.println(g_hasMPU ? F("CONECTADO (I2C)") : F("DESCONECTADO"));
 
-  Serial.println(F("├─── Limiares (%) ──────────────────┤"));
+  Serial.println(F("├─── Limiares (%) & Força G ────────┤"));
   Serial.print(F("│ Pisca:      >")); Serial.print(STEERING_BLINK_PERCENT); Serial.println(F("%"));
-  Serial.print(F("│ Freio:      <-")); Serial.print(THROTTLE_BRAKE_PERCENT); Serial.println(F("%"));
-  Serial.print(F("│ Farol dim:  ")); Serial.print(HEADLIGHT_THRESH_LOW); Serial.println(F("%"));
-  Serial.print(F("│ Farol full: ")); Serial.print(HEADLIGHT_THRESH_HIGH); Serial.println(F("%"));
+  Serial.print(F("│ Freio PPM:  <-")); Serial.print(THROTTLE_BRAKE_PERCENT); Serial.println(F("%"));
+  Serial.println(F("│ Freio G:    <-0.20G (Inercial)"));
+  Serial.println(F("│ Capotamento:>81° (Alerta 4x)"));
   Serial.println(F("└──────────────────────────────────┘\n"));
 }
 
@@ -806,12 +1053,16 @@ void autoCenter() {
 // ============================================================
 void runFullCalibration() {
   Serial.println(F("\n╔══════════════════════════════════════╗"));
-  Serial.println(F("║    CALIBRAÇÃO COMPLETA  v6.0        ║"));
+  Serial.println(F("║    CALIBRAÇÃO COMPLETA  v7.0        ║"));
   Serial.println(F("║  Configure limitadores de curva     ║"));
   Serial.println(F("║  ANTES de calibrar!                 ║"));
   Serial.println(F("╚══════════════════════════════════════╝"));
 
   autoCenter();
+  if (g_hasMPU) {
+    Serial.println(F("⏱ Calibrando gravidade estática do MPU-6050..."));
+    calibrateStaticGravity();
+  }
   blinkAllLEDs(2, 150);
   delay(300);
 
@@ -847,7 +1098,17 @@ void runFullCalibration() {
     interrupts();
 
     if (s > 0) { if (s < sMin) sMin = s; if (s > sMax) sMax = s; }
-    if (t > 0) { if (t < tMin) tMin = t; if (t > tMax) tMax = t; }
+    if (t > 0) {
+      if (t < tMin) tMin = t;
+      if (t > tMax) tMax = t;
+      // Se detectou aceleração forte para frente durante a calibração, aprende o vetor de marcha 3D
+      if (g_hasMPU && (t - g_throCenter) > (g_cal.throDeflFwd / 2)) {
+        float ax, ay, az;
+        if (readMPU6050(ax, ay, az)) {
+          updateLongitudinalVector(ax, ay, az);
+        }
+      }
+    }
 
     if (millis() - lastLed >= 250) {
       ledTog = !ledTog;
@@ -945,7 +1206,6 @@ void runFullCalibration() {
 }
 
 // ============================================================
-// ============================================================
 // COMANDOS SERIAL
 // ============================================================
 void processSerialCommand() {
@@ -963,6 +1223,7 @@ void processSerialCommand() {
       case 'Z': case 'z':
         Serial.println(F("\n→ Re-centralizando os sticks..."));
         autoCenter();
+        if (g_hasMPU) calibrateStaticGravity();
         Serial.println(F("  ✓ Centro atualizado!"));
         printCalibration();
         break;
@@ -970,6 +1231,35 @@ void processSerialCommand() {
       case 'P': case 'p':
         printCalibration();
         break;
+
+      case 'I': case 'i': {
+        Serial.println(F("\n┌─── Status Inercial MPU-6050 ────────┐"));
+        Serial.print(F("│ Sensor I2C:    ")); Serial.println(g_hasMPU ? F("PRESENTE (A4/A5)") : F("NÃO DETECTADO"));
+        if (g_hasMPU) {
+          Serial.print(F("│ Bruto (Ax,Ay,Az): (")); Serial.print(g_rawAx, 2); Serial.print(F(", "));
+          Serial.print(g_rawAy, 2); Serial.print(F(", ")); Serial.print(g_rawAz, 2); Serial.println(F(") G"));
+          Serial.print(F("│ Gravidade g0:     (")); Serial.print(g_g0X, 2); Serial.print(F(", "));
+          Serial.print(g_g0Y, 2); Serial.print(F(", ")); Serial.print(g_g0Z, 2); Serial.println(F(") G"));
+          Serial.print(F("│ Vetor Marcha uL:  (")); Serial.print(g_cal.uLongX, 2); Serial.print(F(", "));
+          Serial.print(g_cal.uLongY, 2); Serial.print(F(", ")); Serial.print(g_cal.uLongZ, 2); Serial.println(F(")"));
+          Serial.print(F("│ Força G Marcha:   ")); Serial.print(g_accelLong, 2); Serial.println(F(" G"));
+          Serial.print(F("│ Status Rollover:  ")); Serial.println(g_rollOver ? F("🚨 CAPOTADO (Roll-Over)") : F("✓ EM PÉ (Normal)"));
+        }
+        Serial.println(F("└─────────────────────────────────────┘\n"));
+        break;
+      }
+
+      case 'K': case 'k': {
+        g_manualSim = true;
+        g_testActive = false;
+        g_rollOver = !g_rollOver;
+        if (g_rollOver) {
+          Serial.println(F("🚨 [MANUAL] SIMULAÇÃO DE CAPOTAMENTO! (Pisca-alerta 4x ATIVO)"));
+        } else {
+          Serial.println(F("✓ [MANUAL] Carro desvirado em pé (Pisca-alerta OFF)."));
+        }
+        break;
+      }
 
       case 'R': case 'r':
         Serial.println(F("\n→ Resetando EEPROM..."));
@@ -981,12 +1271,15 @@ void processSerialCommand() {
         Serial.println(F("\n→ Iniciando simulação de circuito de 60 segundos..."));
         g_testActive = true;
         g_manualSim = false;
+        g_rollOver = false;
         g_testStartTime = millis();
         break;
 
       case 'W': case 'w': {
         g_manualSim = true;
         g_testActive = false;
+        g_rollOver = false;
+        g_accelLong = 0.40f; // Simula aceleração inercial para frente
         unsigned long now = millis();
         if (g_throTimeout > now && g_simThro > g_throCenter) {
           g_throTimeout += 500;
@@ -1003,6 +1296,8 @@ void processSerialCommand() {
       case 'S': case 's': {
         g_manualSim = true;
         g_testActive = false;
+        g_rollOver = false;
+        g_accelLong = -0.60f; // Simula desaceleração inercial de frenagem
         unsigned long now = millis();
         if (g_throTimeout > now && g_simThro < g_throCenter) {
           g_throTimeout += 500;
@@ -1079,6 +1374,8 @@ void processSerialCommand() {
       case 'X': case 'x': {
         g_manualSim = true;
         g_testActive = false;
+        g_rollOver = false;
+        g_accelLong = 0.0f;
         g_steerTimeout = 0;
         g_throTimeout  = 0;
         g_simSteer = g_steerCenter;
@@ -1090,6 +1387,8 @@ void processSerialCommand() {
       case 'N': case 'n':
         g_manualSim = false;
         g_testActive = false;
+        g_rollOver = false;
+        g_accelLong = 0.0f;
         g_steerTimeout = 0;
         g_throTimeout  = 0;
         Serial.println(F("→ Retornando ao modo Rádio Receptor Normal."));
@@ -1103,6 +1402,8 @@ void processSerialCommand() {
         Serial.println(F("  D = Virar Direita (+500ms por toque)"));
         Serial.println(F("  F = Aumentar Farol (OFF -> 40% -> 100%)"));
         Serial.println(F("  G = Diminuir Farol (100% -> 40% -> OFF)"));
+        Serial.println(F("  K = Simular Capotamento / Tombamento (Pisca-alerta 4x)"));
+        Serial.println(F("  I = Exibir Status do Acelerômetro I2C e Força G"));
         Serial.println(F("  X = Centralizar no Neutro (Imediato)"));
         Serial.println(F("  T = Simulação Automática de 60s"));
         Serial.println(F("  N = Retornar ao modo Rádio Normal"));
@@ -1184,16 +1485,25 @@ void runSimulationStep() {
   if (steerPct >= 0) {
     g_simSteer = g_steerCenter + ((long)steerPct * g_cal.steerDeflRight / 100);
   } else {
-    g_simSteer = g_steerCenter + ((long)steerPct * g_cal.steerDeflLeft / -100);
+    g_simSteer = g_steerCenter - ((long)(-steerPct) * g_cal.steerDeflLeft / 100);
   }
 
   if (throPct >= 0) {
     g_simThro = g_throCenter + ((long)throPct * g_cal.throDeflFwd / 100);
   } else {
-    g_simThro = g_throCenter + ((long)throPct * g_cal.throDeflBack / -100);
+    g_simThro = g_throCenter - ((long)(-throPct) * g_cal.throDeflBack / 100);
   }
 
   g_simHl = g_cal.headlightMin + ((long)hlPct * (g_cal.headlightMax - g_cal.headlightMin) / 100);
+
+  // Simulação inercial de Força G durante o circuito de teste
+  if (throPct > 0) {
+    g_accelLong = ((float)throPct / 100.0f) * 0.8f;
+  } else if (throPct < 0) {
+    g_accelLong = ((float)throPct / 100.0f) * 1.2f;
+  } else {
+    g_accelLong = 0.0f;
+  }
 
   // Print periódico do estado do teste a cada 1 segundo para visualização no monitor serial
   static unsigned long lastSimPrint = 0;
@@ -1202,8 +1512,8 @@ void runSimulationStep() {
     
     // Calcular strings de exibição para coincidir com as decisões de luz correspondentes no loop
     HeadlightMode hlMode = calcHeadlightMode(hlPct);
-    bool braking = isBraking(throPct);
-    BlinkDirection blinkDir = getBlinkDirection(steerPct);
+    bool braking = isBraking(throPct, g_accelLong);
+    BlinkDirection blinkDir = getBlinkDirection(steerPct, g_rollOver);
 
     Serial.print(F("[TESTE] "));
     Serial.print(elapsed / 1000);

@@ -1,4 +1,4 @@
-# Skills, Requirements & Troubleshooting — RC Light System v6.0
+# Skills, Requirements & Troubleshooting — RC Light System v7.0
 
 [🇧🇷 **Versão em Português (HABILIDADES_REQUISITOS.md)**](HABILIDADES_REQUISITOS.md) | [🇺🇸 **English Version**](#-english)
 
@@ -23,7 +23,7 @@ To successfully build, calibrate, and install this smart lighting system into yo
 | **Dielectric Silicone Grease** | Seal MODU quick-disconnect terminals against water, mud, and oxidation. | **Recommended (Off-Road)**|
 | **Aluminum Foil Tape** | Secure and conceal harness wires along the underside of the Lexan body. | **Recommended** |
 | **Neutral Silicone / Shoe Goo / E6000**| Secure and seal LED backs inside body light buckets. | **Recommended** |
-| **Conformal Coating / Clear Polish**| Protect shield board solder traces against moisture and dirt. | **Recommended** |
+| **Conformal Coating / Clear Polish**| Protect shield board and MPU-6050 solder traces against moisture and dirt. | **Recommended** |
 
 ---
 
@@ -32,7 +32,7 @@ To successfully build, calibrate, and install this smart lighting system into yo
 1. **Basic Electronics Soldering:** Solder the resistors and male pin headers onto the 5x7cm single-sided perfboard. Heat the copper pad and component leg for 2 seconds before applying solder to create shiny, vibration-proof joints.
 2. **Polarity Identification:** LEDs have an **Anode** (positive, longer leg) and a **Cathode** (negative, shorter leg/flat rim). All cathodes join into the common ground return rail.
 3. **Multimeter Testing:** Measure continuity between 5V and GND on the shield board before plugging into receiver CH6. If the meter beeps, locate and remove the short circuit before applying power.
-4. **Resistor Tuning:** The provided resistor values ($100\Omega$ and $150\Omega$) are standard $20\text{mA}$ safety limits. Increasing resistance to $220\Omega$ or $330\Omega$ saves battery and dims high-efficiency LEDs. Never drop below $82\Omega$ for headlights and $120\Omega$ for other LEDs.
+4. **MPU-6050 Mounting:** Secure the sensor to the chassis using foam double-sided tape (3M VHB) to absorb high-frequency motor vibration. The 3D auto-vector alignment algorithm handles orientation automatically.
 
 ---
 
@@ -46,6 +46,12 @@ To successfully build, calibrate, and install this smart lighting system into yo
 #### ❌ Arduino does not respond to transmitter commands:
 * Verify the radio harness (CON1): **Pin 1 to GND** and **Pin 2 to +5V (VCC)** on receiver channel **CH6**.
 * Check the signal pins: Steering on **CH1 (D4)**, Throttle on **CH2 (D2)**, Headlight on **CH4 (D3)**.
+
+#### ❌ MPU-6050 is not detected:
+* Check I2C wiring: **SDA to A4** and **SCL to A5**. The firmware features graceful fallback and will operate via radio even without the sensor.
+
+#### ❌ Hazard lights flash continuously on power-up:
+* Ensure the car is sitting on all 4 wheels on a flat surface during the initial 2-second boot auto-centering to accurately capture the static gravity vector $\vec{g}_0$.
 
 #### ❌ Car powers up but blinkers stay on while driving straight (trim drift):
 * Turn off the car, ensure steering and throttle sticks are perfectly centered on the transmitter, and turn the car back on. The auto-centering routine recalibrates neutral in the first 2 seconds.

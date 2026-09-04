@@ -1,4 +1,4 @@
-# Wiring Diagram & Shield Board Schematic — RC Light System v6.0
+# Wiring Diagram & Shield Board Schematic — RC Light System v7.0
 
 [🇧🇷 **Versão em Português (ESQUEMA_LIGACAO.md)**](ESQUEMA_LIGACAO.md) | [🇺🇸 **English Version**](#-english)
 
@@ -6,7 +6,7 @@
 
 ## 🇺🇸 English
 
-This document provides the complete pin mapping, **Hub Shield Board layout (5x7cm perfboard)** with **MODU / Dupont 2.54mm pin headers**, the integrated power supply via **Receiver Channel 6 (CH6)**, and the **Common Ground Rail (Neutral Balance)**.
+This document provides the complete pin mapping, **Hub Shield Board layout (5x7cm perfboard)** with **MODU / Dupont 2.54mm pin headers**, the integrated power supply via **Receiver Channel 6 (CH6)**, the **MPU-6050 (GY-521)** I2C inertial bus on pins **A4/A5**, and the **Common Ground Rail (Neutral Balance)**.
 
 ---
 
@@ -22,12 +22,21 @@ flowchart TD
         RX_CH4["CH4 - Headlight Switch Signal (Top Pin)"]
     end
 
+    subgraph MPU["🧭 MPU-6050 (GY-521) 3D Inertial Accelerometer"]
+        MPU_VCC["VCC (+5V)"]
+        MPU_GND["GND (Ground)"]
+        MPU_SDA["SDA (I2C Data)"]
+        MPU_SCL["SCL (I2C Clock)"]
+    end
+
     subgraph SHIELD["🟢 Hub Shield Board (5x7cm Perfboard)"]
         direction TB
         GND_BUS["⚡ COMMON GND BUS (Neutral Balance)"]
         
         subgraph ARDUINO["🔵 Arduino Nano"]
             NANO_5V["5V Pin (Power In)"]
+            A4["A4 (I2C SDA)"]
+            A5["A5 (I2C SCL)"]
             D2["D2 (INT0)"]
             D3["D3 (INT1)"]
             D4["D4 (PCINT20)"]
@@ -55,6 +64,7 @@ flowchart TD
             CON_RADIO["CON1: RADIO & POWER (1x5 Pins)"]
             CON_FRENTE["CON2: FRONT HARNESS (1x4 Pins)"]
             CON_TRAS["CON3: REAR HARNESS (1x6 Pins)"]
+            CON_MPU["CON4: MPU-6050 I2C (1x4 Pins)"]
         end
     end
 
@@ -77,11 +87,19 @@ flowchart TD
     CON_RADIO --> D2
     CON_RADIO --> D3
 
+    %% MPU-6050 Routing
+    CON_MPU <--> MPU
+    CON_MPU --> NANO_5V
+    CON_MPU --> GND_BUS
+    CON_MPU --> A4
+    CON_MPU --> A5
+
     %% Common Ground
     NANO_GND --- GND_BUS
     GND_BUS --- CON_RADIO
     GND_BUS --- CON_FRENTE
     GND_BUS --- CON_TRAS
+    GND_BUS --- CON_MPU
 
     %% Outputs to Resistors
     D9  --> R_FAROL      --> CON_FRENTE
@@ -100,91 +118,123 @@ flowchart TD
 
 ---
 
-### 🗺️ 2. Shield Perfboard Physical Layout (5x7cm)
+### 🗺️ 2. Shield Perfboard Physical Layout (5x7cm) — v8.0 Distributed
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│               LIGHTING HUB SHIELD BOARD (5x7 cm)                       │
+│               LIGHTING HUB SHIELD BOARD (5x7 cm) - v8.0                │
 │                                                                        │
-│   ┌──────────────────────── Arduino Nano ────────────────────────┐     │
-│   │ [D13] [3V3] [REF] [A0] [A1] [A2] [A3] [A4] [A5] [A6] [A7] [5V] │    │
-│   │                                                             ▲│     │
-│   │ [D12] [D11] [D10] [D9] [D8] [D7] [D6] [D5] [D4] [D3] [D2] [GND]│   │
-│   └───┬─────┬─────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬───┘    │
-│       │     │     │    │    │    │    │    │    │    │    │    │        │
-│       │     │     │    │    │    │    │    │    │    │    │    └────┐   │
-│       │     │     │    │    │    │    │    │    │    │    └─┐       │   │
-│       │     │     │    │    │    │    │    │    │    └──┐  │       │   │
-│       │     │     │    │    │    │    │    │    └─┐    │  │       │   │
-│       │     │     │    │    │    │    │    │      │    │  │       ▼   │
-│       │     │     │    │    │    │    │    │   ┌──┴────┴──┴────────────┐
-│       │     │     │    │    │    │    │    │   │ CON1: RADIO (1x5)     │
-│       │     │     │    │    │    │    │    │   │ [1] GND (Black CH6)   │
-│       │     │     │    │    │    │    │    │   │ [2] +5V (Red CH6)  ───┼───┐ (Powers
-│       │     │     │    │    │    │    │    │   │ [3] CH1 (D4 Steer)    │   │  Nano 5V
-│       │     │     │    │    │    │    │    │   │ [4] CH2 (D2 Throttle) │   │  Pin)
-│       │     │     │    │    │    │    │    │   │ [5] CH4 (D3 Headlight)│   │
-│       │     │     │    │    │    │    │    │   └───────────────────────┘   │
-│       │     │     │    │    │    │    │    │                               │
-│       │  [R3 150Ω]│    │ [R7 150Ω]│  [R5 150Ω] ◄───────────────────────────┘
-│       │     │     │    │    │    │    │    │                          │
-│       │  [R2 150Ω]│    │ [R6 150Ω]│  [R4 150Ω]                          │
-│       │     │     │    │    │    │    │    │                          │
-│       │     │  [R1 100Ω]    │    │    │    │                          │
-│       │     │     │    │    │    │    │    │                          │
-│       ▼     ▼     ▼    │    ▼    ▼    ▼    ▼                          │
-│   ┌────────────────┐   │  ┌─────────────────────────┐                 │
-│   │CON2: FRONT 1x4 │   │  │    CON3: REAR 1x6       │                 │
-│   │ [1] Common GND ┼───┴──┼─► [1] Common GND        │                 │
-│   │ [2] Headlight  │      │   [2] Tail Light (D5)   │                 │
-│   │ [3] Blinker FL │      │   [3] Brake Light (D6)  │                 │
-│   │ [4] Blinker FR │      │   [4] Blinker RL (D7)   │                 │
-│   └────────────────┘      │   [5] Blinker RR (D8)   │                 │
-│                           │   [6] Spare / Key       │                 │
-│                           └─────────────────────────┘                 │
-│                                                                        │
-│   ══════════════════════════════════════════════════════════════════   │
-│   ⚡ COMMON GROUND RAIL (Continuous heavy solder bus on board back)     │
+│                      ┌─── [NANO USB PORT] ────┐                        │
+│                      │                        │                        │
+│                      │  ARDUINO NANO V3 (DIP) │                        │
+│                      │                        │                        │
+│             (Col 6)  │                        │  (Col 12)              │
+│       [D1/TX]  (o)   │                        │   (o)  [VIN]           │
+│       [D0/RX]  (o)   │                        │   (o)  [GND] ──┐       │
+│ ┌─────[RST]    (o)   │                        │   (o)  [RST]   │       │
+│ │ ┌───[GND] ──┐(o)   │                        │   (o)  [5V] ───┼─┐     │
+│┌┴─┴─────────┐ │      │                        │   (o)  [A7]    │ │     │
+││ CON1: RADIO│ │      │                        │   (o)  [A6]    │ │ [C1]│
+││(1x5 90°    │ │      │                        │   (o)  [A5/SCL]┼─┼──┐│ │
+││Left Edge)  │ │      │                        │   (o)  [A4/SDA]┼─┼─┐││ │
+││            │ │      │                        │   (o)  [A3]    │ │ │││ │
+││[1: +5V] ◄──┼─┘      │                        │   (o)  [A2]    │ │ │││ │
+││[2: GND] ◄──┼─(Row 6)┤ (10mm direct traces!)  │   (o)  [A1] ┌──┴─┴─┴┴┴┐│
+││[3: CH2] ◄──┼─[D2]───┤                        │             │  │CON4: MPU ││
+││[4: CH4] ◄──┼─[D3]───┤                        │             │  │(1x4 90°  ││
+││[5: CH1] ◄──┼─[D4]───┤                        │             │  │Rt. Edge) ││
+│└┬───────────┘ │      │                        │             │  │          ││
+│ │             │ [D5] (o)════════════════════════════════════╗  │[1: GND]◄─┘│
+│ ▼             │ [D6] (o)════════════════════════════════╗   ║  │[2: +5V]◄──│
+│(90° Pins      │ [D7] (o)════════════════════════════╗   ║   ║  │[3: SCL]◄──┤
+│ point Left)   │ [D8] (o)════════════════════════╗   ║   ║   ║  │[4: SDA]◄──┘
+│               │ [D9] (o)─────┐                  ║   ║   ║   ║  └┬─────────┘
+│               │ [D10](o)──┐  │                  ║   ║   ║   ║   │
+│               │ [D11](o)─┐│  │                  ║   ║   ║   ║   ▼
+│               └──────────┴┴──┴──────────────────╫───╫───╫───╫───(90° Pins point Right)
+│                          ││  │                  ║   ║   ║   ║
+│                 [R1]   [R2] [R3]                [R7][R6][R5][R4]
+│                 100Ω   150Ω 150Ω                150Ω 150Ω 150Ω 150Ω
+│                (Head) (FL-B)(FR-B)             (RR-B)(RL-B)(Brk)(Tail)
+│                  │      │    │                    │   │   │   │
+│                  ▼      ▼    ▼                    ▼   ▼   ▼   ▼
+│         ┌───────────────────────┐        ┌────────────────────────┐
+│         │ CON2: FRONT (1x4 90°) │        │ CON3: REAR (1x6 90°)   │
+│         │┌─────┬───────┬──────┬─┴─┐      │┌───┬───┬───┬───┬───┬──┐│
+│         ││ GND │ Head  │FL-B  │FR-B│      ││RRB│RLB│Brk│Tal│NC │GND│
+│         │└──┬──┴───┬───┴──┬───┴───┘      │└─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬┘│
+│         └───┼──────┼──────┼────────┘     └──┼───┼───┼───┼───┼───┼┘
+│             │      │      │                 │   │   │   │   │   │
+│             │      ▼      ▼                 ▼   ▼   ▼   ▼   │   │
+│             │    (90° Pins point outward from bottom board edge)│
+│             │                                                   │
+│             └══════ (GND via Col 01)       (GND via Col 13) ════╝
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-### 📌 3. Connector Pinout Tables
+### 📍 3. Pin Header Assignments (MODU / Dupont 2.54mm 90° Angle)
 
-#### CON1: Radio Receiver & Power Input (1x5 Pins)
-| Pin # | Wire Color | Destination on Receiver | Destination on Board | Function |
-|:---:|:---:|---|---|---|
-| **1** | Black | **CH6** — Pin 1 (GND / Negative) | Common GND Rail + Nano GND | Power ground & signal reference |
-| **2** | Red | **CH6** — Pin 2 (VCC / +5V or 6V) | Arduino Nano **5V Pin** | ESC BEC Power Input |
-| **3** | White | **CH1** — Pin 3 (Signal) | Arduino Nano **D4 Pin** | Steering PPM Signal |
-| **4** | Yellow | **CH2** — Pin 3 (Signal) | Arduino Nano **D2 Pin** | Throttle PPM Signal |
-| **5** | Green | **CH4** — Pin 3 (Signal) | Arduino Nano **D3 Pin** | Headlight PPM Signal |
+#### 📡 CON1: Radio Receiver & Power Header (1x5 90° — Left Edge)
+*Positioned on the **Left Edge** (Col 02, Rows 05 to 09), face-to-face with Nano D2, D3, D4, and GND pins. Ultra-short 10mm traces!*
 
-#### CON2: Front Light Harness (1x4 Pins)
-| Pin # | Wire Color | Circuit on Shield | Connection to Body LEDs | Function |
-|:---:|:---:|---|---|---|
-| **1** | Black | Common GND Rail | Cathodes of all front LEDs | Common Ground Return |
-| **2** | White | Arduino D9 $\rightarrow$ **R1 (100Ω)** | Anodes of Headlight LEDs | Headlights (0%, 40%, 100%) |
-| **3** | Orange | Arduino D10 $\rightarrow$ **R2 (150Ω)** | Anode of Front Left Blinker | Blinker FL (120 bpm) |
-| **4** | Blue | Arduino D11 $\rightarrow$ **R3 (150Ω)** | Anode of Front Right Blinker | Blinker FR (120 bpm) |
-
-#### CON3: Rear Light Harness (1x6 Pins)
-| Pin # | Wire Color | Circuit on Shield | Connection to Body LEDs | Function |
-|:---:|:---:|---|---|---|
-| **1** | Black | Common GND Rail | Cathodes of all 6 rear LEDs | Common Ground Return |
-| **2** | Brown | Arduino D5 $\rightarrow$ **R4 (150Ω)** | Anodes of Tail LEDs | Tail Lights (~300ms Fade) |
-| **3** | Red | Arduino D6 $\rightarrow$ **R5 (150Ω)** | Anodes of Brake LEDs | Brake Lights (100% On) |
-| **4** | Orange | Arduino D7 $\rightarrow$ **R6 (150Ω)** | Anode of Rear Left Blinker | Blinker RL (120 bpm) |
-| **5** | Blue | Arduino D8 $\rightarrow$ **R7 (150Ω)** | Anode of Rear Right Blinker | Blinker RR (120 bpm) |
-| **6** | *(Unused)*| No Connection | Reserved / Keying Pin | Polarizing Key |
+| Pin | Function | Shield Connection | FS-BS6 Receiver Pin | Wire Color |
+| :---: | :---: | :--- | :--- | :---: |
+| **1** | **VCC (+5V)** | Row 02 Top Trace $\rightarrow$ **Nano 5V** (Col 12, Row 06), C1(+) & CON4 P2 | **CH6 — Center Pin (VCC +5V/6V)** | 🟥 Red |
+| **2** | **GND** | **Nano GND** (Col 06, Row 06) [10mm] & Col 01 Outer Rail (Front GND) | **CH6 — Bottom Pin (GND)** | ⬛ Black |
+| **3** | **CH2 (Signal)** | **Nano D2** (Col 06, Row 07) [10mm trace] | **CH2 — Top Pin (Throttle Signal)** | 🟨 Yellow |
+| **4** | **CH4 (Signal)** | **Nano D3** (Col 06, Row 08) [10mm trace] | **CH4 — Top Pin (Headlight Switch)** | 🟩 Green |
+| **5** | **CH1 (Signal)** | **Nano D4** (Col 06, Row 09) [10mm trace] | **CH1 — Top Pin (Steering Signal)** | ⬜ White |
 
 ---
 
-### 💡 4. Current Limiting Resistor Values (1/4W 5%)
+#### 🧭 CON4: MPU-6050 Accelerometer Header (1x4 90° — Right Edge)
+*Positioned on the **Right Edge** (Col 17, Rows 07 to 10), face-to-face with Nano I2C and power pins. Ultra-short 10mm traces!*
 
-* **R1 (100Ω 1/4W):** Headlights (2 white LEDs in parallel, $V_f \approx 3.0\text{V}$, $I \approx 20\text{mA}$).
-* **R2, R3 (150Ω 1/4W):** Front Blinkers (orange LEDs, $V_f \approx 2.0\text{V}$, $I \approx 20\text{mA}$).
-* **R4 (150Ω 1/4W):** Tail Lights (2 red LEDs in parallel, $V_f \approx 2.0\text{V}$, $I \approx 20\text{mA}$).
-* **R5 (150Ω 1/4W):** Brake Lights (2 red LEDs in parallel, $V_f \approx 2.0\text{V}$, $I \approx 20\text{mA}$).
-* **R6, R7 (150Ω 1/4W):** Rear Blinkers (orange LEDs, $V_f \approx 2.0\text{V}$, $I \approx 20\text{mA}$).
+| Pin | Function | Shield Connection | MPU-6050 Pin | Wire Color |
+| :---: | :---: | :--- | :--- | :---: |
+| **1** | **GND** | Nano GND (Col 12, Row 04) & C1 (-) (Col 14, Row 06) | MPU-6050 GND Pin | ⬛ Black |
+| **2** | **VCC (+5V)** | Nano 5V (Col 12, Row 06) & C1 (+) (Col 15, Row 06) | MPU-6050 VCC Pin | 🟥 Red |
+| **3** | **SCL** | Nano A5 (Col 12, Row 09) [10mm trace] | MPU-6050 SCL Pin | 🟨 Yellow |
+| **4** | **SDA** | Nano A4 (Col 12, Row 10) [10mm trace] | MPU-6050 SDA Pin | 🟩 Green |
+
+---
+
+#### 💡 CON2: Front Harness Header (1x4 90° — Bottom-Left Edge)
+*Positioned on **Row 24, Cols 03 to 06** with 90° angled pins pointing downward.*
+
+| Pin | Function | Board Component | Body Shell Destination | Wire Color |
+| :---: | :--- | :--- | :--- | :---: |
+| **1** | **GND** | Common Ground Bus via Outer Rail (Col 01) | Common cathode of all front LEDs | ⬛ Black |
+| **2** | **Headlights** | Pin D9 $\rightarrow$ Resistor R1 ($100\Omega$, Col 04) | Anode (+) of White Headlight LEDs | ⬜ White |
+| **3** | **Front Left Blinker** | Pin D10 $\rightarrow$ Resistor R2 ($150\Omega$, Col 05) | Anode (+) of Orange Front Left LED | 🟧 Orange |
+| **4** | **Front Right Blinker** | Pin D11 $\rightarrow$ Resistor R3 ($150\Omega$, Col 06) | Anode (+) of Orange Front Right LED | 🟦 Blue |
+
+---
+
+#### 💡 CON3: Rear Harness Header (1x6 90° — Bottom Center-Right Edge)
+*Positioned on **Row 24, Cols 08 to 13** with 90° angled pins pointing downward. Planar nested L-traces with ZERO crossovers!*
+
+| Pin | Function | Board Component | Body Shell Destination | Wire Color |
+| :---: | :--- | :--- | :--- | :---: |
+| **1** | **Rear Right Blinker** | Pin D8 $\rightarrow$ Resistor R7 ($150\Omega$, Col 08) | Anode (+) of Orange Rear Right LED | 🟦 Blue |
+| **2** | **Rear Left Blinker** | Pin D7 $\rightarrow$ Resistor R6 ($150\Omega$, Col 09) | Anode (+) of Orange Rear Left LED | 🟧 Orange |
+| **3** | **Brake Lights** | Pin D6 $\rightarrow$ Resistor R5 ($150\Omega$, Col 10) | Anode (+) of Red Brake Light LEDs | 🟥 Red |
+| **4** | **Tail Lights** | Pin D5 $\rightarrow$ Resistor R4 ($150\Omega$, Col 11) | Anode (+) of Red Tail Light LEDs | 🟫 Brown |
+| **5** | **Spare / Key Pin** | Disconnected (NC, Col 12) | Mechanical key / Expansion channel | ⚪ Gray / Empty |
+| **6** | **Common GND** | Common Ground Bus Direct (Col 13) | Common cathode of all rear LEDs | ⬛ Black |
+
+---
+
+### 📦 4. Resistor Sizing (All Mounted On Shield)
+
+| Resistor | Channel | Connected LEDs | Value | Board Location | Power Rating |
+| :---: | :---: | :--- | :---: | :---: | :---: |
+| **R1** | D9 | 2x White Headlight LEDs | **$100\Omega$** | Column 04 (Rows 18 to 21) | 1/4W |
+| **R2** | D10 | 1x Orange Front Left LED | **$150\Omega$** | Column 05 (Rows 18 to 21) | 1/4W |
+| **R3** | D11 | 1x Orange Front Right LED | **$150\Omega$** | Column 06 (Rows 18 to 21) | 1/4W |
+| **R7** | D8 | 1x Orange Rear Right LED | **$150\Omega$** | Column 08 (Rows 18 to 21) | 1/4W |
+| **R6** | D7 | 1x Orange Rear Left LED | **$150\Omega$** | Column 09 (Rows 18 to 21) | 1/4W |
+| **R5** | D6 | 2x Red Brake Light LEDs | **$150\Omega$** | Column 10 (Rows 18 to 21) | 1/4W |
+| **R4** | D5 | 2x Red Tail Light LEDs | **$150\Omega$** | Column 11 (Rows 18 to 21) | 1/4W |

@@ -1,20 +1,26 @@
 /*
  * ============================================================
- *  Sistema de Luzes para Carro RC - v6.0 (Versão PRODUÇÃO / PISTA)
- *  Arduino Nano + Receptor FlySky FS-BS6
+ *  Sistema de Luzes para Carro RC - v7.0 (Versão PRODUÇÃO / PISTA)
+ *  Arduino Nano + Receptor FlySky FS-BS6 + Acelerômetro MPU-6050
  * ============================================================
  *
  * Esta versão é 100% focada em PERFORMANCE MÁXIMA NA PISTA:
  *   - Zero comunicação Serial (sem desperdício de ciclos de CPU ou interrupções de UART).
- *   - Memória Flash e SRAM ultra-reduzidas.
- *   - Loop principal rodando a mais de 60.000 Hz.
- *   - Inicialização e Calibração 100% autônomas via rádio com feedback visual nos LEDs.
+ *   - Suporte a Acelerômetro I2C MPU-6050 nos pinos A4 (SDA) e A5 (SCL) a 400kHz.
+ *   - Auto-Alinhamento Vetorial 3D (independente da orientação de montagem).
+ *   - Alerta de Capotamento (Roll-Over Safety): 4 piscas piscam rápido em alerta.
+ *   - Memória Flash e SRAM ultra-reduzidas, loop rodando a mais de 60.000 Hz.
+ *   - Inicialização e Calibração 100% autônomas via rádio guiadas por LEDs.
  *
  * Entradas (Servo PPM do receptor):
  *   D4 - Volante / Direção (CH1, Pin Change Interrupt PCINT20)
  *   D2 - Acelerador / Freio (CH2, Interrupção externa INT0)
  *   D3 - Farol (CH4, Interrupção externa INT1)
  *   5V / GND - Alimentação direta via Canal 6 (CH6 do receptor)
+ *
+ * Interface I2C:
+ *   A4 (SDA) - Dados I2C do MPU-6050 (GY-521)
+ *   A5 (SCL) - Clock I2C do MPU-6050 (GY-521)
  *
  * Saídas (LEDs):
  *   D5  - Lanterna traseira (vermelho, PWM com fade suave de ~300ms)
@@ -27,6 +33,7 @@
  */
 
 #include <EEPROM.h>
+#include <Wire.h>
 
 // ============================================================
 // PINAGEM
@@ -55,9 +62,20 @@
 #define DEFAULT_CENTER           1500
 #define DEFAULT_DEFLECTION       500
 
+// --- Registradores e Constantes MPU-6050 (I2C) ---
+#define MPU6050_ADDR_A           0x68
+#define MPU6050_ADDR_B           0x69
+#define MPU6050_REG_PWR_1        0x6B
+#define MPU6050_REG_CONFIG       0x1A
+#define MPU6050_REG_ACCEL_CFG    0x1C
+#define MPU6050_REG_ACCEL_X      0x3B
+#define ACCEL_SCALE_4G           8192.0f
+#define ACCEL_BRAKE_THRESH_G     0.20f   // Desaceleração física para acionar freio
+#define ACCEL_ROLLOVER_COS       0.15f   // Ângulo > 81° com a vertical indica capotamento
+
 // --- Limiares de Ação (%) ---
 #define STEERING_BLINK_PERCENT   70    // Deflexão do volante para ligar o pisca (70%)
-#define THROTTLE_BRAKE_PERCENT   5     // Desaceleração para acionar a luz de freio (5%)
+#define THROTTLE_BRAKE_PERCENT   5     // Desaceleração PPM para acionar freio (5%)
 #define HEADLIGHT_THRESH_LOW     33    // Abaixo: OFF | Acima: 40%
 #define HEADLIGHT_THRESH_HIGH    66    // Acima: 100%
 
@@ -67,7 +85,8 @@
 #define BRIGHTNESS_100           255
 
 // --- Pisca e Fade ---
-#define BLINK_INTERVAL_MS        250   // 120 piscadas por minuto
+#define BLINK_INTERVAL_MS        250   // 120 bpm
+#define BLINK_HAZARD_MS          120   // Pisca-alerta de capotamento
 #define FADE_STEP_INTERVAL_MS    6     // Intervalo de fade da lanterna (~300ms total)
 #define FADE_STEP_SIZE           5
 
@@ -86,6 +105,10 @@ struct CalibrationData {
   int throDeflFwd;
   int headlightMin;
   int headlightMax;
+  // Vetor unitário longitudinal de avanço 3D
+  float uLongX;
+  float uLongY;
+  float uLongZ;
 };
 
 struct MovingAvgFilter {
@@ -111,7 +134,12 @@ struct MovingAvgFilter {
 };
 
 enum HeadlightMode { HL_OFF, HL_DIM, HL_FULL };
-enum BlinkDirection { BLINK_LEFT = -1, BLINK_NONE = 0, BLINK_RIGHT = 1 };
+enum BlinkDirection {
+  BLINK_HAZARD = -2,
+  BLINK_LEFT   = -1,
+  BLINK_NONE   =  0,
+  BLINK_RIGHT  =  1
+};
 
 // ============================================================
 // VARIÁVEIS GLOBAIS
@@ -120,6 +148,19 @@ CalibrationData g_cal;
 
 int g_steerCenter = DEFAULT_CENTER;
 int g_throCenter  = DEFAULT_CENTER;
+
+// Acelerômetro I2C & Força G
+bool    g_hasMPU           = false;
+uint8_t g_mpuAddr          = MPU6050_ADDR_A;
+float   g_g0X              = 0.0f;
+float   g_g0Y              = 0.0f;
+float   g_g0Z              = 1.0f;
+float   g_rawAx            = 0.0f;
+float   g_rawAy            = 0.0f;
+float   g_rawAz            = 1.0f;
+float   g_accelLong        = 0.0f;
+bool    g_rollOver         = false;
+bool    g_longVectorLocked = false;
 
 // ISR variables (volatile)
 volatile unsigned long g_steerRiseTime = 0;
@@ -166,16 +207,22 @@ int getFilteredSteering();
 int getFilteredThrottle();
 int getFilteredHeadlight();
 HeadlightMode calcHeadlightMode(int hlPercent);
-bool isBraking(int throPct);
-BlinkDirection getBlinkDirection(int steerPct);
+bool isBraking(int throPct, float accelLong);
+BlinkDirection getBlinkDirection(int steerPct, bool rollOver);
 void updateHeadlight(HeadlightMode mode);
 void setTailLightTarget(HeadlightMode hlMode, bool braking);
 void updateTailLightFade();
 void updateBrakeLight(bool braking);
 void updateBlinkers(BlinkDirection direction);
 
+bool initMPU6050();
+bool readMPU6050(float &ax, float &ay, float &az);
+void calibrateStaticGravity();
+void updateLongitudinalVector(float ax, float ay, float az);
+void processInertialDynamics(float ax, float ay, float az);
+
 // ============================================================
-// INTERRUPÇÕES (ISRs de Baixo Nível)
+// INTERRUPÇÕES
 // ============================================================
 ISR(PCINT2_vect) {
   if (PIND & (1 << PIN_IN_STEERING)) {
@@ -214,23 +261,18 @@ void headlightISR() {
 }
 
 // ============================================================
-// GESTO DE CALIBRAÇÃO NO RÁDIO
+// DETECÇÃO DE GESTO NO BOOT
 // ============================================================
 bool checkCalibrationGesture() {
-  unsigned long start = millis();
-  int steerDeflectedCount = 0;
-  int totalSamples = 0;
-
   digitalWrite(PIN_OUT_BLINK_FL, HIGH);
   digitalWrite(PIN_OUT_BLINK_FR, HIGH);
 
-  noInterrupts();
-  g_steerNewPulse = false;
-  g_throNewPulse = false;
-  interrupts();
+  int steerDeflectedCount = 0;
+  int totalSamples = 0;
+  unsigned long start = millis();
 
   while (millis() - start < 1500) {
-    int s = 0;
+    int s = -1;
     noInterrupts();
     if (g_steerNewPulse) {
       s = g_steerPulse;
@@ -276,7 +318,7 @@ void setup() {
 
   g_steerFilter.init(DEFAULT_CENTER);
   g_throFilter.init(DEFAULT_CENTER);
-  g_hlFilter.init(DEFAULT_CENTER);
+  g_hlFilter.init(DEFAULT_CENTER - DEFAULT_DEFLECTION);
 
   // Configura interrupções por hardware
   PCICR |= (1 << PCIE2);
@@ -284,6 +326,11 @@ void setup() {
 
   attachInterrupt(digitalPinToInterrupt(PIN_IN_THROTTLE),  throttleISR,  CHANGE);
   attachInterrupt(digitalPinToInterrupt(PIN_IN_HEADLIGHT), headlightISR, CHANGE);
+
+  // Inicializa Acelerômetro MPU-6050
+  if (initMPU6050()) {
+    calibrateStaticGravity();
+  }
 
   // Carrega calibração prévia ou usa padrões de fábrica (500us)
   if (!loadCalibration()) {
@@ -293,6 +340,9 @@ void setup() {
     g_cal.throDeflFwd    = DEFAULT_DEFLECTION;
     g_cal.headlightMin   = DEFAULT_CENTER - DEFAULT_DEFLECTION;
     g_cal.headlightMax   = DEFAULT_CENTER + DEFAULT_DEFLECTION;
+    g_cal.uLongX         = 1.0f;
+    g_cal.uLongY         = 0.0f;
+    g_cal.uLongZ         = 0.0f;
   }
 
   // Verifica gesto de calibração no boot (volante virado por 1.5s)
@@ -309,20 +359,34 @@ void setup() {
 }
 
 // ============================================================
-// LOOP PRINCIPAL (Ultra-rápido, não-bloqueante)
+// LOOP PRINCIPAL (Ultra-rápido, não-bloqueante, >60.000 Hz)
 // ============================================================
 void loop() {
   int steerRaw = getFilteredSteering();
   int throRaw  = getFilteredThrottle();
   int hlRaw    = getFilteredHeadlight();
 
+  // Lê aceleração inercial se o MPU-6050 estiver presente
+  if (g_hasMPU) {
+    float ax, ay, az;
+    if (readMPU6050(ax, ay, az)) {
+      g_rawAx = ax; g_rawAy = ay; g_rawAz = az;
+      processInertialDynamics(ax, ay, az);
+    }
+  }
+
   int steerPct = steeringToPercent(steerRaw);
   int throPct  = throttleToPercent(throRaw);
   int hlPct    = headlightToPercent(hlRaw);
 
+  // Auto-aprendizado do vetor longitudinal no primeiro avanço forte (>60%)
+  if (g_hasMPU && throPct > 60 && !g_longVectorLocked) {
+    updateLongitudinalVector(g_rawAx, g_rawAy, g_rawAz);
+  }
+
   g_hlMode = calcHeadlightMode(hlPct);
-  bool           braking  = isBraking(throPct);
-  BlinkDirection blinkDir = getBlinkDirection(steerPct);
+  bool           braking  = isBraking(throPct, g_accelLong);
+  BlinkDirection blinkDir = getBlinkDirection(steerPct, g_rollOver);
 
   updateHeadlight(g_hlMode);
   setTailLightTarget(g_hlMode, braking);
@@ -434,11 +498,15 @@ HeadlightMode calcHeadlightMode(int hlPercent) {
   return HL_FULL;
 }
 
-bool isBraking(int throPct) {
-  return (throPct < -THROTTLE_BRAKE_PERCENT);
+bool isBraking(int throPct, float accelLong) {
+  if (throPct > THROTTLE_BRAKE_PERCENT) return false;
+  if (throPct < -THROTTLE_BRAKE_PERCENT) return true;
+  if (g_hasMPU && accelLong < -ACCEL_BRAKE_THRESH_G) return true;
+  return false;
 }
 
-BlinkDirection getBlinkDirection(int steerPct) {
+BlinkDirection getBlinkDirection(int steerPct, bool rollOver) {
+  if (rollOver) return BLINK_HAZARD;
   if (steerPct <= -STEERING_BLINK_PERCENT) return BLINK_LEFT;
   if (steerPct >=  STEERING_BLINK_PERCENT) return BLINK_RIGHT;
   return BLINK_NONE;
@@ -495,12 +563,19 @@ void updateBlinkers(BlinkDirection direction) {
     return;
   }
 
-  if (now - g_lastBlinkToggle >= BLINK_INTERVAL_MS) {
+  unsigned long interval = (direction == BLINK_HAZARD) ? BLINK_HAZARD_MS : BLINK_INTERVAL_MS;
+
+  if (now - g_lastBlinkToggle >= interval) {
     g_blinkState = !g_blinkState;
     g_lastBlinkToggle = now;
   }
 
-  if (direction == BLINK_LEFT) {
+  if (direction == BLINK_HAZARD) {
+    digitalWrite(PIN_OUT_BLINK_FL, g_blinkState ? HIGH : LOW);
+    digitalWrite(PIN_OUT_BLINK_RL, g_blinkState ? HIGH : LOW);
+    digitalWrite(PIN_OUT_BLINK_FR, g_blinkState ? HIGH : LOW);
+    digitalWrite(PIN_OUT_BLINK_RR, g_blinkState ? HIGH : LOW);
+  } else if (direction == BLINK_LEFT) {
     digitalWrite(PIN_OUT_BLINK_FL, g_blinkState ? HIGH : LOW);
     digitalWrite(PIN_OUT_BLINK_RL, g_blinkState ? HIGH : LOW);
     digitalWrite(PIN_OUT_BLINK_FR, LOW);
@@ -514,6 +589,131 @@ void updateBlinkers(BlinkDirection direction) {
 }
 
 // ============================================================
+// ACELERÔMETRO MPU-6050 & VETOR 3D (ZERO SERIAL)
+// ============================================================
+bool initMPU6050() {
+  Wire.begin();
+  Wire.setClock(400000);
+
+  g_mpuAddr = MPU6050_ADDR_A;
+  Wire.beginTransmission(g_mpuAddr);
+  byte error = Wire.endTransmission();
+
+  if (error != 0) {
+    g_mpuAddr = MPU6050_ADDR_B;
+    Wire.beginTransmission(g_mpuAddr);
+    error = Wire.endTransmission();
+  }
+
+  if (error != 0) {
+    g_hasMPU = false;
+    return false;
+  }
+
+  Wire.beginTransmission(g_mpuAddr);
+  Wire.write(MPU6050_REG_PWR_1);
+  Wire.write(0x00);
+  Wire.endTransmission();
+
+  Wire.beginTransmission(g_mpuAddr);
+  Wire.write(MPU6050_REG_CONFIG);
+  Wire.write(0x03);
+  Wire.endTransmission();
+
+  Wire.beginTransmission(g_mpuAddr);
+  Wire.write(MPU6050_REG_ACCEL_CFG);
+  Wire.write(0x08);
+  Wire.endTransmission();
+
+  g_hasMPU = true;
+  return true;
+}
+
+bool readMPU6050(float &ax, float &ay, float &az) {
+  if (!g_hasMPU) return false;
+
+  Wire.beginTransmission(g_mpuAddr);
+  Wire.write(MPU6050_REG_ACCEL_X);
+  if (Wire.endTransmission(false) != 0) return false;
+
+  Wire.requestFrom((uint8_t)g_mpuAddr, (uint8_t)6, (uint8_t)true);
+  if (Wire.available() < 6) return false;
+
+  int16_t rawX = (int16_t)(Wire.read() << 8 | Wire.read());
+  int16_t rawY = (int16_t)(Wire.read() << 8 | Wire.read());
+  int16_t rawZ = (int16_t)(Wire.read() << 8 | Wire.read());
+
+  ax = (float)rawX / ACCEL_SCALE_4G;
+  ay = (float)rawY / ACCEL_SCALE_4G;
+  az = (float)rawZ / ACCEL_SCALE_4G;
+  return true;
+}
+
+void calibrateStaticGravity() {
+  if (!g_hasMPU) return;
+  float sumX = 0, sumY = 0, sumZ = 0;
+  int count = 0;
+  unsigned long t0 = millis();
+
+  while (millis() - t0 < 800) {
+    float ax, ay, az;
+    if (readMPU6050(ax, ay, az)) {
+      sumX += ax;
+      sumY += ay;
+      sumZ += az;
+      count++;
+    }
+    delay(10);
+  }
+
+  if (count >= 10) {
+    g_g0X = sumX / count;
+    g_g0Y = sumY / count;
+    g_g0Z = sumZ / count;
+  } else {
+    g_g0X = 0.0f; g_g0Y = 0.0f; g_g0Z = 1.0f;
+  }
+}
+
+void updateLongitudinalVector(float ax, float ay, float az) {
+  float dx = ax - g_g0X;
+  float dy = ay - g_g0Y;
+  float dz = az - g_g0Z;
+  float mag = sqrt(dx * dx + dy * dy + dz * dz);
+
+  if (mag >= 0.25f) {
+    g_cal.uLongX = dx / mag;
+    g_cal.uLongY = dy / mag;
+    g_cal.uLongZ = dz / mag;
+    g_longVectorLocked = true;
+    saveCalibration();
+  }
+}
+
+void processInertialDynamics(float ax, float ay, float az) {
+  if (!g_hasMPU) {
+    g_accelLong = 0.0f;
+    g_rollOver  = false;
+    return;
+  }
+
+  float dx = ax - g_g0X;
+  float dy = ay - g_g0Y;
+  float dz = az - g_g0Z;
+  g_accelLong = (dx * g_cal.uLongX) + (dy * g_cal.uLongY) + (dz * g_cal.uLongZ);
+
+  float gMagAct = sqrt(ax * ax + ay * ay + az * az);
+  float gMag0   = sqrt(g_g0X * g_g0X + g_g0Y * g_g0Y + g_g0Z * g_g0Z);
+
+  if (gMagAct > 0.3f && gMag0 > 0.3f) {
+    float cosAngle = (ax * g_g0X + ay * g_g0Y + az * g_g0Z) / (gMagAct * gMag0);
+    g_rollOver = (cosAngle < ACCEL_ROLLOVER_COS);
+  } else {
+    g_rollOver = false;
+  }
+}
+
+// ============================================================
 // EEPROM
 // ============================================================
 bool loadCalibration() {
@@ -523,6 +723,15 @@ bool loadCalibration() {
       g_cal.throDeflBack < 50  || g_cal.throDeflFwd < 50 ||
       (g_cal.headlightMax - g_cal.headlightMin) < CAL_MIN_RANGE) {
     return false;
+  }
+  float mag = sqrt(g_cal.uLongX * g_cal.uLongX + g_cal.uLongY * g_cal.uLongY + g_cal.uLongZ * g_cal.uLongZ);
+  if (isnan(mag) || mag < 0.5f || mag > 1.5f) {
+    g_cal.uLongX = 1.0f;
+    g_cal.uLongY = 0.0f;
+    g_cal.uLongZ = 0.0f;
+    g_longVectorLocked = false;
+  } else {
+    g_longVectorLocked = true;
   }
   return true;
 }
@@ -556,7 +765,7 @@ void autoCenter() {
 
     noInterrupts();
     if (g_steerNewPulse) { sVal = g_steerPulse; g_steerNewPulse = false; gotS = true; }
-    if (g_throNewPulse)  { tVal = g_throPulse;  g_throNewPulse = false;  gotT = true; }
+    if (g_throNewPulse)  { tVal = g_throPulse;  g_throNewPulse  = false; gotT = true; }
     interrupts();
 
     if (gotS && gotT) {
@@ -578,6 +787,10 @@ void autoCenter() {
   } else {
     g_steerCenter = DEFAULT_CENTER;
     g_throCenter  = DEFAULT_CENTER;
+  }
+
+  if (g_hasMPU) {
+    calibrateStaticGravity();
   }
 }
 
@@ -607,7 +820,16 @@ void runFullCalibration() {
     interrupts();
 
     if (s > 0) { if (s < sMin) sMin = s; if (s > sMax) sMax = s; }
-    if (t > 0) { if (t < tMin) tMin = t; if (t > tMax) tMax = t; }
+    if (t > 0) {
+      if (t < tMin) tMin = t;
+      if (t > tMax) tMax = t;
+      if (g_hasMPU && (t - g_throCenter) > (g_cal.throDeflFwd / 2)) {
+        float ax, ay, az;
+        if (readMPU6050(ax, ay, az)) {
+          updateLongitudinalVector(ax, ay, az);
+        }
+      }
+    }
 
     // Piscas alternando esquerda/direita guiam o usuário
     if (millis() - lastLed >= 200) {

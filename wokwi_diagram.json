@@ -24,7 +24,9 @@
     { "type": "wokwi-resistor", "id": "r5", "top": 150, "left": 20, "attrs": { "value": "150" } },
 
     { "type": "wokwi-led", "id": "led_pisca_rr", "top": 210, "left": 130, "attrs": { "color": "orange", "label": "Pisca Tras Dir (D8)" } },
-    { "type": "wokwi-resistor", "id": "r7", "top": 150, "left": 130, "attrs": { "value": "150" } }
+    { "type": "wokwi-resistor", "id": "r7", "top": 150, "left": 130, "attrs": { "value": "150" } },
+
+    { "type": "wokwi-mpu6050", "id": "mpu1", "top": 0, "left": -260, "attrs": {} }
   ],
   "connections": [
     [ "nano:GND.1", "led_pisca_fl:C", "black", [ "v-30", "h-60" ] ],
@@ -54,7 +56,12 @@
     [ "r6:2", "led_pisca_rl:A", "orange", [ "v10" ] ],
 
     [ "nano:8", "r7:1", "blue", [ "v15", "h40" ] ],
-    [ "r7:2", "led_pisca_rr:A", "blue", [ "v10" ] ]
+    [ "r7:2", "led_pisca_rr:A", "blue", [ "v10" ] ],
+
+    [ "nano:A4", "mpu1:SDA", "green", [ "v20", "h-80" ] ],
+    [ "nano:A5", "mpu1:SCL", "yellow", [ "v30", "h-90" ] ],
+    [ "nano:5V", "mpu1:VCC", "red", [ "v-40", "h-120" ] ],
+    [ "nano:GND.1", "mpu1:GND", "black", [ "v-50", "h-130" ] ]
   ],
   "dependencies": {}
 }

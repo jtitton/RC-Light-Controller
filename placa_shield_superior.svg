@@ -1,0 +1,1212 @@
+<svg id="svg-top-root" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 792 1048" width="792" height="1048" style="background:#090d14; font-family:'Segoe UI',system-ui,sans-serif;">
+<defs>
+
+      <linearGradient id="fr4Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#143d23"/>
+        <stop offset="50%" stop-color="#0e2a18"/>
+        <stop offset="100%" stop-color="#07190e"/>
+      </linearGradient>
+      <linearGradient id="nanoGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#0b5394"/>
+        <stop offset="50%" stop-color="#083866"/>
+        <stop offset="100%" stop-color="#052442"/>
+      </linearGradient>
+      <linearGradient id="usbGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#bdc3c7"/>
+        <stop offset="50%" stop-color="#ecf0f1"/>
+        <stop offset="100%" stop-color="#95a5a6"/>
+      </linearGradient>
+      <linearGradient id="copperPad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#e6b800"/>
+        <stop offset="50%" stop-color="#d4af37"/>
+        <stop offset="100%" stop-color="#aa8800"/>
+      </linearGradient>
+      <linearGradient id="resistorBody" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#e8d5b5"/>
+        <stop offset="40%" stop-color="#fdf3e2"/>
+        <stop offset="100%" stop-color="#d1b894"/>
+      </linearGradient>
+      <linearGradient id="capGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#2c3e50"/>
+        <stop offset="60%" stop-color="#1a252f"/>
+        <stop offset="100%" stop-color="#0d1318"/>
+      </linearGradient>
+      <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+        <feDropShadow dx="3" dy="4" stdDeviation="4" flood-color="#000" flood-opacity="0.6"/>
+      </filter>
+    
+</defs>
+<rect x="63.0" y="58.0" width="666.0" height="882.0" rx="16" fill="url(#fr4Grad)" stroke="#27ae60" stroke-width="2" filter="url(#shadow)"/>
+<rect x="71.0" y="66.0" width="650.0" height="866.0" rx="12" fill="none" stroke="#2ecc71" stroke-width="1" stroke-opacity="0.35"/>
+<circle cx="81.0" cy="76.0" r="10" fill="#0d1318" stroke="#d4af37" stroke-width="3"/>
+<circle cx="711.0" cy="76.0" r="10" fill="#0d1318" stroke="#d4af37" stroke-width="3"/>
+<circle cx="81.0" cy="922.0" r="10" fill="#0d1318" stroke="#d4af37" stroke-width="3"/>
+<circle cx="711.0" cy="922.0" r="10" fill="#0d1318" stroke="#d4af37" stroke-width="3"/>
+<text x="396.0" y="42.0" text-anchor="middle" fill="#ecf0f1" font-size="17" font-weight="bold" letter-spacing="1">PLACA SHIELD HUB 5x7cm — LAYOUT DISTRIBUÍDO v8.0</text>
+<text x="396.0" y="80.0" text-anchor="middle" fill="#a2d9ce" font-size="11" font-weight="600" letter-spacing="1.5">BORDA SUPERIOR ◄── PORTA USB NANO PARA CIMA (ZERO CRUZAMENTOS)</text>
+<text x="90" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">01</text>
+<text x="90" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">01</text>
+<text x="126" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">02</text>
+<text x="126" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">02</text>
+<text x="162" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">03</text>
+<text x="162" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">03</text>
+<text x="198" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">04</text>
+<text x="198" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">04</text>
+<text x="234" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">05</text>
+<text x="234" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">05</text>
+<text x="270" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">06</text>
+<text x="270" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">06</text>
+<text x="306" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">07</text>
+<text x="306" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">07</text>
+<text x="342" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">08</text>
+<text x="342" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">08</text>
+<text x="378" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">09</text>
+<text x="378" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">09</text>
+<text x="414" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">10</text>
+<text x="414" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">10</text>
+<text x="450" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">11</text>
+<text x="450" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">11</text>
+<text x="486" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">12</text>
+<text x="486" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">12</text>
+<text x="522" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">13</text>
+<text x="522" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">13</text>
+<text x="558" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">14</text>
+<text x="558" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">14</text>
+<text x="594" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">15</text>
+<text x="594" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">15</text>
+<text x="630" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">16</text>
+<text x="630" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">16</text>
+<text x="666" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">17</text>
+<text x="666" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">17</text>
+<text x="702" y="70" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">18</text>
+<text x="702" y="960.0" text-anchor="middle" fill="#f1c40f" font-size="11">18</text>
+<text x="60" y="89" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">01</text>
+<text x="732" y="89" text-anchor="middle" fill="#f1c40f" font-size="11">01</text>
+<text x="60" y="125" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">02</text>
+<text x="732" y="125" text-anchor="middle" fill="#f1c40f" font-size="11">02</text>
+<text x="60" y="161" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">03</text>
+<text x="732" y="161" text-anchor="middle" fill="#f1c40f" font-size="11">03</text>
+<text x="60" y="197" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">04</text>
+<text x="732" y="197" text-anchor="middle" fill="#f1c40f" font-size="11">04</text>
+<text x="60" y="233" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">05</text>
+<text x="732" y="233" text-anchor="middle" fill="#f1c40f" font-size="11">05</text>
+<text x="60" y="269" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">06</text>
+<text x="732" y="269" text-anchor="middle" fill="#f1c40f" font-size="11">06</text>
+<text x="60" y="305" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">07</text>
+<text x="732" y="305" text-anchor="middle" fill="#f1c40f" font-size="11">07</text>
+<text x="60" y="341" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">08</text>
+<text x="732" y="341" text-anchor="middle" fill="#f1c40f" font-size="11">08</text>
+<text x="60" y="377" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">09</text>
+<text x="732" y="377" text-anchor="middle" fill="#f1c40f" font-size="11">09</text>
+<text x="60" y="413" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">10</text>
+<text x="732" y="413" text-anchor="middle" fill="#f1c40f" font-size="11">10</text>
+<text x="60" y="449" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">11</text>
+<text x="732" y="449" text-anchor="middle" fill="#f1c40f" font-size="11">11</text>
+<text x="60" y="485" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">12</text>
+<text x="732" y="485" text-anchor="middle" fill="#f1c40f" font-size="11">12</text>
+<text x="60" y="521" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">13</text>
+<text x="732" y="521" text-anchor="middle" fill="#f1c40f" font-size="11">13</text>
+<text x="60" y="557" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">14</text>
+<text x="732" y="557" text-anchor="middle" fill="#f1c40f" font-size="11">14</text>
+<text x="60" y="593" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">15</text>
+<text x="732" y="593" text-anchor="middle" fill="#f1c40f" font-size="11">15</text>
+<text x="60" y="629" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">16</text>
+<text x="732" y="629" text-anchor="middle" fill="#f1c40f" font-size="11">16</text>
+<text x="60" y="665" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">17</text>
+<text x="732" y="665" text-anchor="middle" fill="#f1c40f" font-size="11">17</text>
+<text x="60" y="701" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">18</text>
+<text x="732" y="701" text-anchor="middle" fill="#f1c40f" font-size="11">18</text>
+<text x="60" y="737" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">19</text>
+<text x="732" y="737" text-anchor="middle" fill="#f1c40f" font-size="11">19</text>
+<text x="60" y="773" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">20</text>
+<text x="732" y="773" text-anchor="middle" fill="#f1c40f" font-size="11">20</text>
+<text x="60" y="809" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">21</text>
+<text x="732" y="809" text-anchor="middle" fill="#f1c40f" font-size="11">21</text>
+<text x="60" y="845" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">22</text>
+<text x="732" y="845" text-anchor="middle" fill="#f1c40f" font-size="11">22</text>
+<text x="60" y="881" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">23</text>
+<text x="732" y="881" text-anchor="middle" fill="#f1c40f" font-size="11">23</text>
+<text x="60" y="917" text-anchor="middle" fill="#f1c40f" font-size="12" font-weight="bold">24</text>
+<text x="732" y="917" text-anchor="middle" fill="#f1c40f" font-size="11">24</text>
+<circle cx="90" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="85" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="85" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="121" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="121" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="157" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="157" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="193" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="193" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="229" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="229" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="265" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="265" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="301" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="301" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="337" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="337" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="373" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="373" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="409" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="409" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="445" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="445" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="481" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="481" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="517" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="517" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="553" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="553" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="589" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="589" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="625" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="625" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="661" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="661" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="697" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="697" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="733" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="733" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="769" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="769" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="805" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="805" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="841" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="841" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="877" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="877" r="4" fill="#0d1f14"/>
+<circle cx="90" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="90" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="126" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="126" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="162" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="162" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="198" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="198" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="234" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="234" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="270" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="270" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="306" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="306" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="342" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="342" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="378" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="378" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="414" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="414" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="450" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="450" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="486" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="486" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="522" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="522" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="558" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="558" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="594" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="594" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="630" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="630" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="666" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="666" cy="913" r="4" fill="#0d1f14"/>
+<circle cx="702" cy="913" r="8" fill="url(#copperPad)" opacity="0.85"/>
+<circle cx="702" cy="913" r="4" fill="#0d1f14"/>
+<rect x="260" y="147" width="20" height="524" rx="3" fill="#181818" stroke="#333" stroke-width="1.5" filter="url(#shadow)"/>
+<rect x="476" y="147" width="20" height="524" rx="3" fill="#181818" stroke="#333" stroke-width="1.5" filter="url(#shadow)"/>
+<rect x="266" y="153" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="153" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="189" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="189" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="225" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="225" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="261" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="261" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="297" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="297" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="333" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="333" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="369" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="369" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="405" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="405" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="441" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="441" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="477" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="477" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="513" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="513" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="549" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="549" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="585" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="585" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="621" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="621" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="266" y="657" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="482" y="657" width="8" height="8" rx="1" fill="#000" stroke="#d4af37" stroke-width="1"/>
+<rect x="252" y="79" width="252" height="600" rx="8" fill="url(#nanoGrad)" stroke="#1f8cd1" stroke-width="2" filter="url(#shadow)"/>
+<rect x="256" y="83" width="244" height="592" rx="6" fill="none" stroke="#fff" stroke-width="0.8" stroke-opacity="0.3"/>
+<rect x="357.0" y="69" width="42" height="32" rx="3" fill="url(#usbGrad)" stroke="#7f8c8d" stroke-width="1.5" filter="url(#shadow)"/>
+<rect x="363.0" y="71" width="30" height="10" rx="1" fill="#2c3e50"/>
+<text x="378.0" y="93" text-anchor="middle" fill="#333" font-size="9" font-weight="bold">USB</text>
+<g transform="rotate(45 378.0 347)">
+<rect x="355.0" y="324.0" width="46" height="46" rx="3" fill="#1c2833" stroke="#4a6572" stroke-width="1"/>
+</g>
+<text x="378.0" y="351" text-anchor="middle" fill="#bdc3c7" font-size="8" font-family="monospace" font-weight="bold">ATmega</text>
+<text x="378.0" y="360" text-anchor="middle" fill="#bdc3c7" font-size="8" font-family="monospace" font-weight="bold">328P</text>
+<text x="256" y="160" text-anchor="end" fill="#bdc3c7" font-size="8" font-weight="bold">D1/TX</text>
+<text x="256" y="196" text-anchor="end" fill="#bdc3c7" font-size="8" font-weight="bold">D0/RX</text>
+<text x="256" y="232" text-anchor="end" fill="#e74c3c" font-size="8" font-weight="bold">RST</text>
+<text x="256" y="268" text-anchor="end" fill="#1abc9c" font-size="8" font-weight="bold">GND</text>
+<text x="256" y="304" text-anchor="end" fill="#f39c12" font-size="8" font-weight="bold">D2 (CH2)</text>
+<text x="256" y="340" text-anchor="end" fill="#2ecc71" font-size="8" font-weight="bold">D3 (CH4)</text>
+<text x="256" y="376" text-anchor="end" fill="#3498db" font-size="8" font-weight="bold">D4 (CH1)</text>
+<text x="256" y="412" text-anchor="end" fill="#e67e22" font-size="8" font-weight="bold">D5 (Lant)</text>
+<text x="256" y="448" text-anchor="end" fill="#e74c3c" font-size="8" font-weight="bold">D6 (Freio)</text>
+<text x="256" y="484" text-anchor="end" fill="#f39c12" font-size="8" font-weight="bold">D7 (P.TE)</text>
+<text x="256" y="520" text-anchor="end" fill="#3498db" font-size="8" font-weight="bold">D8 (P.TD)</text>
+<text x="256" y="556" text-anchor="end" fill="#ffffff" font-size="8" font-weight="bold">D9 (Farol)</text>
+<text x="256" y="592" text-anchor="end" fill="#f39c12" font-size="8" font-weight="bold">D10 (P.FE)</text>
+<text x="256" y="628" text-anchor="end" fill="#3498db" font-size="8" font-weight="bold">D11 (P.FD)</text>
+<text x="256" y="664" text-anchor="end" fill="#bdc3c7" font-size="8" font-weight="bold">D12</text>
+<text x="500" y="160" text-anchor="start" fill="#e74c3c" font-size="8" font-weight="bold">VIN</text>
+<text x="500" y="196" text-anchor="start" fill="#1abc9c" font-size="8" font-weight="bold">GND</text>
+<text x="500" y="232" text-anchor="start" fill="#e74c3c" font-size="8" font-weight="bold">RST</text>
+<text x="500" y="268" text-anchor="start" fill="#e74c3c" font-size="8" font-weight="bold">+5V</text>
+<text x="500" y="304" text-anchor="start" fill="#bdc3c7" font-size="8" font-weight="bold">A7</text>
+<text x="500" y="340" text-anchor="start" fill="#bdc3c7" font-size="8" font-weight="bold">A6</text>
+<text x="500" y="376" text-anchor="start" fill="#ffd32a" font-size="8" font-weight="bold">A5 (SCL)</text>
+<text x="500" y="412" text-anchor="start" fill="#2ed573" font-size="8" font-weight="bold">A4 (SDA)</text>
+<text x="500" y="448" text-anchor="start" fill="#bdc3c7" font-size="8" font-weight="bold">A3</text>
+<text x="500" y="484" text-anchor="start" fill="#bdc3c7" font-size="8" font-weight="bold">A2</text>
+<text x="500" y="520" text-anchor="start" fill="#bdc3c7" font-size="8" font-weight="bold">A1</text>
+<text x="500" y="556" text-anchor="start" fill="#bdc3c7" font-size="8" font-weight="bold">A0</text>
+<text x="500" y="592" text-anchor="start" fill="#bdc3c7" font-size="8" font-weight="bold">REF</text>
+<text x="500" y="628" text-anchor="start" fill="#bdc3c7" font-size="8" font-weight="bold">3V3</text>
+<text x="500" y="664" text-anchor="start" fill="#bdc3c7" font-size="8" font-weight="bold">D13</text>
+<line x1="198" y1="697" x2="198" y2="739.0" stroke="#bdc3c7" stroke-width="2.5"/>
+<line x1="198" y1="763.0" x2="198" y2="805" stroke="#bdc3c7" stroke-width="2.5"/>
+<rect x="192.0" y="739.0" width="12" height="24" rx="4" fill="url(#resistorBody)" stroke="#795548" stroke-width="1" filter="url(#shadow)"/>
+<rect x="192.0" y="743.0" width="12" height="3" fill="#795548"/>
+<rect x="192.0" y="747.5" width="12" height="3" fill="#000000"/>
+<rect x="192.0" y="752.0" width="12" height="3" fill="#795548"/>
+<rect x="192.0" y="756.5" width="12" height="3" fill="#f1c40f"/>
+<text x="198" y="754.0" text-anchor="middle" fill="#1a252f" font-size="6.5" font-weight="bold" transform="rotate(-90 198 751.0)">R1 100Ω</text>
+<text x="198" y="845" text-anchor="middle" fill="#ffffff" font-size="8" font-weight="bold">Farol</text>
+<line x1="234" y1="697" x2="234" y2="739.0" stroke="#bdc3c7" stroke-width="2.5"/>
+<line x1="234" y1="763.0" x2="234" y2="805" stroke="#bdc3c7" stroke-width="2.5"/>
+<rect x="228.0" y="739.0" width="12" height="24" rx="4" fill="url(#resistorBody)" stroke="#795548" stroke-width="1" filter="url(#shadow)"/>
+<rect x="228.0" y="743.0" width="12" height="3" fill="#795548"/>
+<rect x="228.0" y="747.5" width="12" height="3" fill="#2ecc71"/>
+<rect x="228.0" y="752.0" width="12" height="3" fill="#795548"/>
+<rect x="228.0" y="756.5" width="12" height="3" fill="#f1c40f"/>
+<text x="234" y="754.0" text-anchor="middle" fill="#1a252f" font-size="6.5" font-weight="bold" transform="rotate(-90 234 751.0)">R2 150Ω</text>
+<text x="234" y="845" text-anchor="middle" fill="#f39c12" font-size="8" font-weight="bold">Pis.FE</text>
+<line x1="270" y1="697" x2="270" y2="739.0" stroke="#bdc3c7" stroke-width="2.5"/>
+<line x1="270" y1="763.0" x2="270" y2="805" stroke="#bdc3c7" stroke-width="2.5"/>
+<rect x="264.0" y="739.0" width="12" height="24" rx="4" fill="url(#resistorBody)" stroke="#795548" stroke-width="1" filter="url(#shadow)"/>
+<rect x="264.0" y="743.0" width="12" height="3" fill="#795548"/>
+<rect x="264.0" y="747.5" width="12" height="3" fill="#2ecc71"/>
+<rect x="264.0" y="752.0" width="12" height="3" fill="#795548"/>
+<rect x="264.0" y="756.5" width="12" height="3" fill="#f1c40f"/>
+<text x="270" y="754.0" text-anchor="middle" fill="#1a252f" font-size="6.5" font-weight="bold" transform="rotate(-90 270 751.0)">R3 150Ω</text>
+<text x="270" y="845" text-anchor="middle" fill="#3498db" font-size="8" font-weight="bold">Pis.FD</text>
+<line x1="342" y1="697" x2="342" y2="739.0" stroke="#bdc3c7" stroke-width="2.5"/>
+<line x1="342" y1="763.0" x2="342" y2="805" stroke="#bdc3c7" stroke-width="2.5"/>
+<rect x="336.0" y="739.0" width="12" height="24" rx="4" fill="url(#resistorBody)" stroke="#795548" stroke-width="1" filter="url(#shadow)"/>
+<rect x="336.0" y="743.0" width="12" height="3" fill="#795548"/>
+<rect x="336.0" y="747.5" width="12" height="3" fill="#2ecc71"/>
+<rect x="336.0" y="752.0" width="12" height="3" fill="#795548"/>
+<rect x="336.0" y="756.5" width="12" height="3" fill="#f1c40f"/>
+<text x="342" y="754.0" text-anchor="middle" fill="#1a252f" font-size="6.5" font-weight="bold" transform="rotate(-90 342 751.0)">R7 150Ω</text>
+<text x="342" y="845" text-anchor="middle" fill="#3498db" font-size="8" font-weight="bold">Pis.TD</text>
+<line x1="378" y1="697" x2="378" y2="739.0" stroke="#bdc3c7" stroke-width="2.5"/>
+<line x1="378" y1="763.0" x2="378" y2="805" stroke="#bdc3c7" stroke-width="2.5"/>
+<rect x="372.0" y="739.0" width="12" height="24" rx="4" fill="url(#resistorBody)" stroke="#795548" stroke-width="1" filter="url(#shadow)"/>
+<rect x="372.0" y="743.0" width="12" height="3" fill="#795548"/>
+<rect x="372.0" y="747.5" width="12" height="3" fill="#2ecc71"/>
+<rect x="372.0" y="752.0" width="12" height="3" fill="#795548"/>
+<rect x="372.0" y="756.5" width="12" height="3" fill="#f1c40f"/>
+<text x="378" y="754.0" text-anchor="middle" fill="#1a252f" font-size="6.5" font-weight="bold" transform="rotate(-90 378 751.0)">R6 150Ω</text>
+<text x="378" y="845" text-anchor="middle" fill="#f39c12" font-size="8" font-weight="bold">Pis.TE</text>
+<line x1="414" y1="697" x2="414" y2="739.0" stroke="#bdc3c7" stroke-width="2.5"/>
+<line x1="414" y1="763.0" x2="414" y2="805" stroke="#bdc3c7" stroke-width="2.5"/>
+<rect x="408.0" y="739.0" width="12" height="24" rx="4" fill="url(#resistorBody)" stroke="#795548" stroke-width="1" filter="url(#shadow)"/>
+<rect x="408.0" y="743.0" width="12" height="3" fill="#795548"/>
+<rect x="408.0" y="747.5" width="12" height="3" fill="#2ecc71"/>
+<rect x="408.0" y="752.0" width="12" height="3" fill="#795548"/>
+<rect x="408.0" y="756.5" width="12" height="3" fill="#f1c40f"/>
+<text x="414" y="754.0" text-anchor="middle" fill="#1a252f" font-size="6.5" font-weight="bold" transform="rotate(-90 414 751.0)">R5 150Ω</text>
+<text x="414" y="845" text-anchor="middle" fill="#e74c3c" font-size="8" font-weight="bold">Freio</text>
+<line x1="450" y1="697" x2="450" y2="739.0" stroke="#bdc3c7" stroke-width="2.5"/>
+<line x1="450" y1="763.0" x2="450" y2="805" stroke="#bdc3c7" stroke-width="2.5"/>
+<rect x="444.0" y="739.0" width="12" height="24" rx="4" fill="url(#resistorBody)" stroke="#795548" stroke-width="1" filter="url(#shadow)"/>
+<rect x="444.0" y="743.0" width="12" height="3" fill="#795548"/>
+<rect x="444.0" y="747.5" width="12" height="3" fill="#2ecc71"/>
+<rect x="444.0" y="752.0" width="12" height="3" fill="#795548"/>
+<rect x="444.0" y="756.5" width="12" height="3" fill="#f1c40f"/>
+<text x="450" y="754.0" text-anchor="middle" fill="#1a252f" font-size="6.5" font-weight="bold" transform="rotate(-90 450 751.0)">R4 150Ω</text>
+<text x="450" y="845" text-anchor="middle" fill="#e67e22" font-size="8" font-weight="bold">Lant.</text>
+<line x1="558" y1="265" x2="572.0" y2="265" stroke="#bdc3c7" stroke-width="2"/>
+<line x1="594" y1="265" x2="580.0" y2="265" stroke="#bdc3c7" stroke-width="2"/>
+<circle cx="576.0" cy="265" r="14" fill="url(#capGrad)" stroke="#566573" stroke-width="1.5" filter="url(#shadow)"/>
+<path d="M 562.0 258 A 14 14 0 0 1 572.0 253 L 572.0 277 A 14 14 0 0 1 562.0 272 Z" fill="#ecf0f1"/>
+<text x="568.0" y="268" fill="#000" font-size="9" font-weight="bold" text-anchor="middle">-</text>
+<text x="580.0" y="263" fill="#ecf0f1" font-size="6.5" font-weight="bold" text-anchor="middle">100µF</text>
+<text x="580.0" y="272" fill="#ecf0f1" font-size="6.5" font-weight="bold" text-anchor="middle">C1</text>
+<rect x="114" y="217" width="24" height="168" rx="3" fill="#1c2833" stroke="#2980b9" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="106" y="301.0" text-anchor="middle" fill="#2980b9" font-size="9.5" font-weight="bold" transform="rotate(-90 106 301.0)">CON1: RÁDIO (1x5 90°)</text>
+<circle cx="126" cy="229" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="91" y="226.5" width="35" height="5" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="84" y="232" text-anchor="end" fill="#e74c3c" font-size="8.5" font-weight="bold">+5V</text>
+<circle cx="126" cy="265" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="91" y="262.5" width="35" height="5" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="84" y="268" text-anchor="end" fill="#1abc9c" font-size="8.5" font-weight="bold">GND</text>
+<circle cx="126" cy="301" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="91" y="298.5" width="35" height="5" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="84" y="304" text-anchor="end" fill="#f39c12" font-size="8.5" font-weight="bold">CH2</text>
+<circle cx="126" cy="337" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="91" y="334.5" width="35" height="5" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="84" y="340" text-anchor="end" fill="#2ecc71" font-size="8.5" font-weight="bold">CH4</text>
+<circle cx="126" cy="373" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="91" y="370.5" width="35" height="5" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="84" y="376" text-anchor="end" fill="#3498db" font-size="8.5" font-weight="bold">CH1</text>
+<rect x="654" y="289" width="24" height="132" rx="3" fill="#1c2833" stroke="#f1c40f" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="686" y="355.0" text-anchor="middle" fill="#f1c40f" font-size="9.5" font-weight="bold" transform="rotate(90 686 355.0)">CON4: MPU (1x4 90°)</text>
+<circle cx="666" cy="301" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="666" y="298.5" width="35" height="5" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="708" y="304" text-anchor="start" fill="#1abc9c" font-size="8.5" font-weight="bold">GND</text>
+<circle cx="666" cy="337" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="666" y="334.5" width="35" height="5" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="708" y="340" text-anchor="start" fill="#e74c3c" font-size="8.5" font-weight="bold">+5V</text>
+<circle cx="666" cy="373" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="666" y="370.5" width="35" height="5" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="708" y="376" text-anchor="start" fill="#ffd32a" font-size="8.5" font-weight="bold">SCL</text>
+<circle cx="666" cy="409" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="666" y="406.5" width="35" height="5" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="708" y="412" text-anchor="start" fill="#2ed573" font-size="8.5" font-weight="bold">SDA</text>
+<rect x="148" y="901" width="136" height="24" rx="3" fill="#1c2833" stroke="#27ae60" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="216.0" y="894" text-anchor="middle" fill="#27ae60" font-size="10" font-weight="bold">CON2: FRENTE (1x4 90°)</text>
+<circle cx="162" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="159.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="162" y="967" text-anchor="middle" fill="#1abc9c" font-size="9" font-weight="bold">GND</text>
+<text x="162" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P1</text>
+<circle cx="198" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="195.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="198" y="967" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="bold">Farol</text>
+<text x="198" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P2</text>
+<circle cx="234" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="231.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="234" y="967" text-anchor="middle" fill="#f39c12" font-size="9" font-weight="bold">Pis.FE</text>
+<text x="234" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P3</text>
+<circle cx="270" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="267.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="270" y="967" text-anchor="middle" fill="#3498db" font-size="9" font-weight="bold">Pis.FD</text>
+<text x="270" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P4</text>
+<rect x="328" y="901" width="208" height="24" rx="3" fill="#1c2833" stroke="#e67e22" stroke-width="1.8" filter="url(#shadow)"/>
+<text x="432.0" y="894" text-anchor="middle" fill="#e67e22" font-size="10" font-weight="bold">CON3: TRÁS (1x6 90°)</text>
+<circle cx="342" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="339.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="342" y="967" text-anchor="middle" fill="#3498db" font-size="9" font-weight="bold">Pis.TD</text>
+<text x="342" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P1</text>
+<circle cx="378" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="375.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="378" y="967" text-anchor="middle" fill="#f39c12" font-size="9" font-weight="bold">Pis.TE</text>
+<text x="378" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P2</text>
+<circle cx="414" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="411.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="414" y="967" text-anchor="middle" fill="#e74c3c" font-size="9" font-weight="bold">Freio</text>
+<text x="414" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P3</text>
+<circle cx="450" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="447.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="450" y="967" text-anchor="middle" fill="#e67e22" font-size="9" font-weight="bold">Lant.</text>
+<text x="450" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P4</text>
+<circle cx="486" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="483.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="486" y="967" text-anchor="middle" fill="#7f8c8d" font-size="9" font-weight="bold">NC</text>
+<text x="486" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P5</text>
+<circle cx="522" cy="913" r="4" fill="#f1c40f" stroke="#000" stroke-width="1"/>
+<rect x="519.5" y="919" width="5" height="38" rx="1" fill="#f1c40f" stroke="#b7950b" stroke-width="0.8" filter="url(#shadow)"/>
+<text x="522" y="967" text-anchor="middle" fill="#1abc9c" font-size="9" font-weight="bold">GND</text>
+<text x="522" y="977" text-anchor="middle" fill="#95a5a6" font-size="7.5">P6</text>
+</svg>
