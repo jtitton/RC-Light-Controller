@@ -1,10 +1,13 @@
-# Skills, Requirements & Troubleshooting — RC Light System v7.0
+# Skills, Requirements & Troubleshooting — RC Light System v7.2
 
 [🇧🇷 **Versão em Português (HABILIDADES_REQUISITOS.md)**](HABILIDADES_REQUISITOS.md) | [🇺🇸 **English Version**](#-english)
 
 ---
 
 ## 🇺🇸 English
+
+> [!IMPORTANT]
+> **Official Project Premises:** Before assembling the shield board or wire harnesses, consult the normative document [PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md). Main power (+5V and GND) originates exclusively from the radio receiver via **CON1 (CH6)**, and capacitor **C1** ($100\mu\text{F} \times 16\text{V}$) is mandatory right at the power entrance (Column 15, Rows 14 and 15).
 
 To successfully build, calibrate, and install this smart lighting system into your RC vehicle, you will need basic electronics tools, manual assembly skills, and materials for vibration and moisture protection.
 
@@ -15,7 +18,9 @@ To successfully build, calibrate, and install this smart lighting system into yo
 | Tool / Material | Purpose in Project | Importance |
 |---|---|:---:|
 | **Soldering Iron (30W to 60W)** | Create durable electrical joints on the shield board and wiring harnesses. | **Essential** |
-| **Solder Wire (with flux core)**| Solder wires, resistors, and MODU pin header strips. | **Essential** |
+| **Solder Wire (with flux core)**| Solder wires, resistors, and 90° pin header strips. | **Essential** |
+| **90° Angled Male Pin Headers (2.54mm Pitch)** | CON1 (1x5), CON2 (1x4), CON3 (1x6), and CON4 (1x4) 90° headers for parallel low-profile wiring. | **Essential** |
+| **Electrolytic Capacitor ($100\mu\text{F} \times 16\text{V}$)** | Input filtering and voltage regulation (C1) at radio harness entrance (Col 04, Rows 14-15). | **Essential** |
 | **Heat-Shrink Tubing (1.5mm to 5mm)**| Insulate splices, ground return junctions, and exposed LED leads. | **Essential** |
 | **Wire Cutters & Strippers** | Cut and strip flexible silicone wires. | **Essential** |
 | **Needle-Nose Pliers or Crimper**| Crimp female MODU terminals onto body harness wires. | **Essential** |
@@ -29,8 +34,8 @@ To successfully build, calibrate, and install this smart lighting system into yo
 
 ### 🧠 Recommended Technical Skills
 
-1. **Basic Electronics Soldering:** Solder the resistors and male pin headers onto the 5x7cm single-sided perfboard. Heat the copper pad and component leg for 2 seconds before applying solder to create shiny, vibration-proof joints.
-2. **Polarity Identification:** LEDs have an **Anode** (positive, longer leg) and a **Cathode** (negative, shorter leg/flat rim). All cathodes join into the common ground return rail.
+1. **Basic Electronics Soldering:** Solder the resistors, capacitor C1, and 90° male pin headers onto the 5x7cm single-sided perfboard per [PLACA_SHIELD_LAYOUT.md](PLACA_SHIELD_LAYOUT.md). Heat the copper pad and component leg for 2 seconds before applying solder to create shiny, vibration-proof joints.
+2. **Polarity Identification:** LEDs have an **Anode** (positive, longer leg) and a **Cathode** (negative, shorter leg/flat rim). Electrolytic capacitor C1 has a polarity stripe indicating the negative (-) lead. All negative leads join into the unified master ground bus.
 3. **Multimeter Testing:** Measure continuity between 5V and GND on the shield board before plugging into receiver CH6. If the meter beeps, locate and remove the short circuit before applying power.
 4. **MPU-6050 Mounting:** Secure the sensor to the chassis using foam double-sided tape (3M VHB) to absorb high-frequency motor vibration. The 3D auto-vector alignment algorithm handles orientation automatically.
 
@@ -44,7 +49,7 @@ To successfully build, calibrate, and install this smart lighting system into yo
 * Check the solder joint of the corresponding resistor on the shield board.
 
 #### ❌ Arduino does not respond to transmitter commands:
-* Verify the radio harness (CON1): **Pin 1 to GND** and **Pin 2 to +5V (VCC)** on receiver channel **CH6**.
+* Verify the radio harness (CON1): **Pin 1 to VCC (+5V)** and **Pin 2 to GND** on receiver channel **CH6** (per [PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)).
 * Check the signal pins: Steering on **CH1 (D4)**, Throttle on **CH2 (D2)**, Headlight on **CH4 (D3)**.
 
 #### ❌ MPU-6050 is not detected:
@@ -56,8 +61,8 @@ To successfully build, calibrate, and install this smart lighting system into yo
 #### ❌ Car powers up but blinkers stay on while driving straight (trim drift):
 * Turn off the car, ensure steering and throttle sticks are perfectly centered on the transmitter, and turn the car back on. The auto-centering routine recalibrates neutral in the first 2 seconds.
 
-#### 🎯 How to recalibrate endpoints at the track without a PC:
-* Turn on the transmitter, hold the steering wheel **fully turned right (or left)**, and power on the car while holding the wheel for 2 seconds. The Arduino will enter standalone calibration mode guided by the LEDs.
+#### 🎯 How to recalibrate endpoints at the track without a PC (Calibration Gesture):
+* Turn on the transmitter, hold the steering wheel deflected **over 50% to the right (or left)**, and power on the car while holding the wheel for **1.5 seconds**. The Arduino will flash all LEDs 3 times and enter standalone calibration mode guided by the LEDs.
 
-#### ❌ Headlights flicker or trigger randomly under hard acceleration (motor EMI noise):
-* Electric motors generate voltage transients. Solder a $100\mu\text{F} \times 16\text{V}$ electrolytic capacitor directly between the 5V and GND pins on the shield board to stabilize the power rail.
+#### ❌ Headlights flicker or trigger randomly under hard acceleration (motor EMI noise / voltage drops):
+* Electric motors generate voltage transients. Solder a $100\mu\text{F} \times 16\text{V}$ electrolytic capacitor directly at the power entrance (Column 15, Rows 14 and 15, next to CON1 on the right edge) as per Premise #2 to stabilize the 5V rail and prevent brownouts.

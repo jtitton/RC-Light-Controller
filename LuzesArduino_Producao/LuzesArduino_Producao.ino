@@ -1,6 +1,6 @@
 /*
  * ============================================================
- *  Sistema de Luzes para Carro RC - v7.0 (Versão PRODUÇÃO / PISTA)
+ *  Sistema de Luzes para Carro RC - v7.2 (Versão PRODUÇÃO / PISTA)
  *  Arduino Nano + Receptor FlySky FS-BS6 + Acelerômetro MPU-6050
  * ============================================================
  *
@@ -9,7 +9,7 @@
  *   - Suporte a Acelerômetro I2C MPU-6050 nos pinos A4 (SDA) e A5 (SCL) a 400kHz.
  *   - Auto-Alinhamento Vetorial 3D (independente da orientação de montagem).
  *   - Alerta de Capotamento (Roll-Over Safety): 4 piscas piscam rápido em alerta.
- *   - Memória Flash e SRAM ultra-reduzidas, loop rodando a mais de 60.000 Hz.
+ *   - Loop otimizado rodando entre 1.000 Hz e 2.000 Hz com MPU ativo (~20.000–30.000 Hz em fallback sem sensor).
  *   - Inicialização e Calibração 100% autônomas via rádio guiadas por LEDs.
  *
  * Entradas (Servo PPM do receptor):
@@ -359,7 +359,7 @@ void setup() {
 }
 
 // ============================================================
-// LOOP PRINCIPAL (Ultra-rápido, não-bloqueante, >60.000 Hz)
+// LOOP PRINCIPAL (Ultra-rápido, não-bloqueante: ~1–2 kHz com MPU, ~20–30 kHz em fallback)
 // ============================================================
 void loop() {
   int steerRaw = getFilteredSteering();
@@ -494,7 +494,7 @@ int getFilteredHeadlight() {
 
 HeadlightMode calcHeadlightMode(int hlPercent) {
   if (hlPercent < HEADLIGHT_THRESH_LOW)  return HL_OFF;
-  if (hlPercent <= HEADLIGHT_THRESH_HIGH) return HL_DIM;
+  if (hlPercent < HEADLIGHT_THRESH_HIGH) return HL_DIM;
   return HL_FULL;
 }
 
@@ -523,12 +523,10 @@ void updateHeadlight(HeadlightMode mode) {
 void setTailLightTarget(HeadlightMode hlMode, bool braking) {
   if (braking) {
     g_tailTarget = BRIGHTNESS_100;
+  } else if (hlMode != HL_OFF) {
+    g_tailTarget = BRIGHTNESS_40;
   } else {
-    switch (hlMode) {
-      case HL_OFF:  g_tailTarget = BRIGHTNESS_OFF; break;
-      case HL_DIM:  g_tailTarget = BRIGHTNESS_40;  break;
-      case HL_FULL: g_tailTarget = BRIGHTNESS_100; break;
-    }
+    g_tailTarget = BRIGHTNESS_OFF;
   }
 }
 

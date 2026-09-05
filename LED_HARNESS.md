@@ -1,4 +1,4 @@
-# Wiring Harness Guide — RC Light System v8.0
+# Wiring Harness Guide — RC Light System v7.2
 
 [🇧🇷 **Versão em Português (CHICOTE_LEDS.md)**](CHICOTE_LEDS.md) | [🇺🇸 **English Version**](#-english)
 
@@ -6,10 +6,10 @@
 
 ## 🇺🇸 English
 
-This guide provides step-by-step instructions for assembling the **wiring harnesses** for the RC model using **MODU / Dupont 2.54mm pitch 90° angle connectors** with the v8.0 Distributed Architecture:
+This guide provides step-by-step instructions for assembling the **wiring harnesses** for the RC model using **MODU / Dupont 2.54mm pitch 90° angle connectors** with the v7.2 Distributed Architecture:
 
-1. **Receiver & Power Cable (5 pins 90° on Left Edge)** — Powers the Arduino (5V and GND) through **Channel 6 (CH6)** and reads control signals (CH2 Throttle, CH4 Headlight switch, CH1 Steering).
-2. **MPU-6050 Accelerometer Cable (4 pins 90° on Right Edge)** — I2C bus interface (GND, +5V, SDA A4, SCL A5) for chassis sensor mounting.
+1. **Receiver & Power Cable (5 pins 90° on Right Edge)** — Powers the Arduino (5V and GND) through **Channel 6 (CH6)** and reads control signals (CH2 Throttle, CH4 Headlight switch, CH1 Steering).
+2. **MPU-6050 Accelerometer Cable (4 pins 90° on Left Edge)** — I2C bus interface (GND, +5V, SDA A4, SCL A5) for chassis sensor mounting.
 3. **Front Body Shell Harness (4 pins 90° on Bottom-Left Edge)** — Powers dual headlights and front turn signals.
 4. **Rear Body Shell Harness (6 pins 90° on Bottom Center-Right Edge)** — Powers tail lights, brake lights, and rear turn signals (condenses 12 body wires into a single 6-pin housing).
 
@@ -62,14 +62,13 @@ This guide provides step-by-step instructions for assembling the **wiring harnes
                              ▼
  ┌────────────────────────────────────────────────────────┐
  │                           ▼                            │
- │ 📡 FS-BS6 Receiver  ┌──────────────────┐  🧭 MPU-6050  │
- │  (CH6: +5V/GND      │ HUB SHIELD BOARD │   (GY-521)    │
- │   CH1, CH2, CH4) ──►│   (5x7 cm)       │◄── [A4, A5,   │
- │   [CON1 Left Edge   │                  │     +5V, GND] │
- │    90° Header]      │                  │    [CON4 Right│
- │                     └────────┬─────────┘     Edge 90°] │
- │                              │ (CON2 & CON3 90°        │
- │                              ▼  on Bottom Edge)        │
+ │ 🧭 MPU-6050 (GY-521) ┌──────────────────┐ 📡 FS-BS6 Receiver  │
+ │  [A4, A5, +5V, GND]  │ HUB SHIELD BOARD │  (CH6: +5V/GND      │
+ │  [CON4 Left Edge ───►│   (5x7 cm)       │◄─ CH1, CH2, CH4)    │
+ │   90° Header]        │                  │  [CON1 Right Edge   │
+ │                      └────────┬─────────┘   90° Header]       │
+ │                               │ (CON2 & CON3 90°       │
+ │                               ▼  on Bottom Edge)       │
  │                        CHASSIS                         │
  └────────────────────────────────────────────────────────┘
 ```
@@ -79,7 +78,7 @@ This guide provides step-by-step instructions for assembling the **wiring harnes
 ### 📝 3. Step-by-Step Harness Assembly
 
 #### 📡 Harness A: Receiver & Power Cable via CH6 (5 Pins)
-This cable connects the FlySky FS-BS6 receiver to CON1 on the left edge of the Arduino Hub Shield. All power for the Arduino and all 7 LEDs is drawn from **CH6** (supplied by the ESC's BEC).
+This cable connects the FlySky FS-BS6 receiver to CON1 on the right edge of the Arduino Hub Shield. All power for the Arduino and all 7 LEDs is drawn from **CH6** (supplied by the ESC's BEC).
 
 ```
 SHIELD BOARD SIDE (CON1 MODU Female)            FLYSKY FS-BS6 RECEIVER SIDE
@@ -91,11 +90,12 @@ SHIELD BOARD SIDE (CON1 MODU Female)            FLYSKY FS-BS6 RECEIVER SIDE
 [Pin 5: CH1]    (White Wire)   ──────────────→ CH1 (Top Pin - Steering Signal D4)
 ```
 * **Recommended Length:** ~10 cm to 15 cm.
-* **Assembly Note:** The 1=5V, 2=GND, 3=CH2, 4=CH4, 5=CH1 order aligns directly with Nano power and D2, D3, D4 pins, producing ultra-short 10mm traces with zero crossovers.
+* **Assembly Note:** The 1=+5V, 2=GND, 3=CH2, 4=CH4, 5=CH1 order aligns directly with the Nano right header pins (Rows 11-15), producing ultra-short 10mm traces with zero crossovers.
 
 ---
 
 #### 🧭 Harness B: MPU-6050 Accelerometer Cable (4-Pin Female MODU)
+Connects the Hub Shield (CON4 on the left edge) to the GY-521 sensor module on the vehicle chassis:
 
 ```
 SHIELD BOARD SIDE (MODU Female)                 MPU-6050 SENSOR SIDE

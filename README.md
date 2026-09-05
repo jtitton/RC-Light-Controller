@@ -1,4 +1,4 @@
-# Sistema de Luzes RC v7.0 — Manual do Usuário
+# Sistema de Luzes RC v7.2 — Manual do Usuário
 
 [🇧🇷 **Versão em Português**](#-português) | [🇺🇸 **English Version (README_EN.md)**](README_EN.md)
 
@@ -17,7 +17,7 @@ O projeto conta com **dois firmwares independentes**, cada um otimizado para uma
 | Firmware | Propósito | Características Técnicas | Consumo de Recursos |
 |---|---|---|:---:|
 | **[LuzesArduino.ino](LuzesArduino.ino)** | **Desenvolvimento & Simulação Wokwi** | Comunicação Serial ativa (115200 baud), telemetria inercial (`I`), simulação de capotamento (`K`), menu de comandos (`C`, `Z`, `P`, `R`), **simulação de pista de 60s (`T`)**, e **pilotagem manual por teclado (`W/S/A/D/F/G/X`)**. | Flash: 23.7 kB (77%)<br>RAM: 983 B (47%) |
-| **[LuzesArduino_Producao.ino](LuzesArduino_Producao/LuzesArduino_Producao.ino)** | **Produção & Corrida na Pista** | **Zero Serial** (UART desligada, 100% autônomo), leitura I2C Fast-Mode (400kHz), loop principal a **> 60.000 Hz**, auto-alinhamento 3D, alerta de capotamento e feedback 100% visual nos LEDs. | **Flash: 11.5 kB (37%)**<br>**RAM: 363 B (17%)** |
+| **[LuzesArduino_Producao.ino](LuzesArduino_Producao/LuzesArduino_Producao.ino)** | **Produção & Corrida na Pista** | **Zero Serial** (UART desligada, 100% autônomo), leitura I2C Fast-Mode (400kHz), loop principal a **~1–2 kHz com MPU ativo** (~20–30 kHz em fallback sem MPU), auto-alinhamento 3D, alerta de capotamento e feedback 100% visual nos LEDs. | **Flash: 11.5 kB (37%)**<br>**RAM: 363 B (17%)** |
 
 > [!TIP]
 > * Para testar no computador ou no simulador online: use **[LuzesArduino.ino](LuzesArduino.ino)**.
@@ -34,12 +34,13 @@ O projeto conta com **dois firmwares independentes**, cada um otimizado para uma
 | 🌐 **[Visualizador Interativo da Placa](placa_shield_visualizador.html)** | 🌐 **[Interactive Board Visualizer](placa_shield_visualizador.html)** | **Modelo gráfico visual interativo** (HTML/SVG): vistas superior, inferior espelhada para solda, raio-x e destaque de circuitos. |
 | **[ESQUEMA_LIGACAO.md](ESQUEMA_LIGACAO.md)** | **[WIRING_SCHEMATIC.md](WIRING_SCHEMATIC.md)** | Diagrama elétrico completo, barramento I2C MPU-6050 (A4/A5), GND comum e conexões do receptor CH6. |
 | **[CHICOTE_LEDS.md](CHICOTE_LEDS.md)** | **[LED_HARNESS.md](LED_HARNESS.md)** | Guia de montagem dos chicotes MODU (Frente 4P, Trás 6P, Rádio/CH6 5P, MPU-6050 4P), catálogo HU e impermeabilização. |
+| **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **Premissas Normativas de Engenharia**: alimentação via rádio (CH6), regulação na entrada com C1 e GND mestre unificado. |
 | **[HABILIDADES_REQUISITOS.md](HABILIDADES_REQUISITOS.md)** | **[SKILLS_REQUIREMENTS.md](SKILLS_REQUIREMENTS.md)** | Ferramentas, soldagem, isolamento contra água, aterramento e resolução de problemas (*troubleshooting*). |
-| **[wokwi_diagram.json](wokwi_diagram.json)** | **[wokwi_diagram.json](wokwi_diagram.json)** | Diagrama de componentes e interligações para o simulador Wokwi (incluindo MPU-6050). |
+| **[wokwi_diagram.json](wokwi_diagram.json)** / **[diagram.json](diagram.json)** | **[wokwi_diagram.json](wokwi_diagram.json)** / **[diagram.json](diagram.json)** | Diagrama de componentes e interligações para o simulador Wokwi (com alimentação de rádio, barramento GND e MPU-6050). |
 
 ---
 
-### ⚙️ Principais Características do Sistema (v7.0)
+### ⚙️ Principais Características do Sistema (v7.2)
 
 - **Acelerômetro Inercial I2C (MPU-6050) com I2C Fast-Mode (400kHz):** Detecta aceleração e frenagem física real da carroceria independentemente da orientação de montagem do sensor.
 - **Algoritmo de Auto-Alinhamento Vetorial 3D:** O sistema calibra a gravidade de repouso $\vec{g}_0$ no boot e extrai o vetor longitudinal de marcha $\vec{u}_{\text{long}}$ por produto escalar $A_{\text{long}} = (\vec{a} - \vec{g}_0) \cdot \vec{u}_{\text{long}}$, permitindo fixar a placa em qualquer posição ou inclinação no chassi.
@@ -47,9 +48,9 @@ O projeto conta com **dois firmwares independentes**, cada um otimizado para uma
 - **Alerta de Capotamento (Roll-Over Safety):** Se o veículo capotar ou tombar lateralmente ($\theta > 81^\circ$), os 4 piscas entram automaticamente em modo de alerta rápido (120ms).
 - **Operação Graciosa Resiliente:** Se o módulo MPU-6050 não estiver conectado nos pinos A4/A5, o sistema opera normalmente em modo Rádio PPM exclusivo.
 - **100% Baseado em Interrupções (Não-bloqueante):** Leituras PPM de volante, acelerador e farol via `INT0`, `INT1` e `PCINT20`.
-- **Alimentação Integrada via Canal 6 (CH6):** O Arduino, os LEDs e o acelerômetro são energizados diretamente pelo receptor (BEC do ESC).
+- **Alimentação Integrada via Canal 6 (CH6):** O Arduino, os LEDs e o acelerômetro são energizados diretamente pelo receptor (BEC nominal 5.0V do ESC).
 - **Transição Suave (Fade):** Lanternas traseiras possuem transições suaves de intensidade (fade de ~300ms) ao acender e apagar.
-- **Calibração Autônoma por Gesto no Rádio:** Calibração completa de neutro, extremos e faróis diretamente na pista segurando o volante virado no boot.
+- **Calibração Autônoma por Gesto no Rádio:** Calibração completa de neutro, extremos e faróis diretamente na pista segurando o volante defletido ($\ge 50\%$) por 1.5 segundos no boot.
 
 ---
 
@@ -86,8 +87,8 @@ No firmware, os limiares de acionamento são configurados como constantes:
 
 #### 🎯 Calibração Autônoma de Campo (Por Gesto no Rádio - Sem PC)
 Se você trocar de rádio ou quiser recalibrar os limites máximos na pista:
-1. Ligue o rádio transmissor e segure o volante **todo virado para a direita (ou esquerda)**.
-2. Ligue o carro mantendo o volante virado por 2 segundos.
+1. Ligue o rádio transmissor e segure o volante com **mais de 50% de deflexão para a direita (ou esquerda)**.
+2. Ligue o carro mantendo o volante defletido por **1.5 segundos**.
 3. Os LEDs darão **3 piscadas rápidas** indicando a entrada no modo de calibração.
 4. **Auto-Centro (2s):** Solte o volante e o gatilho no centro (piscas ficam fixos).
 5. **Passo 1 (Extremos - 5s):** Os piscas esquerdo e direito piscarão alternadamente. Mova o volante e o acelerador aos batentes.

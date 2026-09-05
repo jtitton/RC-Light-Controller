@@ -14,7 +14,7 @@
       "top": -240,
       "left": -300,
       "attrs": {
-        "text": "🛡️ SHIELD HUB 5x7cm (v7.2 - PREMISSAS DE ALIMENTAÇÃO)\n1. Origem: VCC (+5V) e GND Mestre provêm do Receptor via CON1 (CH6 / BEC)\n2. Regulação: Capacitor C1 (100uF x 16V) filtra a entrada imediata da placa\n3. Barramento GND Mestre: 100% contínuo e unificado (Nano GNDs, MPU e LEDs)"
+        "text": "🛡️ SHIELD HUB 5x7cm (v7.2 - PRODUÇÃO)\n1. Origem: VCC (+5V) e GND Mestre provêm do Receptor via CON1 (CH6 / BEC)\n2. Regulação: Capacitor C1 (100uF x 16V) filtra a entrada imediata da placa\n3. Barramento GND Mestre: 100% contínuo e unificado (Nano GNDs, MPU e LEDs)"
       }
     },
 

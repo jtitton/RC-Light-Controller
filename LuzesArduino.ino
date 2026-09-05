@@ -1,6 +1,6 @@
 /*
  * ============================================================
- *  Sistema de Luzes para Carro RC - v7.0
+ *  Sistema de Luzes para Carro RC - v7.2
  *  Arduino Nano + Receptor FlySky FS-BS6 + Acelerômetro MPU-6050
  * ============================================================
  *
@@ -23,7 +23,7 @@
  *   D7  - Pisca traseiro esquerdo (laranja, Digital)
  *   D8  - Pisca traseiro direito (laranja, Digital)
  *
- * Novidades v7.0:
+ * Novidades v7.2:
  *   - Suporte a Acelerômetro I2C MPU-6050 com I2C Fast-Mode (400kHz).
  *   - Algoritmo de Auto-Alinhamento Vetorial 3D (independente da orientação de instalação).
  *   - Detecção de aceleração e frenagem física real por produto escalar de Força G.
@@ -71,7 +71,6 @@
 #define MPU6050_REG_ACCEL_X      0x3B
 #define ACCEL_SCALE_4G           8192.0f // LSB/G para escala de ±4G
 #define ACCEL_BRAKE_THRESH_G     0.20f   // Desaceleração >= 0.20G acende a luz de freio
-#define ACCEL_ACCEL_THRESH_G     0.15f   // Aceleração >= 0.15G
 #define ACCEL_ROLLOVER_COS       0.15f   // Ângulo > 81° com a gravidade estática indica capotamento
 
 // --- Limiares em Percentual do Rádio ---
@@ -329,7 +328,7 @@ bool checkCalibrationGesture() {
 
     if (s >= PPM_VALID_MIN && s <= PPM_VALID_MAX) {
       totalSamples++;
-      // Considera defletido se o volante estiver virado > 60% para esquerda (< 1250us) ou direita (> 1750us)
+      // Considera defletido se o volante estiver virado >= 50% para esquerda (< 1250us) ou direita (> 1750us)
       if (s < 1250 || s > 1750) {
         steerDeflectedCount++;
       }
@@ -375,7 +374,7 @@ void setup() {
   // Inicializa a Serial (para bancada e debug)
   Serial.begin(SERIAL_BAUD);
   Serial.println(F("\n==================================="));
-  Serial.println(F(" Sistema de Luzes RC - v7.0"));
+  Serial.println(F(" Sistema de Luzes RC - v7.2"));
   Serial.println(F(" 100% Interrupt-driven + Acelerômetro I2C"));
   Serial.println(F("==================================="));
   Serial.println(F(" C=Calibrar A=Centro P=Print I=Inercial ?=Ajuda\n"));
@@ -747,7 +746,7 @@ void updateTailLightFade() {
 }
 
 void updateBrakeLight(bool braking) {
-  digitalWrite(PIN_OUT_BRAKE, braking ? HIGH : LOW);
+  analogWrite(PIN_OUT_BRAKE, braking ? BRIGHTNESS_100 : BRIGHTNESS_OFF);
 }
 
 void updateBlinkers(BlinkDirection direction) {
@@ -1053,7 +1052,7 @@ void autoCenter() {
 // ============================================================
 void runFullCalibration() {
   Serial.println(F("\n╔══════════════════════════════════════╗"));
-  Serial.println(F("║    CALIBRAÇÃO COMPLETA  v7.0        ║"));
+  Serial.println(F("║    CALIBRAÇÃO COMPLETA  v7.2        ║"));
   Serial.println(F("║  Configure limitadores de curva     ║"));
   Serial.println(F("║  ANTES de calibrar!                 ║"));
   Serial.println(F("╚══════════════════════════════════════╝"));

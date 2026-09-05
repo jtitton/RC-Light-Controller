@@ -1,4 +1,4 @@
-# Guia de Confecção dos Chicotes — Sistema de Luzes RC v8.0
+# Guia de Confecção dos Chicotes — Sistema de Luzes RC v7.2
 
 [🇧🇷 **Versão em Português**](#-português) | [🇺🇸 **English Version (LED_HARNESS.md)**](LED_HARNESS.md)
 
@@ -6,10 +6,10 @@
 
 ## 🇧🇷 Português
 
-Este guia orienta a confecção dos **4 chicotes desacopláveis** do automodelo RC utilizando conectores da **Linha MODU / Dupont (Passo padrão de 2.54mm / 0.1") em 90°** com o **Layout Natural Distribuído (v8.0)**:
+Este guia orienta a confecção dos **4 chicotes desacopláveis** do automodelo RC utilizando conectores da **Linha MODU / Dupont (Passo padrão de 2.54mm / 0.1") em 90°** com o **Layout Natural Distribuído (v7.2)**:
 
-1. **Chicote do Receptor e Alimentação (5 vias em 90° na Lateral Esquerda)** — Alimenta o Arduino (5V e GND) através do **Canal 6 (CH6)** e lê os sinais de controle (CH2 Throttle, CH4 Chave Farol, CH1 Volante).
-2. **Chicote do Acelerômetro MPU-6050 (4 vias em 90° na Lateral Direita)** — Interface I2C (GND, +5V, SCL A5, SDA A4) para fixação do sensor GY-521 no chassi.
+1. **Chicote do Receptor e Alimentação (5 vias em 90° na Lateral Direita)** — Alimenta o Arduino (5V e GND) através do **Canal 6 (CH6)** e lê os sinais de controle (CH2 Throttle, CH4 Chave Farol, CH1 Volante).
+2. **Chicote do Acelerômetro MPU-6050 (4 vias em 90° na Lateral Esquerda)** — Interface I2C (GND, +5V, SCL A5, SDA A4) para fixação do sensor GY-521 no chassi.
 3. **Chicote Dianteiro da Bolha (4 vias em 90° na Borda Inferior Esquerda)** — Faróis duplos e piscas dianteiros.
 4. **Chicote Traseiro da Bolha (6 vias em 90° na Borda Inferior Centro-Direita)** — Lanternas, freios e piscas traseiros (afunilamento dos 12 fios da bolha em um conector único).
 
@@ -22,7 +22,7 @@ Este guia orienta a confecção dos **4 chicotes desacopláveis** do automodelo 
   * 1x [Alojamento MODU Fêmea 6 Vias (1x06)](https://www.huinfinito.com.br/conectores/547-conector-modu-femea-alojamento-01x06-180-graus.html) — Para Chicote do Rádio/Alimentação (usa 5 vias).
   * 1x [Alojamento MODU Fêmea 6 Vias (1x06)](https://www.huinfinito.com.br/conectores/547-conector-modu-femea-alojamento-01x06-180-graus.html) — Para Chicote Traseiro (usa 6 vias).
   * 25x [Terminais MODU Fêmea 1T](https://www.huinfinito.com.br/conectores/186-terminal-modu-femea-1t.html) — Para crimpar/soldar nas pontas dos fios.
-  * 1x [Barra de Pinos Macho 1x40 90°](https://www.huinfinito.com.br/conectores/165-conector-barra-de-pinos-macho-1x40x112-180-graus.html) — Para soldar nas bordas da placa Shield.
+  * 1x Barra de Pinos Macho 1x40 90° (para soldar nas bordas da placa Shield em ângulo reto voltado para fora).
 * **Placa Perfurada:**
   * 1x [Placa Universal Perfurada 5x7cm](https://www.huinfinito.com.br/placas-circuito-impresso/1861-placa-universal-perfurada-face-simples-5x7cm.html)
 * **Fios Recomendados:** Fios de **28 AWG ou 30 AWG com silicone flexível**.
@@ -62,12 +62,11 @@ Este guia orienta a confecção dos **4 chicotes desacopláveis** do automodelo 
                             ▼
  ┌────────────────────────────────────────────────────────┐
  │                          ▼                             │
- │ 📡 Receptor FS-BS6  ┌──────────────────┐  🧭 MPU-6050  │
- │  (CH6: +5V/GND      │ PLACA HUB SHIELD │   (GY-521)    │
- │   CH1, CH2, CH4) ──►│   (5x7 cm)       │◄── [A4, A5,   │
- │   [CON1 Lateral     │                  │     +5V, GND] │
- │    Esquerda 90°]    │                  │    [CON4 Lat. │
- │                     └────────┬─────────┘     Dir. 90°] │
+ │ 🧭 MPU-6050 (GY-521)┌──────────────────┐  📡 Receptor FS-BS6  │
+ │  [A4, A5, +5V, GND] │ PLACA HUB SHIELD │   (CH6: +5V/GND      │
+ │  [CON4 Lateral      │   (5x7 cm)       │◄── CH1, CH2, CH4)    │
+ │   Esquerda 90°] ───►│                  │   [CON1 Lateral      │
+ │                     └────────┬─────────┘    Direita 90°]      │
  │                              │ (CON2 & CON3 90°        │
  │                              ▼  na Borda Inferior)     │
  │                       CHASSI                           │
@@ -79,7 +78,7 @@ Este guia orienta a confecção dos **4 chicotes desacopláveis** do automodelo 
 ### 📝 3. Montagem dos Chicotes Passo a Passo
 
 #### 📡 Chicote A: Cabo do Receptor com Alimentação via CH6 (5 Vias)
-Este cabo conecta o receptor FlySky FS-BS6 ao CON1 na lateral esquerda da placa Shield. Toda a energia do Arduino e dos LEDs vem da porta **CH6** (alimentada pelo BEC do ESC).
+Este cabo conecta o receptor FlySky FS-BS6 ao CON1 na lateral direita da placa Shield. Toda a energia do Arduino e dos LEDs vem da porta **CH6** (alimentada pelo BEC do ESC).
 
 ```
 LADO PLACA SHIELD (CON1 MODU Fêmea)           LADO RECEPTOR FLYSKY FS-BS6
@@ -91,12 +90,12 @@ LADO PLACA SHIELD (CON1 MODU Fêmea)           LADO RECEPTOR FLYSKY FS-BS6
 [Pino 5: CH1]   (Fio Branco)  ──────────────→ CH1 (Linha Superior - Sinal Volante D4)
 ```
 * **Comprimento:** ~10 cm a 15 cm.
-* **Nota de Montagem:** A ordem 1=5V, 2=GND, 3=CH2, 4=CH4, 5=CH1 casa perfeitamente com os pinos de alimentação e D2, D3, D4 do Arduino Nano, garantindo trilhas retas de 10mm sem cruzamentos.
+* **Nota de Montagem:** A ordem 1=+5V, 2=GND, 3=CH2, 4=CH4, 5=CH1 casa perfeitamente com os pinos de alimentação e D2, D3, D4 na barra direita do Arduino Nano, garantindo trilhas retas de 10mm sem cruzamentos.
 
 ---
 
 #### 🧭 Chicote B: Acelerômetro MPU-6050 (4 Vias)
-Conecta a placa Shield ao módulo sensor GY-521 fixado com fita dupla face no chassi do carro:
+Conecta a placa Shield (CON4 na lateral esquerda) ao módulo sensor GY-521 fixado com fita dupla face no chassi do carro:
 
 ```
 LADO PLACA SHIELD (MODU Fêmea)                LADO MPU-6050 (GY-521)
