@@ -9,9 +9,9 @@
 Este projeto consiste em um controlador inteligente de iluminação para carros de controle remoto (RC), baseado no microcontrolador **Arduino Nano**, acelerômetro inercial 3D **MPU-6050 (GY-521)** e alimentado diretamente pela porta **Canal 6 (CH6)** de um receptor de rádio **FlySky FS-BS6** (ou qualquer outro receptor PPM compatível) com suporte nativo a **BEC de 6.0V**.
 
 <p align="center">
-  <img src="placa_shield_3d.jpg" alt="Placa Shield Hub 5x7cm - Visão 3D" width="650">
+  <img src="placa_shield_3d.jpg" alt="Placa Shield Hub 5x7cm - Visão Conceitual 3D" width="650">
   <br>
-  <em>Placa Shield Hub 5x7cm (v8.4) com Conectores MODU em 90°, Diodo D1, Driver Q1 e Acelerômetro MPU-6050</em>
+  <em>⚠️ <strong>Nota:</strong> Imagem gerada por Inteligência Artificial (meramente ilustrativa para visualização conceitual dos componentes). Será substituída futuramente por fotografias reais da montagem final de bancada. Para a pinagem e o roteamento milimétrico exatos, consulte sempre os diagramas técnicos normativos (<a href="PLACA_SHIELD_LAYOUT.md">PLACA_SHIELD_LAYOUT.md</a> e o <a href="placa_shield_visualizador.html">Visualizador Interativo</a>).</em>
 </p>
 
 ---

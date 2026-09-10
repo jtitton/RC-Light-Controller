@@ -9,9 +9,9 @@
 This project consists of an intelligent lighting controller for radio-controlled (RC) cars, based on the **Arduino Nano** microcontroller, **MPU-6050 (GY-521)** 3D inertial accelerometer, and powered directly through the **Channel 6 (CH6)** port of a **FlySky FS-BS6** receiver (or any standard PPM receiver) with native **BEC 6.0V support**.
 
 <p align="center">
-  <img src="placa_shield_3d.jpg" alt="Shield Hub Board 5x7cm - 3D View" width="650">
+  <img src="placa_shield_3d.jpg" alt="Shield Hub Board 5x7cm - 3D Conceptual View" width="650">
   <br>
-  <em>Shield Hub Perfboard 5x7cm (v8.4) with 90° MODU Connectors, Diode D1, Driver Q1, and MPU-6050 Accelerometer</em>
+  <em>⚠️ <strong>Note:</strong> AI-generated conceptual render (merely illustrative). It will be replaced in the future with actual photographs of the physical bench assembly. For exact pinouts, solder tracks, and pad coordinates, always refer to the official technical documentation (<a href="SHIELD_BOARD_LAYOUT.md">SHIELD_BOARD_LAYOUT.md</a> and the <a href="placa_shield_visualizador.html">Interactive Visualizer</a>).</em>
 </p>
 
 ---
