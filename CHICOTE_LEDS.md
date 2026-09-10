@@ -1,4 +1,4 @@
-# Guia de Confecção dos Chicotes — Sistema de Luzes RC v8.3
+# Guia de Confecção dos Chicotes — Sistema de Luzes RC v8.4
 
 [🇧🇷 **Versão em Português**](#-português) | [🇺🇸 **English Version (LED_HARNESS.md)**](LED_HARNESS.md) | [📜 **Premissas Oficiais (PREMISSAS_PROJETO.md)**](PREMISSAS_PROJETO.md)
 
@@ -6,7 +6,7 @@
 
 ## 🇧🇷 Português
 
-Este guia orienta a confecção dos **4 chicotes desacopláveis** do automodelo RC utilizando conectores da **Linha MODU / Dupont (Passo padrão de 2.54mm / 0.1") em 90°** com o **Layout Natural Distribuído (v8.3)**:
+Este guia orienta a confecção dos **4 chicotes desacopláveis** do automodelo RC utilizando conectores da **Linha MODU / Dupont (Passo padrão de 2.54mm / 0.1") em 90°** com o **Layout Natural Distribuído (v8.4)**:
 
 1. **Chicote do Receptor e Alimentação (5 vias em 90° na Lateral Direita - CON1)** — Alimenta o sistema via **Canal 6 (CH6)** com **BEC de 6.0V** (reduzido internamente na placa para +5.25V pelo diodo D1 1N4007) e lê os sinais de controle (CH2 Throttle, CH4 Chave Farol, CH1 Volante).
 2. **Chicote do Acelerômetro MPU-6050 (4 vias em 90° na Lateral Esquerda - CON4)** — Interface I2C direta 1:1 (**GND, TX [SCL], RX [SDA], VCC [+5.25V]**) para fixação do sensor GY-521 no chassi.
@@ -69,7 +69,7 @@ Este guia orienta a confecção dos **4 chicotes desacopláveis** do automodelo 
  │                              │          │              │
  │ 🧭 MPU-6050 (GY-521)    ┌────┴──────────▼─┐  📡 FS-BS6 │
  │  [A4, A5, +5V, GND]     │ PLACA HUB SHIELD│   (CH6:    │
- │  [CON4 Lateral          │   (5x7 cm) v8.3 │◄── +6.0V/GND│
+ │  [CON4 Lateral          │   (5x7 cm) v8.4 │◄── +6.0V/GND│
  │   Esquerda 90°]────────►│[Q1 BC337 Faróis]│    CH1,2,4)│
  │                         └────────┬────────┘   [CON1 Dir│
  │                                  │ (CON3 90° na   90°] │

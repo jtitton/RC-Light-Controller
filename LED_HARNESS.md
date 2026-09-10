@@ -1,12 +1,12 @@
-# Wiring Harness Guide — RC Light System v8.3
+# Wiring Harness Guide — RC Light System v8.4
 
-[🇧🇷 **Versão em Português (CHICOTE_LEDS.md)**](CHICOTE_LEDS.md) | [🇺🇸 **English Version**](#-english) | [📜 **Official Premises (PREMISSAS_PROJETO.md)**](PREMISSAS_PROJETO.md)
+[🇧🇷 **Versão em Português (CHICOTE_LEDS.md)**](CHICOTE_LEDS.md) | [🇺🇸 **English Version**](#-english) | [📜 **Project Premises (PREMISSAS_PROJETO.md)**](PREMISSAS_PROJETO.md)
 
 ---
 
 ## 🇺🇸 English
 
-This guide provides step-by-step instructions for assembling the **wiring harnesses** for the RC model using **MODU / Dupont 2.54mm pitch 90° angle connectors** with the v8.3 Distributed Architecture:
+This guide provides step-by-step instructions for assembling the **wiring harnesses** for the RC model using **MODU / Dupont 2.54mm pitch 90° angle connectors** with the v8.4 Distributed Architecture:
 
 1. **Receiver & Power Cable (5 pins 90° on Right Edge - CON1)** — Powers the system through **Channel 6 (CH6)** with **6.0V BEC** (dropped on-board to +5.25V by D1 1N4007) and reads control signals (CH2 Throttle, CH4 Headlight switch, CH1 Steering).
 2. **MPU-6050 Accelerometer Cable (4 pins 90° on Left Edge - CON4)** — Direct 1:1 I2C interface (**GND, TX [SCL], RX [SDA], VCC [+5.25V]**) for chassis sensor mounting.
@@ -69,7 +69,7 @@ This guide provides step-by-step instructions for assembling the **wiring harnes
  │                           │          │                 │
  │ 🧭 MPU-6050 (GY-521) ┌────┴──────────▼─┐ 📡 FS-BS6     │
  │  [A4, A5, +5V, GND]  │ HUB SHIELD BOARD│  (CH6:        │
- │  [CON4 Left Edge     │   (5x7 cm) v8.3 │◄─ +6.0V/GND,  │
+ │  [CON4 Left Edge     │   (5x7 cm) v8.4 │◄─ +6.0V/GND,  │
  │   90° Header] ──────►│[Q1 BC337 Headlt]│   CH1,2,4)    │
  │                      └────────┬────────┘  [CON1 Right] │
  │                               │ (CON3 90° on           │

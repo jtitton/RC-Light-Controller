@@ -1,4 +1,4 @@
-# Sistema de Luzes RC v8.0 — Manual do Usuário
+# Sistema de Luzes RC v8.4 — Manual do Usuário
 
 [🇧🇷 **Versão em Português**](#-português) | [🇺🇸 **English Version (README_EN.md)**](README_EN.md)
 
@@ -6,7 +6,13 @@
 
 ## 🇧🇷 Português
 
-Este projeto consiste em um controlador inteligente de iluminação para carros de controle remoto (RC), baseado no microcontrolador **Arduino Nano**, acelerômetro inercial 3D **MPU-6050 (GY-521)** e alimentado diretamente pela porta **Canal 6 (CH6)** de um receptor de rádio **FlySky FS-BS6** (ou qualquer outro receptor PPM compatível).
+Este projeto consiste em um controlador inteligente de iluminação para carros de controle remoto (RC), baseado no microcontrolador **Arduino Nano**, acelerômetro inercial 3D **MPU-6050 (GY-521)** e alimentado diretamente pela porta **Canal 6 (CH6)** de um receptor de rádio **FlySky FS-BS6** (ou qualquer outro receptor PPM compatível) com suporte nativo a **BEC de 6.0V**.
+
+<p align="center">
+  <img src="placa_shield_3d.jpg" alt="Placa Shield Hub 5x7cm - Visão 3D" width="650">
+  <br>
+  <em>Placa Shield Hub 5x7cm (v8.4) com Conectores MODU em 90°, Diodo D1, Driver Q1 e Acelerômetro MPU-6050</em>
+</p>
 
 ---
 
@@ -32,23 +38,27 @@ O projeto conta com **dois firmwares independentes**, cada um otimizado para uma
 | **[README.md](README.md)** | **[README_EN.md](README_EN.md)** | Visão geral, comparação de firmwares, integração inercial e guia de operação. |
 | **[PLACA_SHIELD_LAYOUT.md](PLACA_SHIELD_LAYOUT.md)** | **[SHIELD_BOARD_LAYOUT.md](SHIELD_BOARD_LAYOUT.md)** | **Projeto de engenharia da placa perfurada (5x7cm)**: grid de coordenadas 18x24, trilhas de solda, barramento GND e layout de componentes. |
 | 🌐 **[Visualizador Interativo da Placa](placa_shield_visualizador.html)** | 🌐 **[Interactive Board Visualizer](placa_shield_visualizador.html)** | **Modelo gráfico visual interativo** (HTML/SVG): vistas superior, inferior espelhada para solda, raio-x e destaque de circuitos. |
-| **[ESQUEMA_LIGACAO.md](ESQUEMA_LIGACAO.md)** | **[WIRING_SCHEMATIC.md](WIRING_SCHEMATIC.md)** | Diagrama elétrico completo, barramento I2C MPU-6050 (A4/A5), GND comum e conexões do receptor CH6. |
-| **[CHICOTE_LEDS.md](CHICOTE_LEDS.md)** | **[LED_HARNESS.md](LED_HARNESS.md)** | Guia de montagem dos chicotes MODU (Frente 4P, Trás 6P, Rádio/CH6 5P, MPU-6050 4P), catálogo HU e impermeabilização. |
-| **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **Premissas Normativas de Engenharia**: alimentação via rádio (CH6), regulação na entrada com C1 e GND mestre unificado. |
+| **[ESQUEMA_LIGACAO.md](ESQUEMA_LIGACAO.md)** | **[WIRING_SCHEMATIC.md](WIRING_SCHEMATIC.md)** | Diagrama elétrico completo, barramento I2C MPU-6050 (A4/A5), GND comum, transistor Q1, diodo D1 e conexões do receptor CH6. |
+| **[CHICOTE_LEDS.md](CHICOTE_LEDS.md)** | **[LED_HARNESS.md](LED_HARNESS.md)** | Guia de montagem dos chicotes MODU (Frente 4P, Trás 6P, Rádio/CH6 5P, MPU-6050 4P), bitolas e impermeabilização. |
+| **[SBOM_COMPRAS_HU_INFINITO.md](SBOM_COMPRAS_HU_INFINITO.md)** | **[SBOM_COMPRAS_HU_INFINITO.md](SBOM_COMPRAS_HU_INFINITO.md)** | **Lista de compras completa (BOM)**: componentes com links diretos, estoque real e preços na loja HU Infinito. |
+| **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **Premissas Normativas de Engenharia**: alimentação via rádio (CH6), regulação na entrada com D1/C1 e GND mestre unificado. |
 | **[HABILIDADES_REQUISITOS.md](HABILIDADES_REQUISITOS.md)** | **[SKILLS_REQUIREMENTS.md](SKILLS_REQUIREMENTS.md)** | Ferramentas, soldagem, isolamento contra água, aterramento e resolução de problemas (*troubleshooting*). |
 | **[wokwi_diagram.json](wokwi_diagram.json)** / **[diagram.json](diagram.json)** | **[wokwi_diagram.json](wokwi_diagram.json)** / **[diagram.json](diagram.json)** | Diagrama de componentes e interligações para o simulador Wokwi (com alimentação de rádio, barramento GND e MPU-6050). |
 
 ---
 
-### ⚙️ Principais Características do Sistema (v8.0)
+### ⚙️ Principais Características do Sistema (v8.4)
 
+- **Suporte Nativo a BEC de 6.0V com Diodo D1 Onboard (1N4007):** Alimentado diretamente pela porta CH6 do receptor com suporte pleno a BECs de 6.0V. O diodo retificador D1 produz uma queda de $V_f \approx 0.75\text{V}$, gerando um barramento seguro de **$+5.25\text{V}$** que protege o microcontrolador, o conversor USB e o acelerômetro, além de oferecer proteção contra inversão acidental de polaridade.
+- **Capacitor de Entrada C1 ($100\mu\text{F} \times 25\text{V}$):** Montado na Linha 18 na entrada de energia, absorve transientes e oscilações de carga provocadas pelo servo de direção e motor elétrico.
+- **Driver de Farol Q1 (BC337 NPN) & Resistor R1 ($27\,\Omega$):** Transistor operando em seguidor de emissor para fornecer de 45 a 55 mA aos 4 faróis dianteiros em paralelo com brilho total, drenando menos de 0.5 mA do pino D9 do Arduino Nano.
+- **Padronização dos Canais Diretos em $100\,\Omega$ 1/4W (R2 a R7):** Piscas dianteiros/traseiros, luz de freio e lanternas traseiras com correntes calibradas para visibilidade extrema e máxima segurança elétrica.
 - **Acelerômetro Inercial I2C (MPU-6050) com I2C Fast-Mode (400kHz):** Detecta aceleração e frenagem física real da carroceria independentemente da orientação de montagem do sensor.
 - **Algoritmo de Auto-Alinhamento Vetorial 3D:** O sistema calibra a gravidade de repouso $\vec{g}_0$ no boot e extrai o vetor longitudinal de marcha $\vec{u}_{\text{long}}$ por produto escalar $A_{\text{long}} = (\vec{a} - \vec{g}_0) \cdot \vec{u}_{\text{long}}$, permitindo fixar a placa em qualquer posição ou inclinação no chassi.
 - **Fusão de Sensores na Frenagem:** A luz de freio é acionada pelo gatilho do rádio (PPM $< -5\%$) **OU** por desaceleração física inercial ($A_{\text{long}} \le -0.20G$), simulando o efeito de freio-motor e frenagem real em pista.
 - **Alerta de Capotamento (Roll-Over Safety):** Se o veículo capotar ou tombar lateralmente ($\theta > 81^\circ$), os 4 piscas entram automaticamente em modo de alerta rápido (120ms).
 - **Operação Graciosa Resiliente:** Se o módulo MPU-6050 não estiver conectado nos pinos A4/A5, o sistema opera normalmente em modo Rádio PPM exclusivo.
 - **100% Baseado em Interrupções (Não-bloqueante):** Leituras PPM de volante, acelerador e farol via `INT0`, `INT1` e `PCINT20`.
-- **Alimentação Integrada via Canal 6 (CH6):** O Arduino, os LEDs e o acelerômetro são energizados diretamente pelo receptor (BEC nominal 5.0V do ESC).
 - **Transição Suave (Fade):** Lanternas traseiras possuem transições suaves de intensidade (fade de ~300ms) ao acender e apagar.
 - **Calibração Autônoma por Gesto no Rádio:** Calibração completa de neutro, extremos e faróis diretamente na pista segurando o volante defletido ($\ge 50\%$) por 1.5 segundos no boot.
 

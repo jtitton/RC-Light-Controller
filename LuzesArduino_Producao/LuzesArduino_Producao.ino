@@ -1,6 +1,6 @@
 /*
  * ============================================================
- *  Sistema de Luzes para Carro RC - v8.0 (Versão PRODUÇÃO / PISTA)
+ *  Sistema de Luzes para Carro RC - v8.4 (Versão PRODUÇÃO / PISTA)
  *  Arduino Nano + Receptor FlySky FS-BS6 + Acelerômetro MPU-6050
  * ============================================================
  *

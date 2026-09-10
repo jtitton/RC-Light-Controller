@@ -1,4 +1,4 @@
-# RC Car Smart Lighting System v8.0 — User Manual
+# RC Car Smart Lighting System v8.4 — User Manual
 
 [🇧🇷 **Portuguese Version (README.md)**](README.md) | [🇺🇸 **English Version**](#-english)
 
@@ -6,7 +6,13 @@
 
 ## 🇺🇸 English
 
-This project consists of an intelligent lighting controller for radio-controlled (RC) cars, based on the **Arduino Nano** microcontroller, **MPU-6050 (GY-521)** 3D inertial accelerometer, and powered directly through the **Channel 6 (CH6)** port of a **FlySky FS-BS6** receiver (or any standard PPM receiver).
+This project consists of an intelligent lighting controller for radio-controlled (RC) cars, based on the **Arduino Nano** microcontroller, **MPU-6050 (GY-521)** 3D inertial accelerometer, and powered directly through the **Channel 6 (CH6)** port of a **FlySky FS-BS6** receiver (or any standard PPM receiver) with native **BEC 6.0V support**.
+
+<p align="center">
+  <img src="placa_shield_3d.jpg" alt="Shield Hub Board 5x7cm - 3D View" width="650">
+  <br>
+  <em>Shield Hub Perfboard 5x7cm (v8.4) with 90° MODU Connectors, Diode D1, Driver Q1, and MPU-6050 Accelerometer</em>
+</p>
 
 ---
 
@@ -32,23 +38,27 @@ The project provides **two independent firmwares**, each optimized for a specifi
 | **[README_EN.md](README_EN.md)** | **[README.md](README.md)** | Project overview, firmware comparisons, inertial integration, and operation guide. |
 | **[SHIELD_BOARD_LAYOUT.md](SHIELD_BOARD_LAYOUT.md)** | **[PLACA_SHIELD_LAYOUT.md](PLACA_SHIELD_LAYOUT.md)** | **Perfboard Engineering Design (5x7cm)**: 18x24 grid coordinate matrix, solder traces, common GND rail, and component placement. |
 | 🌐 **[Interactive Board Visualizer](placa_shield_visualizador.html)** | 🌐 **[Visualizador Interativo da Placa](placa_shield_visualizador.html)** | **Interactive Graphical Board Model** (HTML/SVG): component top view, mirrored solder bottom view, x-ray, and dynamic net highlighting. |
-| **[WIRING_SCHEMATIC.md](WIRING_SCHEMATIC.md)** | **[ESQUEMA_LIGACAO.md](ESQUEMA_LIGACAO.md)** | Full circuit diagram, MPU-6050 I2C bus (A4/A5), common ground rail, resistor calculations, and CH6 receiver power supply. |
-| **[LED_HARNESS.md](LED_HARNESS.md)** | **[CHICOTE_LEDS.md](CHICOTE_LEDS.md)** | Build guide for MODU quick-disconnect harnesses (Front 4P, Rear 6P, Radio/CH6 5P, MPU-6050 4P), connector part numbers, and waterproofing. |
-| **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **Normative Engineering Premises**: dedicated radio power (CH6), C1 entrance regulation, and unified master GND bus. |
+| **[WIRING_SCHEMATIC.md](WIRING_SCHEMATIC.md)** | **[ESQUEMA_LIGACAO.md](ESQUEMA_LIGACAO.md)** | Full circuit diagram, MPU-6050 I2C bus (A4/A5), common ground rail, Q1 driver, D1 diode, and CH6 receiver power supply. |
+| **[LED_HARNESS.md](LED_HARNESS.md)** | **[CHICOTE_LEDS.md](CHICOTE_LEDS.md)** | Build guide for MODU quick-disconnect harnesses (Front 4P, Rear 6P, Radio/CH6 5P, MPU-6050 4P), wire gauges, and waterproofing. |
+| **[SBOM_COMPRAS_HU_INFINITO.md](SBOM_COMPRAS_HU_INFINITO.md)** | **[SBOM_COMPRAS_HU_INFINITO.md](SBOM_COMPRAS_HU_INFINITO.md)** | **Complete Bill of Materials (BOM)**: components with direct purchase links, live stock, and prices at HU Infinito. |
+| **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **[PREMISSAS_PROJETO.md](PREMISSAS_PROJETO.md)** | **Normative Engineering Premises**: dedicated radio power (CH6), entrance regulation via D1/C1, and unified master GND bus. |
 | **[SKILLS_REQUIREMENTS.md](SKILLS_REQUIREMENTS.md)** | **[HABILIDADES_REQUISITOS.md](HABILIDADES_REQUISITOS.md)** | Required tools, soldering best practices, waterproofing techniques, and comprehensive troubleshooting. |
 | **[wokwi_diagram.json](wokwi_diagram.json)** / **[diagram.json](diagram.json)** | **[wokwi_diagram.json](wokwi_diagram.json)** / **[diagram.json](diagram.json)** | Complete wiring and visual component schematic for Wokwi online simulation (including radio power, master GND bus, and MPU-6050). |
 
 ---
 
-### ⚙️ Main System Features (v8.0)
+### ⚙️ Main System Features (v8.4)
 
+- **Native Support for BEC 6.0V with Onboard Diode D1 (1N4007):** Powered directly through receiver channel CH6 with full support for 6.0V BECs. Diode D1 provides a $V_f \approx 0.75\text{V}$ voltage drop, supplying a safe and stable **$+5.25\text{V}$** rail that protects the microcontroller, USB converter, and accelerometer against overvoltage, while providing reverse polarity protection.
+- **Input Decoupling Capacitor C1 ($100\mu\text{F} \times 25\text{V}$):** Positioned on Row 18 right at the power entrance, absorbing voltage dips and transient spikes caused by high-torque servos and powerful electric motors.
+- **Headlight Driver Q1 (BC337 NPN) & Resistor R1 ($27\,\Omega$):** Emitter follower topology delivering 45–55 mA to the 4 parallel headlights at full brightness, drawing less than 0.5 mA from Arduino pin D9.
+- **Direct Channels Standardized at $100\,\Omega$ 1/4W (R2 to R7):** Front/rear turn signals, brake lights, and taillights operate at optimal current for extreme track visibility and electrical reliability.
 - **I2C Inertial Accelerometer (MPU-6050) with Fast-Mode (400kHz):** Measures true physical vehicle acceleration and deceleration regardless of mounting orientation.
 - **3D Auto-Vector Alignment Algorithm:** Automatically establishes static gravity $\vec{g}_0$ at boot and computes longitudinal dynamic force $A_{\text{long}} = (\vec{a} - \vec{g}_0) \cdot \vec{u}_{\text{long}}$ through vector projection, allowing the sensor to be mounted at any angle or position.
 - **Braking Sensor Fusion:** Brake lights illuminate on transmitter reverse command (PPM $< -5\%$) **OR** true physical deceleration ($A_{\text{long}} \le -0.20G$), accurately simulating engine braking and track friction.
 - **Roll-Over Safety Alert:** If the vehicle flips or rolls over on its side ($\theta > 81^\circ$), all 4 turn signals automatically enter high-speed hazard flash mode (120ms).
 - **Graceful Fallback:** If the MPU-6050 sensor is not connected on A4/A5, the system automatically falls back to 100% PPM radio operation without crashing or lagging.
 - **100% Interrupt-Driven (Non-blocking):** All 3 radio channels are read asynchronously via hardware interrupts (`INT0`, `INT1`, and `PCINT20`).
-- **CH6 Integrated Power Supply:** Powered directly through receiver channel CH6 via the ESC's Battery Elimination Circuit (nominal 5.0V BEC).
 - **Smooth Fade Transitions:** Tail lights feature smooth ~300ms fade transitions.
 - **Standalone Field Gesture Calibration:** Recalibrate all stick and headlight endpoints directly at the track by holding steering wheel deflected ($\ge 50\%$) for 1.5 seconds during power-up.
 
