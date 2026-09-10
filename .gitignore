@@ -21,3 +21,11 @@ $RECYCLE.BIN/
 GEMINI.md
 AGENTS.md
 project_config.json
+
+# Local / Private SBOM & Shopping Lists
+SBOM*.md
+SBOM_COMPRAS_HU_INFINITO.md
+
+# Python cache
+__pycache__/
+*.py[cod]

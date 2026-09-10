@@ -1,4 +1,4 @@
-# RC Car Smart Lighting System v7.2 — User Manual
+# RC Car Smart Lighting System v8.0 — User Manual
 
 [🇧🇷 **Portuguese Version (README.md)**](README.md) | [🇺🇸 **English Version**](#-english)
 
@@ -40,7 +40,7 @@ The project provides **two independent firmwares**, each optimized for a specifi
 
 ---
 
-### ⚙️ Main System Features (v7.2)
+### ⚙️ Main System Features (v8.0)
 
 - **I2C Inertial Accelerometer (MPU-6050) with Fast-Mode (400kHz):** Measures true physical vehicle acceleration and deceleration regardless of mounting orientation.
 - **3D Auto-Vector Alignment Algorithm:** Automatically establishes static gravity $\vec{g}_0$ at boot and computes longitudinal dynamic force $A_{\text{long}} = (\vec{a} - \vec{g}_0) \cdot \vec{u}_{\text{long}}$ through vector projection, allowing the sensor to be mounted at any angle or position.

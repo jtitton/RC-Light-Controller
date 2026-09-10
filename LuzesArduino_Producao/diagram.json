@@ -14,30 +14,30 @@
       "top": -240,
       "left": -300,
       "attrs": {
-        "text": "🛡️ SHIELD HUB 5x7cm (v7.2 - PRODUÇÃO)\n1. Origem: VCC (+5V) e GND Mestre provêm do Receptor via CON1 (CH6 / BEC)\n2. Regulação: Capacitor C1 (100uF x 16V) filtra a entrada imediata da placa\n3. Barramento GND Mestre: 100% contínuo e unificado (Nano GNDs, MPU e LEDs)"
+        "text": "🛡️ SHIELD HUB 5x7cm (v8.3 - PRODUÇÃO)\n1. Origem: BEC 6.0V e GND Mestre provêm do Receptor via CON1 (CH6 / BEC)\n2. Regulação e Proteção: Diodo D1 (1N4007) reduz 6.0V para +5.25V e C1 (100uF) filtra a entrada\n3. Barramento GND Mestre: 100% contínuo e unificado (Nano GNDs, MPU e LEDs)\n4. Driver Farol: Q1 BC337 (NPN) High-Side + R1 (27Ω) para 4 LEDs brancos em paralelo\n5. Canais Diretos: R2-R7 padronizados em 100Ω (1/4W) para máxima intensidade luminosa\n6. CON4 MPU-6050: P1 GND, P2 TX [SCL], P3 RX [SDA], P4 VCC"
       }
     },
 
     { "type": "wokwi-led", "id": "led_pisca_fl", "top": -160, "left": -180, "attrs": { "color": "orange", "label": "Pisca Diant Esq (D10)" } },
-    { "type": "wokwi-resistor", "id": "r2", "top": -90, "left": -180, "attrs": { "value": "150" } },
+    { "type": "wokwi-resistor", "id": "r2", "top": -90, "left": -180, "attrs": { "value": "100" } },
 
-    { "type": "wokwi-led", "id": "led_farol", "top": -160, "left": -70, "attrs": { "color": "white", "label": "Farol Dianteiro (D9)" } },
-    { "type": "wokwi-resistor", "id": "r1", "top": -90, "left": -70, "attrs": { "value": "100" } },
+    { "type": "wokwi-led", "id": "led_farol", "top": -160, "left": -70, "attrs": { "color": "white", "label": "Farol Dianteiro (D9 via Q1)" } },
+    { "type": "wokwi-resistor", "id": "r1", "top": -90, "left": -70, "attrs": { "value": "27" } },
 
     { "type": "wokwi-led", "id": "led_pisca_fr", "top": -160, "left": 50, "attrs": { "color": "orange", "label": "Pisca Diant Dir (D11)" } },
-    { "type": "wokwi-resistor", "id": "r3", "top": -90, "left": 50, "attrs": { "value": "150" } },
+    { "type": "wokwi-resistor", "id": "r3", "top": -90, "left": 50, "attrs": { "value": "100" } },
 
     { "type": "wokwi-led", "id": "led_pisca_rl", "top": 210, "left": -180, "attrs": { "color": "orange", "label": "Pisca Tras Esq (D7)" } },
-    { "type": "wokwi-resistor", "id": "r6", "top": 150, "left": -180, "attrs": { "value": "150" } },
+    { "type": "wokwi-resistor", "id": "r6", "top": 150, "left": -180, "attrs": { "value": "100" } },
 
     { "type": "wokwi-led", "id": "led_tail", "top": 210, "left": -80, "attrs": { "color": "red", "label": "Lanterna (D5)" } },
-    { "type": "wokwi-resistor", "id": "r4", "top": 150, "left": -80, "attrs": { "value": "150" } },
+    { "type": "wokwi-resistor", "id": "r4", "top": 150, "left": -80, "attrs": { "value": "100" } },
 
     { "type": "wokwi-led", "id": "led_brake", "top": 210, "left": 20, "attrs": { "color": "red", "label": "Luz de Freio (D6)" } },
-    { "type": "wokwi-resistor", "id": "r5", "top": 150, "left": 20, "attrs": { "value": "150" } },
+    { "type": "wokwi-resistor", "id": "r5", "top": 150, "left": 20, "attrs": { "value": "100" } },
 
     { "type": "wokwi-led", "id": "led_pisca_rr", "top": 210, "left": 130, "attrs": { "color": "orange", "label": "Pisca Tras Dir (D8)" } },
-    { "type": "wokwi-resistor", "id": "r7", "top": 150, "left": 130, "attrs": { "value": "150" } },
+    { "type": "wokwi-resistor", "id": "r7", "top": 150, "left": 130, "attrs": { "value": "100" } },
 
     { "type": "wokwi-mpu6050", "id": "mpu1", "top": 0, "left": -260, "attrs": {} }
   ],

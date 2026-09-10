@@ -1,7 +1,26 @@
 """
-Script de Validação Automatizada de Roteamento — Shield Hub v7.2
+Script de Validação Automatizada de Roteamento — Shield Hub v8.4
 Verifica matematicamente que nenhum pad da matriz de 18x24 é compartilhado
 por duas redes elétricas distintas, garantindo ZERO curtos-circuitos.
+Arquitetura v8.4:
+- Proteção e Regulação de Entrada D1 com Pitch Expandido (1N4007 DO-41 descendo na Col 17, Rows 15 a 18):
+  * CON1 Pino 1 (+6.0V RAW BEC) entra no Pad (17, 15), isolado no verso.
+  * Diodo desce verticalmente com pitch padrão DO-41 de 7,62 mm (3 passos) para o Pad (17, 18), gerando +5.25V.
+  * Barramento VCC no verso da Linha 18 conecta (17, 18) a (15, 18).
+  * Capacitor C1 (100µF x 25V) na Linha 18: C1(+) em (15, 18) e C1(-) em (14, 18), ligado a GND (13, 18).
+  * Jumper W1 (+5.25V Nano 5V) sai de (15, 18) e Jumper W5 (+5.25V Coletor Q1) sai de (16, 18).
+  * Pads (16, 15) e (15, 15) ficam 100% livres, criando mais de 7 mm de separação galvânica contra curtos.
+- Driver de Transistor Q1 (BC337 NPN) no canal de Farol (D9) em High-Side Emitter Follower:
+  * Coletor (Col 13, Linha 09) conectado a +5.25V via Jumper W5.
+  * Base (Col 14, Linha 09) excitada por Nano D9 (12, 06).
+  * Emissor (Col 15, Linha 09) alimenta R1 (27Ω) em (15, 08).
+- Resistor R1 Farol (27Ω 1/4W): Montado verticalmente na Coluna 15 entre Linhas 08 e 06 (pitch 5,08mm).
+- Resistores R2 a R7 padronizados em 100Ω (1/4W) para máxima intensidade luminosa segura.
+- CON2 (Chicote Frente 1x4 90°) na Borda Superior Direita (Col 17, Linhas 04 a 07).
+- CON4 (MPU-6050 1x4 90°) na Lateral Esquerda (Col 02, Linhas 10 a 13): P1 GND, P2 TX/SCL, P3 RX/SDA, P4 VCC.
+- CON1 (Rádio 1x5 90°) na Lateral Direita (Col 17, Linhas 11 a 15).
+- CON3 (Chicote Traseiro 1x6 90°) e R4-R7 na Borda Inferior (Linha 24 / Cols 08-13).
+- 5 Jumpers Superiores Isolados (W1 +5V, W2 GND Frente, W3 GND Cross, W4 SDA/RX MPU, W5 +5V Farol).
 """
 import sys
 import io
@@ -60,32 +79,64 @@ def verify_board_routing():
         assign_pad(12, r, name)
 
     # 2. Conectores e Componentes
-    # CON1 (Rádio): Col 17, Rows 11 a 15
+    # CON1 (Rádio e Alimentação): Col 17, Rows 11 a 15
     assign_pad(17, 11, "CH1")
     assign_pad(17, 12, "CH4")
     assign_pad(17, 13, "CH2")
     assign_pad(17, 14, "GND")
-    assign_pad(17, 15, "VCC")
+    assign_pad(17, 15, "V_IN_BEC")  # Entrada +6.0V do BEC do ESC (v8.3)
 
-    # Capacitor C1: Col 15, Rows 14 e 15
-    assign_pad(15, 14, "GND")
-    assign_pad(15, 15, "VCC")
+    # Diodo D1 (1N4007 DO-41 v8.4): Col 17, Rows 15 a 18 (Pitch expandido de 7,62mm / 3 passos)
+    # Anodo (+) em (17, 15) [V_IN_BEC]
+    # Catodo (- faixa prateada) em (17, 18) [VCC +5.25V]
+    assign_pad(17, 15, "V_IN_BEC")
+    assign_pad(17, 18, "VCC")
 
-    # CON4 (MPU-6050): Col 02, Rows 10 a 13
-    assign_pad(2, 10, "SDA")
+    # Linha VCC Protegida na Linha 18 (Saída de D1 Cátodo em 17,18 -> W5 em 16,18 -> C1+ em 15,18)
+    assign_line((17, 18), (15, 18), "VCC")
+
+    # Capacitor C1 (100µF x 25V v8.4): Col 15 (+) e Col 14 (-), Row 18
+    assign_pad(15, 18, "VCC")
+    assign_pad(14, 18, "GND")
+
+    # Ponte de solda GND C1(-): (14, 18) -> (13, 18) [Tronco GND Mestre Col 13]
+    assign_line((14, 18), (13, 18), "GND")
+
+    # CON4 (MPU-6050 v8.1/v8.2/v8.3): Col 02, Rows 10 a 13
+    assign_pad(2, 10, "GND")
     assign_pad(2, 11, "SCL")
-    assign_pad(2, 12, "VCC")
-    assign_pad(2, 13, "GND")
+    assign_pad(2, 12, "SDA")
+    assign_pad(2, 13, "VCC")
 
-    # Resistores R1-R3 Dianteiros: Rows 18 (Top) e 21 (Bot)
-    assign_pad(4, 18, "D9")
-    assign_pad(4, 21, "D9_out")
-    assign_pad(5, 18, "D10")
-    assign_pad(5, 21, "D10_out")
-    assign_pad(6, 18, "D11")
-    assign_pad(6, 21, "D11_out")
+    # CON2 (Chicote Dianteiro): Col 17, Rows 04 a 07
+    assign_pad(17, 7, "GND")
+    assign_pad(17, 6, "D9_out")
+    assign_pad(17, 5, "D10_out")
+    assign_pad(17, 4, "D11_out")
 
-    # Resistores R7, R6, R5, R4 Traseiros: Rows 18 (Top) e 21 (Bot)
+    # Resistores R2 e R3 Dianteiros (100Ω): Cols 14 a 16, Rows 05 e 04
+    # R2 (Pisca FE 100Ω): Lead 1 (14, 05) [D10 in], Lead 2 (16, 05) [D10_out]
+    assign_pad(14, 5, "D10")
+    assign_pad(16, 5, "D10_out")
+    # R3 (Pisca FD 100Ω): Lead 1 (14, 04) [D11 in], Lead 2 (16, 04) [D11_out]
+    assign_pad(14, 4, "D11")
+    assign_pad(16, 4, "D11_out")
+
+    # Driver de Transistor Q1 (BC337 NPN Farol v8.2/v8.3): Row 09, Cols 13 a 15
+    # Pin 1: Coletor (13, 09) [VCC vindo de W5]
+    # Pin 2: Base (14, 09) [D9 vindo de Nano D9]
+    # Pin 3: Emissor (15, 09) [D9_emitter]
+    assign_pad(13, 9, "VCC")
+    assign_pad(14, 9, "D9")
+    assign_pad(15, 9, "D9_emitter")
+
+    # Resistor R1 Farol (27Ω 1/4W v8.2/v8.3): Col 15, Rows 08 a 06 (Vertical)
+    # Lead 1: (15, 08) [D9_emitter]
+    # Lead 2: (15, 06) [D9_out]
+    assign_pad(15, 8, "D9_emitter")
+    assign_pad(15, 6, "D9_out")
+
+    # Resistores R7, R6, R5, R4 Traseiros (100Ω): Rows 18 (Top) e 21 (Bot)
     assign_pad(8, 18, "D8")
     assign_pad(8, 21, "D8_out")
     assign_pad(9, 18, "D7")
@@ -94,12 +145,6 @@ def verify_board_routing():
     assign_pad(10, 21, "D6_out")
     assign_pad(11, 18, "D5")
     assign_pad(11, 21, "D5_out")
-
-    # CON2 (Chicote Dianteiro): Row 24, Cols 03 a 06
-    assign_pad(3, 24, "GND")
-    assign_pad(4, 24, "D9_out")
-    assign_pad(5, 24, "D10_out")
-    assign_pad(6, 24, "D11_out")
 
     # CON3 (Chicote Traseiro): Row 24, Cols 08 a 13
     assign_pad(8, 24, "D8_out")
@@ -113,9 +158,11 @@ def verify_board_routing():
     assign_line((17, 12), (12, 12), "CH4")
     assign_line((17, 13), (12, 13), "CH2")
 
-    # 4. Trilhas de Solda do MPU-6050 (10mm face a face)
-    assign_line((6, 10), (2, 10), "SDA")
+    # 4. Trilhas de Solda do MPU-6050
+    # P2 (TX / SCL): Trilha reta horizontal de 10mm para Nano A5 (Linha 11)
     assign_line((6, 11), (2, 11), "SCL")
+    # P1 (GND): Ponte direta para o Barramento GND Coluna 01
+    assign_line((2, 10), (1, 10), "GND")
 
     # 5. Trilhas de Solda dos LEDs Traseiros (Trilhas L aninhadas)
     assign_line((12, 7), (8, 7), "D8")
@@ -135,56 +182,62 @@ def verify_board_routing():
     assign_line((11, 21), (11, 24), "D5_out")
 
     # 6. Trilhas de Solda dos LEDs Dianteiros
-    # D11: corre pelo canal central livre Col 07 até R3 Top (06,18)
-    assign_line((12, 4), (7, 4), "D11")
-    assign_line((7, 4), (7, 17), "D11")
-    assign_pad(6, 18, "D11")
-    assign_line((6, 21), (6, 24), "D11_out")
+    # R2 Pisca FE D10 (Row 05)
+    assign_line((12, 5), (14, 5), "D10")
+    assign_line((16, 5), (17, 5), "D10_out")
+    # R3 Pisca FD D11 (Row 04)
+    assign_line((12, 4), (14, 4), "D11")
+    assign_line((16, 4), (17, 4), "D11_out")
 
-    # Saídas de R1 e R2 para CON2
-    assign_line((4, 21), (4, 24), "D9_out")
-    assign_line((5, 21), (5, 24), "D10_out")
+    # Farol Driver v8.2/v8.3:
+    # Base de Q1: Nano D9 (12, 06) -> (14, 06) -> (14, 09)
+    assign_line((12, 6), (14, 6), "D9")
+    assign_line((14, 6), (14, 9), "D9")
+
+    # Emissor de Q1 -> R1 In: (15, 09) -> (15, 08)
+    assign_line((15, 9), (15, 8), "D9_emitter")
+
+    # R1 Out -> CON2 P2: (15, 6) -> (17, 6)
+    assign_line((15, 6), (17, 6), "D9_out")
 
     # 7. Barramento GND Mestre
     # Tronco Direito: CON1 P2 (17,14) -> C1(-) (15,14) -> Nano GND Dir (12,14)
     assign_line((17, 14), (12, 14), "GND")
     # Canal Col 13 desce até CON3 P6 (13,24)
     assign_line((13, 14), (13, 24), "GND")
-    # Tronco Esquerdo: Nano GND Esq (06,16) -> CON4 P1 (02,13)
-    assign_line((6, 16), (2, 16), "GND")
-    assign_line((2, 16), (2, 13), "GND")
-    # Margem Col 01 até CON2 P1 (03,24)
-    assign_line((2, 16), (1, 16), "GND")
-    assign_line((1, 16), (1, 24), "GND")
-    assign_line((1, 24), (3, 24), "GND")
+    # Tronco Esquerdo: Nano GND Esq (06,16) -> Barramento Coluna 01
+    assign_line((6, 16), (1, 16), "GND")
+    # Margem Col 01: Barramento Vertical GND unificado de Row 01 a Row 24
+    assign_line((1, 1), (1, 24), "GND")
+    # Ponte de terra para CON2 P1 (17, 07): Col 16 Lin 07 -> Col 17 Lin 07
+    assign_line((16, 7), (17, 7), "GND")
 
-    # 8. Linha +5V Mestre (Perimetral)
-    # CON1 P1 (17,15) -> C1(+) (15,15)
-    assign_line((17, 15), (15, 15), "VCC")
-    # Margem Col 18 até Topo Lin 01
-    assign_line((17, 15), (18, 15), "VCC")
-    assign_line((18, 15), (18, 1), "VCC")
-    assign_line((18, 1), (1, 1), "VCC")
-    assign_line((1, 1), (1, 14), "VCC")
-    # Ramal CON4 P2 (+5V)
-    assign_line((1, 12), (2, 12), "VCC")
+    # 8. Linha VCC Protegida (Nano 5V -> CON4 P4)
+    # Ramal de alimentação para CON4 P4 (Linha 13): Nano 5V (06,14) -> (05,14) -> (05,13) -> CON4 P4 (02,13)
+    assign_line((6, 14), (5, 14), "VCC")
+    assign_line((5, 14), (5, 13), "VCC")
+    assign_line((5, 13), (2, 13), "VCC")
 
-    # 9. Fios Isolados Superiores (Jumpers - conectam somente os 2 terminais)
-    # Jumper 1: +5V de (01,14) para Nano +5V (06,14)
-    assign_pad(1, 14, "VCC")
+    # 9. Fios Isolados Superiores (5 Jumpers v8.4)
+    # Jumper W1: +5.25V de C1(+) (15,18) para Nano 5V (06,14)
+    assign_pad(15, 18, "VCC")
     assign_pad(6, 14, "VCC")
 
-    # Jumper 2: Farol D9 de Nano D9 (12,06) para R1 Top (04,18)
-    assign_pad(12, 6, "D9")
-    assign_pad(4, 18, "D9")
+    # Jumper W2: GND Dianteiro de GND Mestre (16,14) para CON2 P1 (16,07)
+    assign_pad(16, 14, "GND")
+    assign_pad(16, 7, "GND")
 
-    # Jumper 3: Pisca FE D10 de Nano D10 (12,05) para R2 Top (05,18)
-    assign_pad(12, 5, "D10")
-    assign_pad(5, 18, "D10")
-
-    # Jumper 4: GND Cross-Tie de Nano GND Dir (12,14) para Nano GND Esq (06,16)
+    # Jumper W3: GND Cross-Tie de Nano GND Dir (12,14) para Nano GND Esq (06,16)
     assign_pad(12, 14, "GND")
     assign_pad(6, 16, "GND")
+
+    # Jumper W4: SDA / RX de CON4 P3 (02,12) para Nano A4 (06,10)
+    assign_pad(2, 12, "SDA")
+    assign_pad(6, 10, "SDA")
+
+    # Jumper W5: +5.25V Farol de Barramento VCC (16,18) para Q1 Coletor (13,09)
+    assign_pad(16, 18, "VCC")
+    assign_pad(13, 9, "VCC")
 
     # Relatório de Conflitos
     if conflicts:
@@ -194,7 +247,7 @@ def verify_board_routing():
         return False
     else:
         print("=" * 60)
-        print("✅ SUCESSO: ZERO CONFLITOS DE PADS NA MATRIZ 18x24!")
+        print("✅ SUCESSO: ZERO CONFLITOS DE PADS NA MATRIZ 18x24 (v8.4)!")
         print("=" * 60)
         print(f"Total de pads ocupados com segurança: {len(grid)} / {18*24}")
         
@@ -202,7 +255,7 @@ def verify_board_routing():
         counts = Counter(grid.values())
         print("\nDistribuição de Pads por Rede:")
         for net, count in counts.most_common():
-            print(f"  • {net:10s}: {count:2d} pads")
+            print(f"  • {net:12s}: {count:2d} pads")
         return True
 
 if __name__ == "__main__":

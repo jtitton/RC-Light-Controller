@@ -1,4 +1,4 @@
-# Sistema de Luzes RC v7.2 — Manual do Usuário
+# Sistema de Luzes RC v8.0 — Manual do Usuário
 
 [🇧🇷 **Versão em Português**](#-português) | [🇺🇸 **English Version (README_EN.md)**](README_EN.md)
 
@@ -40,7 +40,7 @@ O projeto conta com **dois firmwares independentes**, cada um otimizado para uma
 
 ---
 
-### ⚙️ Principais Características do Sistema (v7.2)
+### ⚙️ Principais Características do Sistema (v8.0)
 
 - **Acelerômetro Inercial I2C (MPU-6050) com I2C Fast-Mode (400kHz):** Detecta aceleração e frenagem física real da carroceria independentemente da orientação de montagem do sensor.
 - **Algoritmo de Auto-Alinhamento Vetorial 3D:** O sistema calibra a gravidade de repouso $\vec{g}_0$ no boot e extrai o vetor longitudinal de marcha $\vec{u}_{\text{long}}$ por produto escalar $A_{\text{long}} = (\vec{a} - \vec{g}_0) \cdot \vec{u}_{\text{long}}$, permitindo fixar a placa em qualquer posição ou inclinação no chassi.

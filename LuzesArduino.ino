@@ -1,6 +1,6 @@
 /*
  * ============================================================
- *  Sistema de Luzes para Carro RC - v7.2
+ *  Sistema de Luzes para Carro RC - v8.0
  *  Arduino Nano + Receptor FlySky FS-BS6 + Acelerômetro MPU-6050
  * ============================================================
  *
@@ -23,7 +23,7 @@
  *   D7  - Pisca traseiro esquerdo (laranja, Digital)
  *   D8  - Pisca traseiro direito (laranja, Digital)
  *
- * Novidades v7.2:
+ * Versão v8.0:
  *   - Suporte a Acelerômetro I2C MPU-6050 com I2C Fast-Mode (400kHz).
  *   - Algoritmo de Auto-Alinhamento Vetorial 3D (independente da orientação de instalação).
  *   - Detecção de aceleração e frenagem física real por produto escalar de Força G.
@@ -374,7 +374,7 @@ void setup() {
   // Inicializa a Serial (para bancada e debug)
   Serial.begin(SERIAL_BAUD);
   Serial.println(F("\n==================================="));
-  Serial.println(F(" Sistema de Luzes RC - v7.2"));
+  Serial.println(F(" Sistema de Luzes RC - v8.0"));
   Serial.println(F(" 100% Interrupt-driven + Acelerômetro I2C"));
   Serial.println(F("==================================="));
   Serial.println(F(" C=Calibrar A=Centro P=Print I=Inercial ?=Ajuda\n"));
@@ -1052,7 +1052,7 @@ void autoCenter() {
 // ============================================================
 void runFullCalibration() {
   Serial.println(F("\n╔══════════════════════════════════════╗"));
-  Serial.println(F("║    CALIBRAÇÃO COMPLETA  v7.2        ║"));
+  Serial.println(F("║    CALIBRAÇÃO COMPLETA  v8.0        ║"));
   Serial.println(F("║  Configure limitadores de curva     ║"));
   Serial.println(F("║  ANTES de calibrar!                 ║"));
   Serial.println(F("╚══════════════════════════════════════╝"));
