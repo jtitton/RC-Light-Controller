@@ -271,6 +271,12 @@ bool checkCalibrationGesture() {
   int totalSamples = 0;
   unsigned long start = millis();
 
+  // Limpa quaisquer flags pendentes
+  noInterrupts();
+  g_steerNewPulse = false;
+  g_throNewPulse = false;
+  interrupts();
+
   while (millis() - start < 1500) {
     int s = -1;
     noInterrupts();
@@ -786,14 +792,13 @@ void autoCenter() {
     g_steerCenter = DEFAULT_CENTER;
     g_throCenter  = DEFAULT_CENTER;
   }
-
-  if (g_hasMPU) {
-    calibrateStaticGravity();
-  }
 }
 
 void runFullCalibration() {
   autoCenter();
+  if (g_hasMPU) {
+    calibrateStaticGravity();
+  }
   blinkAllLEDs(2, 150);
   delay(300);
 
@@ -863,6 +868,8 @@ void runFullCalibration() {
   g_cal.headlightMin = PPM_VALID_MAX;
   g_cal.headlightMax = PPM_VALID_MIN;
 
+  analogWrite(PIN_OUT_HEADLIGHT, BRIGHTNESS_40);
+
   noInterrupts();
   g_hlNewPulse = false;
   interrupts();
@@ -894,5 +901,5 @@ void runFullCalibration() {
   }
 
   saveCalibration();
-  blinkAllLEDs(5, 80); // 5 piscadas rápidas confirmam gravação na EEPROM
+  blinkAllLEDs(5, 100); // 5 piscadas rápidas confirmam gravação na EEPROM
 }

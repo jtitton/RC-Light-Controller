@@ -107,7 +107,7 @@ flowchart LR
      - **Dissipação Q1:** $\approx 35\text{mW}$ (opera frio, limite nominal 625mW).
 4. **Padronização dos Canais Diretos em $100\,\Omega$ 1/4W (R2 a R7):**
    - **Piscas FE/FD e TE/TD e Freio:** 2 LEDs em paralelo por canal $\rightarrow I_{total} \approx 29\text{–}30\text{mA}$ ($\approx 14.5\text{–}15\text{mA}$ por LED), atingindo luminosidade máxima com segurança total para as portas I/O do Nano.
-   - **Lanterna Traseira (D5):** Resistor $100\,\Omega$ com PWM via software a ~20% (`analogWrite(50)`), simulando a meia-luz suave.
+   - **Lanterna Traseira (D5):** Resistor $100\,\Omega$ com PWM via software a 40% (`analogWrite(102)` / `BRIGHTNESS_40`) em meia-luz (`HL_DIM`) e 100% (`BRIGHTNESS_100`) em farol alto (`HL_FULL`), com transição suave (*fade* de ~300ms via `updateTailLightFade()`).
 5. **Execução dos 5 Fios Isolados Superiores (Jumpers W1 a W5):**
    - Para garantir **ZERO curtos-circuitos** e 100% de confiabilidade mecânica, apenas 5 conexões utilizam fios flexíveis isolados na **face superior** (face dos componentes):
      - **W1 (+5.25V Nano, ~23mm):** C1(+) / W1 In (Col 15, Lin 18) $\rightarrow$ Nano 5V (Col 06, Lin 14).

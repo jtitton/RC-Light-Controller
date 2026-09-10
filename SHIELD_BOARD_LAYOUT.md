@@ -115,7 +115,7 @@ This document provides the complete assembly design for the **Hub Shield Board**
 
 ### 🔌 3. Solder Routing (Bottom View & Top Jumpers)
 
-The **Natural Distributed Layout v8.3** features the D1 (1N4007) silicon diode for native 6.0V BEC support, Q1 transistor driver for the headlights, standardized 100Ω resistors, and **5 top insulated jumper wires (W1 to W5)**:
+The **Natural Distributed Layout v8.4** features the D1 (1N4007) silicon diode for native 6.0V BEC support, Q1 transistor driver for the headlights, standardized 100Ω resistors, and **5 top insulated jumper wires (W1 to W5)**:
 
 #### 📻 A. Radio Channel, Diode D1 & Entrance Regulation (Right Edge — 10mm Short Traces!)
 CON1 is on **Column 17 (Rows 11 to 15)**, directly facing Nano control pins, diode D1, and capacitor C1:

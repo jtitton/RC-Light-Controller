@@ -129,7 +129,7 @@ Este documento detalha o projeto de montagem da **Placa Shield Hub** utilizando 
 
 ### 🔌 3. Roteamento das Trilhas (Face Inferior de Cobre & Fios Superiores)
 
-O **Layout Natural Distribuído v8.3** utiliza o diodo D1 (1N4007) para compatibilidade nativa com BEC de 6.0V, driver de transistor Q1 para os faróis, resistores padronizados em 100Ω e **5 fios isolados superiores (jumpers W1 a W5)**:
+O **Layout Natural Distribuído v8.4** utiliza o diodo D1 (1N4007) para compatibilidade nativa com BEC de 6.0V, driver de transistor Q1 para os faróis, resistores padronizados em 100Ω e **5 fios isolados superiores (jumpers W1 a W5)**:
 
 #### 📻 A. Canal do Rádio, Diodo D1 & Filtragem de Entrada (Lateral Direita — Trilhas de 10mm!)
 O conector CON1 fica na **Coluna 17 (Linhas 11 a 15)**, face a face com os pinos de controle do Nano e com D1 descendo até Linha 18:

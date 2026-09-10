@@ -14,7 +14,7 @@
       "top": -240,
       "left": -300,
       "attrs": {
-        "text": "🛡️ SHIELD HUB 5x7cm (v8.3 - PRODUÇÃO)\n1. Origem: BEC 6.0V e GND Mestre provêm do Receptor via CON1 (CH6 / BEC)\n2. Regulação e Proteção: Diodo D1 (1N4007) reduz 6.0V para +5.25V e C1 (100uF) filtra a entrada\n3. Barramento GND Mestre: 100% contínuo e unificado (Nano GNDs, MPU e LEDs)\n4. Driver Farol: Q1 BC337 (NPN) High-Side + R1 (27Ω) para 4 LEDs brancos em paralelo\n5. Canais Diretos: R2-R7 padronizados em 100Ω (1/4W) para máxima intensidade luminosa\n6. CON4 MPU-6050: P1 GND, P2 TX [SCL], P3 RX [SDA], P4 VCC"
+        "text": "🛡️ SHIELD HUB 5x7cm (v8.4 - PRODUÇÃO)\n1. Origem: BEC 6.0V e GND Mestre provêm do Receptor via CON1 (CH6 / BEC)\n2. Regulação e Proteção: Diodo D1 (1N4007) reduz 6.0V para +5.25V e C1 (100uF) filtra a entrada\n3. Barramento GND Mestre: 100% contínuo e unificado (Nano GNDs, MPU e LEDs)\n4. Driver Farol: Q1 BC337 (NPN) High-Side + R1 (27Ω) para 4 LEDs brancos em paralelo\n5. Canais Diretos: R2-R7 padronizados em 100Ω (1/4W) para máxima intensidade luminosa\n6. CON4 MPU-6050: P1 GND, P2 TX [SCL], P3 RX [SDA], P4 VCC"
       }
     },
 
