@@ -16,14 +16,15 @@
  *
  * Saídas (LEDs):
  *   D5  - Lanterna traseira (vermelho, PWM com fade suave de ~300ms)
- *   D6  - Luz de freio (vermelho, Digital/PWM)
- *   D9  - Farol dianteiro (branco, PWM: OFF / 40% / 100%)
+ *   D6  - Luz de freio (vermelho, PWM com fade suave de ~300ms)
+ *   D9  - Farol dianteiro (branco via Q1, PWM com fade suave: OFF / 40% / 100%)
  *   D10 - Pisca dianteiro esquerdo (laranja, Digital)
  *   D11 - Pisca dianteiro direito (laranja, Digital)
  *   D7  - Pisca traseiro esquerdo (laranja, Digital)
  *   D8  - Pisca traseiro direito (laranja, Digital)
  *
  * Versão v8.4:
+ *   - Fade-In / Fade-Out suave sincronizado nos Faróis (Q1/D9), Lanternas (D5) e Luzes de Freio (D6).
  *   - Suporte a BEC 6.0V com Diodo D1 (1N4007) e barramento seguro +5.25V.
  *   - Driver de Farol Q1 (BC337 NPN) em seguidor de emissor com R1 (27Ω) para 4 faróis.
  *   - Resistores dos canais diretos padronizados em 100Ω (R2 a R7).
@@ -177,10 +178,12 @@ int getFilteredHeadlight();
 HeadlightMode calcHeadlightMode(int hlPercent);
 bool isBraking(int throPct, float accelLong);
 BlinkDirection getBlinkDirection(int steerPct, bool rollOver);
-void updateHeadlight(HeadlightMode mode);
+void setHeadlightTarget(HeadlightMode mode);
+void updateHeadlightFade();
 void setTailLightTarget(HeadlightMode hlMode, bool braking);
 void updateTailLightFade();
-void updateBrakeLight(bool braking);
+void setBrakeLightTarget(bool braking);
+void updateBrakeLightFade();
 void updateBlinkers(BlinkDirection direction);
 void processSerialCommand();
 void runSimulationStep();
@@ -234,10 +237,18 @@ MovingAvgFilter g_steerFilter;
 MovingAvgFilter g_throFilter;
 MovingAvgFilter g_hlFilter;
 
-// --- Fade (lanterna traseira) ---
-int           g_tailCurrent = 0;    // Brilho atual (0-255)
-int           g_tailTarget  = 0;    // Brilho alvo  (0-255)
-unsigned long g_lastFadeUpdate = 0;
+// --- Fade suave dos LEDs (Farol Q1, Lanterna Traseira, Luz de Freio) ---
+int           g_tailCurrent        = 0;    // Brilho atual Lanterna (0-255)
+int           g_tailTarget         = 0;    // Brilho alvo Lanterna  (0-255)
+unsigned long g_lastFadeUpdate     = 0;
+
+int           g_hlCurrent          = 0;    // Brilho atual Farol (0-255)
+int           g_hlTarget           = 0;    // Brilho alvo Farol  (0-255)
+unsigned long g_lastHlFadeUpdate   = 0;
+
+int           g_brakeCurrent       = 0;    // Brilho atual Freio (0-255)
+int           g_brakeTarget        = 0;    // Brilho alvo Freio  (0-255)
+unsigned long g_lastBrakeFadeUpdate = 0;
 
 // --- Estado pisca ---
 unsigned long g_lastBlinkToggle = 0;
@@ -498,11 +509,13 @@ void loop() {
   bool           braking  = isBraking(throPct, g_accelLong);
   BlinkDirection blinkDir = getBlinkDirection(steerPct, g_rollOver);
 
-  // 6. Atualiza o estado físico das saídas
-  updateHeadlight(g_hlMode);
+  // 6. Atualiza o estado físico das saídas com fade suave
+  setHeadlightTarget(g_hlMode);
+  updateHeadlightFade();
   setTailLightTarget(g_hlMode, braking);
-  updateTailLightFade(); // Executado suavemente a cada ciclo
-  updateBrakeLight(braking);
+  updateTailLightFade();
+  setBrakeLightTarget(braking);
+  updateBrakeLightFade();
   updateBlinkers(blinkDir);
 
   // 7. Exibição periódica de Debug via Serial (imprime em mudanças de estado e durante ações)
@@ -605,8 +618,12 @@ void allLEDsOff() {
   digitalWrite(PIN_OUT_BLINK_FR, LOW);
   digitalWrite(PIN_OUT_BLINK_RL, LOW);
   digitalWrite(PIN_OUT_BLINK_RR, LOW);
-  g_tailCurrent = 0;
-  g_tailTarget  = 0;
+  g_tailCurrent  = 0;
+  g_tailTarget   = 0;
+  g_hlCurrent    = 0;
+  g_hlTarget     = 0;
+  g_brakeCurrent = 0;
+  g_brakeTarget  = 0;
 }
 
 void blinkAllLEDs(int count, int intervalMs) {
@@ -712,12 +729,30 @@ BlinkDirection getBlinkDirection(int steerPct, bool rollOver) {
 // ============================================================
 // ATUALIZAÇÃO DAS SAÍDAS
 // ============================================================
-void updateHeadlight(HeadlightMode mode) {
+void setHeadlightTarget(HeadlightMode mode) {
   switch (mode) {
-    case HL_OFF:  analogWrite(PIN_OUT_HEADLIGHT, BRIGHTNESS_OFF);  break;
-    case HL_DIM:  analogWrite(PIN_OUT_HEADLIGHT, BRIGHTNESS_40);   break;
-    case HL_FULL: analogWrite(PIN_OUT_HEADLIGHT, BRIGHTNESS_100);  break;
+    case HL_OFF:  g_hlTarget = BRIGHTNESS_OFF; break;
+    case HL_DIM:  g_hlTarget = BRIGHTNESS_40;  break;
+    case HL_FULL: g_hlTarget = BRIGHTNESS_100; break;
   }
+}
+
+void updateHeadlightFade() {
+  if (g_hlCurrent == g_hlTarget) return;
+
+  unsigned long now = millis();
+  if (now - g_lastHlFadeUpdate < FADE_STEP_INTERVAL_MS) return;
+  g_lastHlFadeUpdate = now;
+
+  if (g_hlCurrent < g_hlTarget) {
+    g_hlCurrent += FADE_STEP_SIZE;
+    if (g_hlCurrent > g_hlTarget) g_hlCurrent = g_hlTarget;
+  } else {
+    g_hlCurrent -= FADE_STEP_SIZE;
+    if (g_hlCurrent < g_hlTarget) g_hlCurrent = g_hlTarget;
+  }
+
+  analogWrite(PIN_OUT_HEADLIGHT, g_hlCurrent);
 }
 
 void setTailLightTarget(HeadlightMode hlMode, bool braking) {
@@ -748,8 +783,26 @@ void updateTailLightFade() {
   analogWrite(PIN_OUT_TAIL, g_tailCurrent);
 }
 
-void updateBrakeLight(bool braking) {
-  analogWrite(PIN_OUT_BRAKE, braking ? BRIGHTNESS_100 : BRIGHTNESS_OFF);
+void setBrakeLightTarget(bool braking) {
+  g_brakeTarget = braking ? BRIGHTNESS_100 : BRIGHTNESS_OFF;
+}
+
+void updateBrakeLightFade() {
+  if (g_brakeCurrent == g_brakeTarget) return;
+
+  unsigned long now = millis();
+  if (now - g_lastBrakeFadeUpdate < FADE_STEP_INTERVAL_MS) return;
+  g_lastBrakeFadeUpdate = now;
+
+  if (g_brakeCurrent < g_brakeTarget) {
+    g_brakeCurrent += FADE_STEP_SIZE;
+    if (g_brakeCurrent > g_brakeTarget) g_brakeCurrent = g_brakeTarget;
+  } else {
+    g_brakeCurrent -= FADE_STEP_SIZE;
+    if (g_brakeCurrent < g_brakeTarget) g_brakeCurrent = g_brakeTarget;
+  }
+
+  analogWrite(PIN_OUT_BRAKE, g_brakeCurrent);
 }
 
 void updateBlinkers(BlinkDirection direction) {
